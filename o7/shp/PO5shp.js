@@ -10,7 +10,7 @@
         olga5_modul = "shp",
         modulname = 'PO5shp',
         C = window.olga5.C,
-        o5debug = C.consts.o5debug,
+        o_debug = C.consts.o_debug,
         fmtErr = "background: yellow; color: black;",
         fmtOK = "background: aquamarine; color: black;",
         saved = {
@@ -27,7 +27,7 @@
                     sl = saved.last
 
                 if (sl.pO5 && sl.pO5 !== pO5) { // заканчиваю предыдущую цепочку скроллингов
-                    if (o5debug > 2)
+                    if (o_debug > 2)
                         console.log("%c%s", fmtOK, `scroll ${sl.pO5.cnst.id}: `, ' закончил!')
 
                     Object.assign(scrll, {
@@ -62,7 +62,7 @@
                     Math.abs(rH) >= dm.H ||
                     dt
                 ) {
-                    if (o5debug > 2)
+                    if (o_debug > 2)
                         console.log("%c%s", fmtOK, `saved ${pO5.cnst.id}: ${typ === 'S' ? 'скроллинг' : 'размеры'} ` +
                             `sV=${sV}, sH=${sH}, rV=${rV}, rH=${rH}, sT=${el.scrollTop}, aT=${scrll.top}, sL=${el.scrollLeft}, aL=${scrll.left}`)
 
@@ -74,7 +74,7 @@
                         dV = strt ? 0.1 : (typS ? sV : (rV ? 0.1 : 0)),
                         dH = strt ? 0.1 : (typS ? sH : (rH ? 0.1 : 0))
                     let blks
-                    if (o5debug) {
+                    if (o_debug) {
                         const blk = document.getElementById('blockScroll')
                         blks = blk && blk.checked
                     }
@@ -104,7 +104,7 @@
                     const
                         pO5 = e.target.pO5,
                         z = pO5.pOuts.size
-                    // console.log(`${pO5.cnst.name}: ${Array.from(pO5.pOuts).map(p=>p.name).join(', ')}`)                        
+                    // console.log(`${pO5.name}: ${Array.from(pO5.pOuts).map(p=>p.name).join(', ')}`)                        
                     if (n >= z || !p) {
                         n = z
                         p = pO5
@@ -124,7 +124,7 @@
         IsFinal = tag => {
             return tag.aO5shp ||            // контейнер сам является подвисабельным тегом
                 tag.nodeName == 'BODY' ||   // контейнер является конечным
-                tag.classList.contains('olga5_Start')
+                tag.classList.contains('olga-start')
         },
         AbsoluteZIndex = (el, nst) => {
             let current = el, zTotal = 0, multiplier = 1;
@@ -160,6 +160,7 @@
             }
         }
         static pBody;
+        name = ''       // вначале, чтобы было лучше "видно"
 
         constructor(tag, nst) {
             if (tag.pO5)
@@ -175,6 +176,8 @@
             if (ibody)
                 PO5.pBody = this
 
+            this.name = tag.id ? tag.id : C.MakeObjName(tag)
+
             Object.assign(this, {
                 pOuts: new Set(),  // д.б. Set() иначе в AddToBase будут повторы  (скроллируемые pO5) все скроллируемых внешних контейнеров
                 pBases: new Set(),  //   -"-    (скроллируемые pO5) все скроллируемых вложенных контейнеров 
@@ -186,7 +189,6 @@
                     ibody: ibody,
                     classOrigs: classList,
                     zIndex: AbsoluteZIndex(el, nst),
-                    name: tag.id ? tag.id : C.MakeObjName(tag),
                 }),
                 borders: Object.freeze({
                     bgColor: nst.backgroundColor,
@@ -237,10 +239,10 @@
                 )
             observer.observe(tag)
 
-            if (o5debug > 1)
+            if (o_debug > 1)
                 console.log(`PO5 создано ${this.name}`)
         }
-        name = ''    // еще и тут - чтобы сразу видеть в отладчике
+        // name = ''    // еще и тут - чтобы сразу видеть в отладчике
         CalcScope(time) {   // видимост,- пересчитывается при скроллине в DoChgsconst
             if (this.scops.time === time)
                 return

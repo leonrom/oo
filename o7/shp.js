@@ -11,21 +11,22 @@
 		W = {
 			modul: 'shp',
 			Init: ShpInit,
-			class: 'olga5_shp',
+			class: 'olga-shp',
 			incls: {
 				names: ['DoInit', 'PBases', 'AO5shp', 'PO5shp', 'Frames', 'DoChgs'],
 				actscript: document.currentScript,
 			},
 		},
 		o5css = `
-			.olga5_cart {
+			.o-shpCart {
                 margin: 0;
 				cursor: pointer; 
 				position: fixed;
 				background: none;
+				overflow: hidden;
 				transform: translate(0px, 0px);
 			}
-			.olga5_clon {
+			.o-shpClon {
 				display:none;
 			}
 	    `,
@@ -35,11 +36,11 @@
 
 		C.ParamsFill(W, o5css)
 
-		const excls = document.getElementsByClassName('o5shp_none')
+		const excls = document.getElementsByClassName('o-shpNone')
 		for (const excl of excls) {
-			const exs = excl.querySelectorAll('[class *=olga5_shp]')
+			const exs = excl.querySelectorAll('[class *=olga-shp]')
 			for (const ex of exs)
-				ex.classList.add('o5shp_none')
+				ex.classList.add('o-shpNone')
 		}
 
 		wshp.DoInit.Init()

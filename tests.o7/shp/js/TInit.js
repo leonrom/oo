@@ -57,8 +57,14 @@ export class TInit {
         cb.addEventListener('change', athis.CbAlive)
         div.aO5bs.push(cb)
     }
-    static #FillFram(aO5, div, athis, p, name, key, isInc, isOut) {
-        const isdis = 'disable', cf = 'f', cc = 'c', co = '&nbsp;',
+
+    static InitCtrls(aO5, div, athis) {        // это - бывшая FillFrams()
+        const
+            cf = 'f', cc = 'c', co = '&nbsp;',
+            key = athis.frame,
+            bO5 = aO5.pBase.pO5,
+            pdiv = div.getElementsByClassName(key)[0],
+            ps = Array.from(pdiv.getElementsByTagName('p')),                        
             StopPropagation = e => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -74,52 +80,6 @@ export class TInit {
                 else
                     console.error(`нет кнопки "btnScrollHead" ??`)
             },
-            is0 = Array.from(p.getElementsByTagName('i'))[0]
-
-        is0.classList.add('button')
-        is0.title = "Выбор для скроллинга желтыми 'TLRB'"
-        is0.addEventListener('contextmenu', StopPropagation)
-        is0.addEventListener('mouseup', AskScroll)
-
-        const pcn = name + '-b',
-            bs = Array.from(p.getElementsByTagName('b'))
-        for (const i of [0, 1]) {
-            const b = bs[i]
-            b.id = pcn + i
-            b.innerHTML = co
-            div.aO5bs.push(b)
-            b.b5 = { aO5: aO5, div: div, key: key, nam: is0.innerText, val: '', cut: '' }
-            b.innerHTML = co
-            Object.seal(b.b5)
-        }
-
-        let b = bs[0]
-        if (isOut) {
-            b.title = 'фиксация (по ходу)'
-            b.addEventListener('click', athis.CbFramF)
-            for (const frame of aO5.frms.frames)
-                if (name === frame.pO5.cnst.name) {
-                    b.innerHTML = b.b5.val = cf
-                    break
-                }
-        }
-        else b.classList.add(isdis)
-
-        b = bs[1]
-        if (isInc) {
-            b.title = 'обрезание (сзади)'
-            b.addEventListener('click', athis.CbFramC)
-            if (aO5.frms.tagCut.id === name)
-                b.innerHTML = b.b5.cut = cc
-        }
-        else b.classList.add(isdis)
-    }
-    static InitCtrls(aO5, div, athis) {
-        // это - бывшая FillFrams()
-        const
-            key = athis.frame,
-            pdiv = div.getElementsByClassName(key)[0],
-            pO5s = Array.from(pdiv.getElementsByTagName('p')),
             FindO = (id, ps) => {
                 for (const p of ps)
                     if (id === p.name)
@@ -136,26 +96,69 @@ export class TInit {
                 } while ((tag = tag.parentElement) && tag.id !== bO5.id)
             }
 
-        for (const p of pO5s) {
+        let found = false
+        for (const p of ps) {
             const
                 name = p.className.trim(),
                 dcls = document.getElementById(name)
 
             p.style.display = 'none'
+            if (!found)
+                found = name === bO5.name
 
             if (dcls) {
-                const 
+                const
                     id = dcls.id,
-                    bO5 = aO5.pBase.pO5,
                     isOut = FindO(id, bO5.pOuts),
-                    isInc = 
-                        (id === aO5.frms.tagCut.pO5.cnst.name) ||
-                        (id === bO5.cnst.name) ||
-                        FindI(id, bO5)
+                    isInc = FindI(id, bO5) && (found || id === aO5.frms.tagCut.pO5.name)
+                // isInc = 
+                //     (id === aO5.frms.tagCut.pO5.name) ||
+                //     (id === bO5.name) ||
+                //     FindI(id, bO5)
 
                 if (isInc || isOut) {
                     p.style.display = ''
-                    TInit.#FillFram(aO5, div, athis, p, name, key, isInc, isOut)
+
+                    const is0 = Array.from(p.getElementsByTagName('i'))[0]
+                    is0.classList.add('button')
+                    is0.title = "Выбор для скроллинга желтыми 'TLRB'"
+                    is0.addEventListener('contextmenu', StopPropagation)
+                    is0.addEventListener('mouseup', AskScroll)
+
+                    const pcn = name + '-b',
+                        bs = Array.from(p.getElementsByTagName('b'))
+                    for (const i of [0, 1]) {
+                        const b = bs[i]
+                        b.id = pcn + i
+                        b.innerHTML = co
+                        div.aO5bs.push(b)
+                        b.b5 = { aO5: aO5, div: div, key: key, nam: is0.innerText, val: '', cut: '' }
+                        b.innerHTML = co
+                        Object.seal(b.b5)
+                    }
+
+                    let b = bs[0]
+                    if (isOut) {
+                        b.title = 'фиксация (по ходу)'
+                        b.addEventListener('click', athis.CbFramF)
+                        for (const frame of aO5.frms.frames)
+                            if (name === frame.pO5.name) {
+                                b.innerHTML = b.b5.val = cf
+                                break
+                            }
+                    }
+                    else
+                        b.classList.add('disable')
+
+                    b = bs[1]
+                    if (isInc) {
+                        b.title = 'обрезание (сзади)'
+                        b.addEventListener('click', athis.CbFramC)
+                        if (aO5.frms.tagCut.id === name)
+                            b.innerHTML = b.b5.cut = cc
+                    }
+                    else
+                        b.classList.add('disable')
                 }
             }
         }

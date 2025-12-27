@@ -6,12 +6,10 @@
 	<title>3shp</title>
 	<link rel="shortcut icon" href="../add/favicon.svg" type="image/x-icon">
 
-	<link href='./add/all.css' media='screen' rel='stylesheet' />
-	<script type="module" src='./add/all.js'></script>
+	<link href='./js/all.css' media='screen' rel='stylesheet' />
+	<script type="module" src='./js/all.js'></script>
 
-	<script src='../o7/com.js' o5debug=0 data-o_urlrfs="
-      тесты='+ ./tests';
-    "></script>
+	<script src='../../o7/com.js' o_urlrfs="html='+ ../tests.o7/shp/html';"></script>
 
 	<script data-src='+dbg.js' o5load="up"></script>
 
@@ -32,26 +30,22 @@
 </head>
 
 <body id="body" style="height: 1500px;">
-	<div class='example olga5_Start'>
+	<div class='example olga-start'>
 		<div class='cboxed'>
-			<div o5include='тесты + /shp/add/0shp.html?.cboxedinc'></div>
+			<div o5include='html + /0shp.html?.cboxedinc'></div>
 		</div>
 
-		<pre id="ref0" class="pre-head"><b>Варианты подвисания <i>olga5_shp</i></b>
+		<pre id="ref0" class="pre-head"><b>Варианты подвисания <i>olga-shp</i></b>
 	</pre>
 		<div class="thetext" style="height: 227px;">
 			<p>
-				Демонстрация вариантов взаимодействия объектов <b>shp1</b>, <b>shp2</b> и <b>shp3</b>,
-				где исходный приоритет (по умолчанию) равен номеру объекта.
+				Демонстрация сохранения скроллинга внутри перетаскиваемых объектов
 				<br>
 				При этом изменять:
 			</p>
 			<ul>
-				<li>направление скроллинга (по умолчанию: вверху - прилипание, внизу - сдвиг) </li>
-				<li>способ сдвига другого (подвисшего) объекта - '<b>O</b>, '<b>P</b>, '<b>C</b>, '<b>S</b>'</li>
-				<li>значения приоритетов объектов</li>
-				<li>автовозврат после сдвига</li>
-				<li>положение объектов в кадре</li>
+				<li>скроллирование внутри тега <b>shp1</b> ;</li>
+				<li>сдвиги и положение объектов в кадре</li>
 			</ul>
 			<p>
 				Сравнить поведение <b>shp1</b> при скроллинге <b>div2</b> влево
@@ -62,7 +56,7 @@
 				в зависимости от опций зависания (<b>T</b>, <b>L</b>, <b>R</b>, <b>B</b>)
 			</p>
 			<div>
-				<div o5include='тесты + /shp/add/all.html?.descript'></div>
+				<div o5include='html + /all.html?.descript'></div>
 			</div>
 		</div>
 
@@ -79,14 +73,14 @@
 							<div id="cbo3" class="cbo"
 								style="background-size: 15px 15px; width: 1900px; height: 1300px; ">
 
-								<div id="shpX" class="moved olga5_shp:n o5shp_none"
+								<div id="shpX" class="moved olga-shp:n o-shpNone"
 									style="left:550px; top:520px; height: 50px; width: 55px;">
 									<p><br>контроль</p>
 								</div>
 
 								<div id="div4" class="div" style="left: 680px; top: 440px;">
                                     <span>div4</span>
-									<div id="shp1" class="moved olga5_shp:TrLb-1A:i=div3/fc"
+									<div id="shp1" class="moved olga-shp:TrLb-1A:i=div3/fc"
 										style="
 										margin-left: 6px;left:2px; top:8px; 
 										height: 110px; width: 130px;
@@ -102,11 +96,11 @@ display:flex; justify-content:center; align-items:center;
     RL
 </div>
 									</div>
-									<div id="shp2" class="moved olga5_shp:TL:i=div4/c,div3,div2/f"
+									<div id="shp2" class="moved olga-shp:TL:i=div4/c,div3,div2/f"
 										style="left:90px; top:60px;">
 										<p>название объекта</p>
 									</div>
-									<div id="shp3" class="moved olga5_shp:TrLb1A:i=div3/fc"
+									<div id="shp3" class="moved olga-shp:TrLb1A:i=div3/fc"
 										style="left:170px; top:-90px; height: 60px; width: 180px;">
 										<p>название объекта</p>
 									</div>
@@ -124,18 +118,18 @@ display:flex; justify-content:center; align-items:center;
 						<span>div3a</span>
 						<div id="cbo3a" class="cbo" style="background-size: 15px 15px; width: 1900px; height: 1300px; ">
 
-							<div id="shp9" class="moved olga5_shp:TrLb:i=div3a/fc,div2a/f"
+							<div id="shp9" class="moved olga-shp:TrLb:i=div3a/fc,div2a/f"
 								style="left:750px; top:500px;">
 								<p>название объекта</p>
 							</div>
 
-							<!-- <div id="shp2" class="moved olga5_shp:TrLb:1:i=div3/fc" style="left:900px; top:660px;">
+							<!-- <div id="shp2" class="moved olga-shp:TrLb:1:i=div3/fc" style="left:900px; top:660px;">
 								<p>название объекта</p>
 							</div>
-							<div id="shp3" class="moved olga5_shp:TrLb2A:i=div3/fc" style="left:700px; top:700px; height: 60px;">
+							<div id="shp3" class="moved olga-shp:TrLb2A:i=div3/fc" style="left:700px; top:700px; height: 60px;">
 								<p>название объекта</p>
 							</div>
-							<div id="shp4" class="moved olga5_shp:TrLb:3:i=div3/fc" style="left:950px; top:860px;">
+							<div id="shp4" class="moved olga-shp:TrLb:3:i=div3/fc" style="left:950px; top:860px;">
 								<p>название объекта</p>
 							</div> -->
 						</div>

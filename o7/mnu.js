@@ -166,10 +166,6 @@
     height: 2px ! important;
     background-color: aqua ! important;
 }
-
-.olga5-menuHidden{
-	display:none;
-}
 `,
 
 		// const phases = ['NONE', 'CAPTURING_PHASE', 'AT_TARGET', 'BUBBLING_PHASE',]
@@ -193,7 +189,7 @@
 				C.ConsoleError("GoTo: не определён тег в текущем окне: ", o5menus.ref)
 		},
 		DoMnu = e => {
-			if (C.consts.o5debug)
+			if (C.consts.o_debug)
 				console.log('DoMnu: ' + e.type + ' ' + e.eventPhase + ' ' + e.timeStamp.toFixed(1).padEnd(6))
 			const target = Target(e)
 			if (target && target.o5menus.ready) {
@@ -214,7 +210,7 @@
 			}
 		},
 		Clear = e => {
-			if (C.consts.o5debug)
+			if (C.consts.o_debug)
 				console.log('Clear: ' + e.type + ' ' + e.eventPhase + ' ' + e.timeStamp.toFixed(1).padEnd(6) +
 					' ' + (win.blockclick ? 'очищаю' : ''))
 			if (win.blockclick) {
@@ -225,7 +221,7 @@
 			// e.cancelBubble = true
 		},
 		MnuInit = function (items) {
-			if (C.consts.o5nomnu > 0) return
+			if (C.consts.o_nomnu > 0) return
 
 			const proc = 'MnuInit',
 				errs = []
@@ -374,7 +370,7 @@
 				MnuInit(items)
 			}
 
-		if (C.consts.o5nomnu > 0) C.ConsoleInfo(`Меню отключено по o5nomnu=${C.consts.o5nomnu}`)
+		if (C.consts.o_nomnu > 0) C.ConsoleInfo(`Меню отключено по o_nomnu=${C.consts.o_nomnu}`)
 		else {
 			if (!W.isReady) {
 				C.ParamsFill(W, o5css)
@@ -385,7 +381,7 @@
 			if (menu)	// если есть такой атрибут}
 				InitByText(menu)
 
-			const tags = C.GetTagsByClassNames('olga5-menuHidden', W.modul)
+			const tags = C.GetTagsByClassNames('o-menuHidden', W.modul)
 			if (tags)
 				tags.forEach(tag => {
 					InitByText(tag.innerText.trim())	//, tag)

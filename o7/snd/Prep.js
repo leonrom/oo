@@ -10,7 +10,7 @@
         olga5_modul = 'snd',
         modulname = 'Prep',
         C = window.olga5.C,
-        o5debug = C.consts.o5debug,
+        o_debug = C.consts.o_debug,
         lognam = `${olga5_modul}/${modulname} `,
         StopSoundOnPage = () => {
             if (wshp.actaudio)
@@ -43,8 +43,8 @@
                                     break
                                 case 'L': modis.loop = true
                                     break
-                                case 'F': if (!snd.classList.contains(wshp.css.olga5freeimg))
-                                    snd.classList.add(wshp.css.olga5freeimg)
+                                case 'F': if (!snd.classList.contains('o-freeImg'))
+                                    snd.classList.add('o-freeImg')
                                     break
                                 case 'N': modis.none = true
                                     break
@@ -60,7 +60,7 @@
                     if (!modis.aplay && !modis.none)
                         errs.Add(aO5.name, scls, `игнор остальных квалиф.`, 'audio_play', "нету аудио-квалиф.")
 
-                    if (aO5.modis.none) snd.classList.add(wshp.css.olga5sndNone)
+                    if (aO5.modis.none) snd.classList.add('o-sndNone')
 
                     if (!snd.alt || (snd.alt.trim() == '')) snd.alt = snd.title.trim()
                 },
@@ -191,7 +191,7 @@
             }
 
             if (urlattrs.length > 0)
-                if (C.consts.o5debug > 0) C.ConsoleInfo(`Всего выполнено подстановок snd/audio`, urlattrs.length, urlattrs)
+                if (C.consts.o_debug > 0) C.ConsoleInfo(`Всего выполнено подстановок snd/audio`, urlattrs.length, urlattrs)
 
             if (errs.length > 0)
                 C.ConsoleError(`${wshp.W.modul}: ошибки перекодировки тегов с ${wshp.W.class}`, errs.length, errs)
@@ -206,7 +206,7 @@
         setClass: {
             stop: 'stop', play: 'play', pause: 'pause',
             SetC: (aO5, state) => {
-                if (o5debug > 1) console.log(`${lognam} SetC (${aO5.name}, '${state}')`)
+                if (o_debug > 1) console.log(`${lognam} SetC (${aO5.name}, '${state}')`)
                 const classList = (aO5.image.play ? aO5.image.play : aO5.snd).classList
                 if (state == wshp.setClass.play) {
                     const image = aO5.image
@@ -214,16 +214,16 @@
                         image.stop.style.display = 'none'
                         image.play.style.display = aO5.modis.dspl
                     }
-                    classList.add(wshp.css.olga5sndPlay)
-                    classList.remove(wshp.css.olga5sndPause)
+                    classList.add('o-sndPlay')
+                    classList.remove('o-sndPause')
                 }
                 else if (state == wshp.setClass.pause) {
-                    classList.remove(wshp.css.olga5sndPlay)
-                    classList.add(wshp.css.olga5sndPause)
+                    classList.remove('o-sndPlay')
+                    classList.add('o-sndPause')
                 }
                 else if (state == wshp.setClass.stop) {
-                    classList.remove(wshp.css.olga5sndPlay)
-                    classList.remove(wshp.css.olga5sndPause)
+                    classList.remove('o-sndPlay')
+                    classList.remove('o-sndPause')
                 }
                 else alert(`setClass.SetC: state='${state}'`)
                 aO5.sound.state = state
@@ -243,7 +243,7 @@
             return ori
         },
         StopSound: aO5 => {
-            if (o5debug > 1) console.log(`${lognam}  StopSound (${aO5.name})`)
+            if (o_debug > 1) console.log(`${lognam}  StopSound (${aO5.name})`)
 
 			// тут его НИЗЗЯ ! window.dispatchEvent(new CustomEvent('o5snd_stopSound', { detail: { tag: aO5.audio, type: 'audio', } }))
 

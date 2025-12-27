@@ -1,0 +1,101 @@
+.olga_snd,
+.olga-shp,
+.olga-start {
+    --_o_reserved: 0;
+}
+.o-attention {
+    background-color: bisque;
+    border: 1px solid lightgreen;
+    border-radius: 5px;
+    padding: 0 0.3em;
+}
+.o-comment {
+    font: italic small serif;
+    line-height: 0.85em;
+    margin-block-start: 0.65em;
+    margin-block-end: 0;
+} 
+
+
+.o-menuHidden {
+    display: none;
+}
+.o-codeText {
+    width: max-content;
+    padding: 0 0.3em;
+    border: none;
+    background-color: aliceblue;
+    border-radius: 6px;
+    font-family: monospace;
+}
+.o-codeTextSeparate {
+    width: max-content;
+    padding: 0.2em 1em;
+    margin: 0 0 0 3em;
+    color: black;
+    font: small serif;
+}
+
+.o-codeTextInline {
+    padding: 0 0.1em;
+}
+
+.o-codeTextSeparate,
+.o-codeTextInline {
+    vertical-align: baseline;
+    text-align: left;
+    font-size: x-small;
+    background-color: aliceblue;
+    border: 1px solid lightpink;
+    border-radius: 2px;
+    font-family: monospace;
+    padding-right: 12px;
+}
+.o-pageHeader {
+    background-color: seashell;
+    border: 1px solid lightpink;
+    border-radius: 3px;
+    padding: 0.3em 0.2em 0.2em 5.2em;
+    margin-top: 0.1em;
+    color: darkblue;
+    font-size: large;
+    font-weight: bold;
+    line-height: 1em;
+    text-align: center;
+}
+
+.o-pageHeader > .copyright {
+    position: absolute;
+    top: 24px;
+    right: 16px;
+    display: inline-block;
+    font-size: x-small;
+    text-align: end;
+    color: blueviolet;
+    opacity: 0.3;
+    font-style: italic;
+}
+
+.o-diagonal {
+    position: absolute;
+    top: 77px;
+    left: 12px;
+    right: 0;
+    width: 255px;
+    padding: 18px;
+    background: yellow;
+    border: 1px solid black;
+    border-radius: 15px;
+    opacity: 0.8;
+    transform: rotate(-35deg);
+    z-index: 11111;
+    color: darkred;
+    font: bold normal 1em sans-serif;
+    text-align: center;
+    display: block;
+}
+
+.o-diagonal span {
+    font: italic small sans-serif;
+    font-weight: normal;
+}

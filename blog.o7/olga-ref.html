@@ -7,15 +7,15 @@
 	<link rel="shortcut icon" href="./media/favicon.svg" type="image/x-icon">
 
 	<!-- 
-	src='https://rombase.neocities.org/olga5/com!.js'
-	src='https://rombase.h1n.ru/o5/olga5/com!.js'
+	src='https://rombase.neocities.org/o7/com!.js'
 	src='http://localhost/o5/olga5/com!.js' 
 	_блог_o5 = 'https://olga-5.blogspot.com/2020/02' 
-    тесты='http://rombase.h1n.ru/o5/olga5-tests'
-    тесты='http://localhost/o5/olga5-tests'  
+    тесты='http://rombase.neocities.org/o7/tests.o7'	
+
+    тесты='http://localhost/o7/tests.o7'  
 	https://leonrom.github.io/o5/olga5/o5.js
 -->
-	<script src='http://localhost/o5/olga5/o5.js' o5consts="o5debug=0" o_urlrfs="
+	<script src='http://localhost/o5/olga5/o5.js' o5consts="o_debug=0" o_urlrfs="
 	_блог_o5 = '_url_olga5+../2020/02';
 	тесты = '_url_olga5 + ../olga5-tests';
 	images = _url_olga5 + ../media/image;
@@ -25,7 +25,7 @@
 ">
 </script>
 
-	<link data-href='../css/o5ini.css' media='screen' rel='stylesheet' />
+	<link data-href='../css.o7/ini.css' media='screen' rel='stylesheet' />
 	<script data-src='+pop.js'></script>
 	<script data-src='+mnu.js' o5consts="scrollY=-32"></script>
 	<script data-src='+ref.js' o_attrs="
@@ -42,17 +42,18 @@
 	</script>
 	<script data-src='+add/pusto.js' data-o_consts="moe-attr=мой атрибут"></script>
 
-	<link data-href='+../css/olga5-a.css' media='screen' rel='stylesheet' />
-	<link data-href='+../css/olga5-o5.css' media='screen' rel='stylesheet' />
+	<link data-href='+../css.o7/basis.css' rel='stylesheet' />
+	<link data-href='+../css.o7/table.css' rel='stylesheet' />
+	<link data-href='+../css.o7/popup.css' rel='stylesheet' />
 
 </head>
 
 <body>
-	<div class="olga5_Start:pop,ref,shp,mnu" dir="ltr" trbidi="on">
+	<div class="olga-start:pop,ref,shp,mnu" dir="ltr" trbidi="on">
 		<img alt="" border="0" width="200" style="display:none" data-original-height="599" data-original-width="662"
 			src="https://1.bp.blogspot.com/-opJj3td2qGQ/YEsTLcPWdRI/AAAAAAAAEQg/C1qCdQsEf-87IkDtZdPI_6K5VsBlNnFVACPcBGAsYHg/s200/ref.png" />
 
-		<p class="olga5_page_header">
+		<p class="o-pageHeader">
 			Подстановка <i>именованных</i> ссылок в теги <b>HTML</b>-документа.
 		</p>
 
@@ -60,10 +61,10 @@
 		<div>
 			<p>
 				Скрипт <code>ref.js</code> входит в <i>библиотеку</i>
-				<span o5popup='+ ../help/o5help.html; width: 555, height: 390'><code>Olga5</code></span>&nbsp;и
+				<span o5popup='+ ../help/o5help.html; width: 555, height: 390'><code>Olga7</code></span>&nbsp;и
 				выполняет обработку внутренней структуры тегов, находящихся в
-				<span class="olga5_popup"
-					o5popup='+../blog/olga5-all.html?o5nomnu#head_43; width: 666, height: 444'>областях</span>
+				<span class="o-popup"
+					o5popup='+../blog/olga5-all.html?o_nomnu#head_43; width: 666, height: 444'>областях</span>
 				действия инициализации данного скрипта:
 			<ul>
 				<li>подстановку <i>именованных</i> ссылок в тегах, заданных обязательным атрибутом <b>o_attrs</b>;
@@ -78,8 +79,8 @@
 
 			подстановку <i>именованных</i> ссылок
 			в тегах, заданных обязательным атрибутом <b>o_attrs</b> и находящихся в
-			<span class="olga5_popup"
-				o5popup='+../blog/olga5-all.html?o5nomnu#head_43; width: 666, height: 444'>областях</span>
+			<span class="o-popup"
+				o5popup='+../blog/olga5-all.html?o_nomnu#head_43; width: 666, height: 444'>областях</span>
 			действия инициализации данного скрипта.
 
 
@@ -87,27 +88,27 @@
 			При его отсутствии модуль не выполняет никаких действий, а в системный журнал выдаётся предупреждающее
 			сообщение.
 			Сами же <i>именованные</i> ссылки могут быть определены как в общедоступном атрибуте
-			<span class="olga5_popup"
-				onmouseup="window.olga5.PopShow( 666, 555, '_url_olga5+../blog/olga5-all.html?o5nomnu#head_622')"><b>o_urlrfs</b></span>
-			<!-- class="olga5_popup"	onmouseup="window.olga5.PopShow( 666, 555, './olga5-all.html?o5nomnu#head_62')"><b>o_urlrfs</b></span> -->
+			<span class="o-popup"
+				onmouseup="window.olga5.PopShow( 666, 555, '_url_olga5+../blog/olga5-all.html?o_nomnu#head_622')"><b>o_urlrfs</b></span>
+			<!-- class="o-popup"	onmouseup="window.olga5.PopShow( 666, 555, './olga5-all.html?o_nomnu#head_62')"><b>o_urlrfs</b></span> -->
 			тега <code>com!.js</code>,
 			так и в одноимённом атрибуте данного скрипта <code>ref.js</code>.
 			</p>
 			<p>
 				Общий синтаксис задания атрибутов определён
-				<span id='span2' title="Ссылка на описание ядра библиотеки 'Olga5'" class="olga5_popup"
-					onclick="window.olga5.PopUp(this, '+../blog/olga5-all.html?o5nomnu#head_6', 'width:720, height:800')">здесь</span>,
-				<!-- onclick="window.olga5.PopUp(this, './olga5-all.html?o5nomnu#head_6', 'width:720, height:800')">здесь</span>, -->
+				<span id='span2' title="Ссылка на описание ядра библиотеки 'Olga7'" class="o-popup"
+					onclick="window.olga5.PopUp(this, '+../blog/olga5-all.html?o_nomnu#head_6', 'width:720, height:800')">здесь</span>,
+				<!-- onclick="window.olga5.PopUp(this, './olga5-all.html?o_nomnu#head_6', 'width:720, height:800')">здесь</span>, -->
 				а подробности использования <i>именованных</i> ссылок -
-				<span id='span2' title="Ссылка на описание ядра библиотеки 'Olga5'" class="olga5_popup"
-					onclick="window.olga5.PopUp(this, '+./help/urlrfs.html?o5nomnu#head_1', 'width:720, height:800')">здесь</span>.
+				<span id='span2' title="Ссылка на описание ядра библиотеки 'Olga7'" class="o-popup"
+					onclick="window.olga5.PopUp(this, '+./help/urlrfs.html?o_nomnu#head_1', 'width:720, height:800')">здесь</span>.
 			</p>
 			<p>
 				Атрибут <b>o_attrs</b> задает массив из <i>пар</i> списков: тегов и теговых атрибутов,
 				в которых будет выполняться поиск и подстановка <i>именованных</i> ссылок.
 				Например:
 			</p>
-			<p class="olga5_codeTextSeparate">
+			<p class="o-codeTextSeparate">
 				o_attrs = 'a= href, data-href # первая пара; img, audio= src, data-src # вторая пара'
 			</p>
 			Здесь:
@@ -116,7 +117,7 @@
 					<b>data-href</b>
 					находящихся в
 					<span
-						o5popup='+../blog/olga5-all.html?o5nomnu#head_43; width: 666, height: 444'>областях&nbsp;действия</span>
+						o5popup='+../blog/olga5-all.html?o_nomnu#head_43; width: 666, height: 444'>областях&nbsp;действия</span>
 					инициализации;
 				</li>
 				<li>для тегов &lt;<b>img</b>&gt; и &lt;<b>audio</b>&gt; <i>именованные</i> ссылки
@@ -136,12 +137,12 @@
 		<div>
 			<p>
 				Как пример подключения <code>ref.js</code> рассматривается
-				<code class="olga5_popup"
+				<code class="o-popup"
 					onclick="window.olga5.PopShow( 500, 288, 'тесты+/ref2.html')">HTML-файл</code>:
 			</p>
 
 			<div id="kst">
-				<table class="olga5_tableCode olga5_shp" style="height:222px;" olga5_owners="id:kst">
+				<table class="o-tableCode olga-shp" style="height:222px;" olga5_owners="id:kst">
 					<tbody>
 						<tr>
 							<td>
@@ -149,7 +150,7 @@
 							</td>
 							<td>
 								<pre>
-<span class="olga5_tableName">рабочий пример</span>
+<span class="o-tableName">рабочий пример</span>
 &lt;html&gt;
 &lt;head&gt;
     &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt;
@@ -170,7 +171,7 @@
         "
     &gt;
     &lt;/script&gt;
-    &lt;script async src='../olga5/com!.js' o5debug=2 &gt;&lt;/script&gt;
+    &lt;script async src='../olga5/com!.js' o_debug=2 &gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
     &lt;br/&gt;1 &lt;<b>b</b>     id="1" <b>title</b>="xxx= + _url_html + ma + /mm"
@@ -208,7 +209,7 @@
 					другие ссылки,
 					который были определены в вышенаписанных строках.
 				</p>
-				<p class='moecomment'>
+				<p class='o-comment'>
 					Здесь строки 7&div;10 и 13&div;17 не заканчиваются символом '<b>;</b>' - потому, что
 					достаточно разрыва строки. Но лучше всё-таки всегда писать '<b>;</b>'
 					т.к. <b>Blogger</b>, при сохранении файла, объединяет строки значения атрибута.
@@ -223,7 +224,7 @@
 			</div>
 			<p>
 				Правильность работы приведенного выше
-				<span class="olga5_popup"
+				<span class="o-popup"
 					onclick="window.olga5.PopShow( 500, 288, 'тесты+/ref2.html')">HTML-файла</span>:
 				подтверждается (после клика по ссылке) отображением иконок и загрузкой/звучанием аудио-файла (в 5-м
 				теге).
@@ -282,7 +283,7 @@
 				красным шрифтом
 				и начинающиеся словом <span style="color:red;">GET</span>. Коды ошибок, указанные в сообщениях можно
 				найти
-				<code class="olga5_popup"
+				<code class="o-popup"
 					onclick="window.olga5.PopShow( 777, 444, 'https://developer.mozilla.org/ru/docs/Web/HTTP/Status')">тут</code>.
 				К сожалению, не смог обработать и отобразить данным скриптом эту информацию в упорядоченном виде
 				средствами
@@ -302,12 +303,12 @@
 			<p>
 				При поиске ошибки в тесте HTML-страницы следует иметь ввиду, что в сообщении символ конкатенации всегда
 				показывается
-				как '<span class="olga5_codeText"><b>+</b></span>', в то время как на странице он м.б. представлен не
-				только как '<span class="olga5_codeText"><b>+</b></span>',
+				как '<span class="o-codeText"><b>+</b></span>', в то время как на странице он м.б. представлен не
+				только как '<span class="o-codeText"><b>+</b></span>',
 				но и как код '&amp;#43;' (даже если изначально там был простой <i>плюс</i>).
 			</p>
 			<p>
-				Для анализа обработки <i>именованных</i> ссылок скриптом, при его инициализации с <b>o5debug</b>>0,
+				Для анализа обработки <i>именованных</i> ссылок скриптом, при его инициализации с <b>o_debug</b>>0,
 				в системный <i title="закладка Console окна отладчика браузера">журнал</i>
 				выдаются</span> 'раскрываемые' (табличные) сообщения:
 			</p>
@@ -325,7 +326,7 @@
 				<li><i>неопределённые адреса</i> &mdash; сообщение об ошибке,- появляется при наличии неопределнных
 					<i>именованных</i> ссылок.
 				</li>
-				<p class="moecomment">
+				<p class="o-comment">
 					Последнее сообщение может оказаться ложным, если обработка <i>именованной</i> ссылки предусмотрена
 					в ином модуле (например в <code>snd</code>).
 				</p>
@@ -344,7 +345,7 @@
 			<p>
 				Если после исправления необнаруженных атрибутов тег по-прежнему не работает, но зато в протоколе
 				появились
-				сообщения вида "<b>GET</b> <i>http://rombase.h1n.ru/o5/media/image/shp1.png</i> <b>404 (Not
+				сообщения вида "<b>GET</b> <i>http://XXXX.XX.XX/XX/media/image/shp1.png</i> <b>404 (Not
 					Found)</b>",
 				то следует <i title="подстановкой вручную в браузер">проверить</i> адреса в 3-й таблице.
 			</p>
@@ -370,7 +371,7 @@
 		</div>
 
 		<!-- ===================================================================================== -->
-		<pre id="menu-pre" class="olga5-menuHidden" style="display:none">
+		<pre id="menu-pre" class="o-menuHidden" style="display:none">
 					{ span: 'Статья', id: "moemenu", right: '5px', top: '5px', add: '266px', block:'s' },
 					{ span: '1. Общие сведения', ref: 'head_1' },
 					{ span: '2. Подключение скрипта', ref: 'head_2' },

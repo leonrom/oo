@@ -11,7 +11,7 @@
         olga5_modul = "shp",
         modulname = 'Frames',
         C = window.olga5.C,
-        o5debug = C.consts.o5debug,
+        o_debug = C.consts.o_debug,
         fmtErr = "background: yellow; color: black;",
         // mdiglit = /[a-zA-Z]+|[+-]*\d+/g,
         MakeFrames = (aO5, ss) => {
@@ -109,11 +109,11 @@
                                 while (own.nodeName !== 'HTML')
 
                                 if (tag && tag !== pBase.pO5.cnst.tag)
-                                    console.log("%c%s", fmtErr, `cut-контейнер '${tag.pO5.cnst.name}' для '${aO5.name}' `, ` найден снаружи базового контейнера '${pBase.pO5.cnst.name}'`)
+                                    console.log("%c%s", fmtErr, `cut-контейнер '${tag.pO5?tag.pO5.name:C.MakeObjName(tag)}' для '${aO5.name}' `, ` найден снаружи базового контейнера '${pBase.pO5.name}'`)
                             }
 
                             if (!tag) {
-                                errs.push(`${aO5.name}: не найден контейнер 'владелец' для "${s}" . Взял '${tagBase.pO5.cnst.name}'`)
+                                errs.push(`${aO5.name}: не найден контейнер 'владелец' для "${s}" . Взял '${tagBase.pO5.name}'`)
                                 tag = tagBase
                             }
                             else if (n > 0)
@@ -156,7 +156,7 @@
                                 }
                                 const txt = found ? `найден НЕ скроллируемый` : `не найден скроллируемый`
                                 errs.push(`${aO5.name}: ${txt}` + //  (или хотя  бы overflow: auto; / scroll;)    
-                                    ` контейнер 'оператор' для typ=${typ} и cod='${cod}'. Взял '${pBase.pO5.cnst.name}'`)
+                                    ` контейнер 'оператор' для typ=${typ} и cod='${cod}'. Взял '${pBase.pO5.name}'`)
                                 tag = pBase.pO5.cnst.tag
                             }
                             else if (n > 0)
@@ -166,8 +166,8 @@
 
                         Frame.frames.set(key, frame)
 
-                        if (o5debug)
-                            console.log(`Определил (и добавил в base.frames) фрейм "${key} на ${frame.pO5.cnst.name}" `)
+                        if (o_debug)
+                            console.log(`Определил (и добавил в base.frames) фрейм "${key} на ${frame.pO5.name}" `)
                     }
 
                     frame.aO5fs.push(aO5)

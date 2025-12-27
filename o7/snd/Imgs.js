@@ -35,7 +35,7 @@
                         For now I’m going to continue to use document.createElement('img'). 
                         Not only is this the w3c recommendation but it’s the faster method in IE8, the version users are slowly starting to adopt.
                         */
-                        if (C.consts.o5debug > 1)
+                        if (C.consts.o_debug > 1)
                             console.log(`${lognam} olga5_Imgs создание нового для url=${url}`)
 
                         const nimg = document.createElement('img')
@@ -43,7 +43,7 @@
                         maps.set(url, { img: nimg, err: '' })
 
                         nimg.addEventListener('load', () => {
-                            if (C.consts.o5debug > 1)
+                            if (C.consts.o_debug > 1)
                                 console.log(`${lognam} GetImgForRef: загружен url= ${url}`)
                             if (url.trim() == '')
                                 alert('url=?')
@@ -65,7 +65,7 @@
 
                         if (!isinmap)
                             maps.set(url, { img: img.cloneNode(true), err: '' })
-                        if (C.consts.o5debug > 1)
+                        if (C.consts.o_debug > 1)
                             console.log(`${lognam} olga5_Imgs ${isinmap ? 'повтор  ' : 'добавлен'} url=${url} для img.id='${img.id}' ${s}`)
                     }
                     else

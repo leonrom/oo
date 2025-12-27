@@ -31,7 +31,7 @@
 		olga5_modul = "shp",
 		modulname = 'DoChgs',
 		C = window.olga5.C,
-		o5debug = C.consts.o5debug,
+		o_debug = C.consts.o_debug,
 		fmtOK = "background: cornsilk; color: black;",
 		fmtErr = "background: yellow; color: black;",
 		opp = { T: 'B', L: 'R', R: 'L', B: 'T' },
@@ -59,8 +59,8 @@
 				// if (fix.xO5 && fix.isP)
 				// 	fix.xO5 = xO5
 
-				if (o5debug > 2) console.log(`FindExternalFixCuts ${aO5.name} :  ` +
-					`canFixs[${m}] = ${xO5 ? xO5.cnst.name : ' -  '},   ` +
+				if (o_debug > 2) console.log(`FindExternalFixCuts ${aO5.name} :  ` +
+					`canFixs[${m}] = ${xO5 ? xO5.name : ' -  '},   ` +
 					`canCuts[${m}] = ${aO5.canCuts[m] ? aO5.canCuts[m].name : ' -  '}`)
 			}
 		},
@@ -372,10 +372,10 @@
 		}
 
 	function MakeScroll(scV, scH, pcO5, fromExt) {
-		if (o5debug > 1 && !D && fromExt) {	//	постоянный доступ из отладчика
+		if (o_debug > 1 && !D && fromExt) {	//	постоянный доступ из отладчика
 			D = {}
 			for (const pBase of pcO5.pBases) {
-				let b = D[pBase.pO5.cnst.name] = {}
+				let b = D[pBase.pO5.name] = {}
 				for (const aO5 of pBase.aAll)
 					b[aO5.name] = aO5	// .substr(3)
 			}
@@ -414,6 +414,9 @@
 				// прямой ход и фиксация	по 'x' 
 				const o = opp[x]
 				let xTL = 'TL'.includes(x)
+			/**
+			 * фиксации
+			 */
 				for (const aO5 of pBase.bO5s[x]) {
 					if (aO5.act.ready
 						&& !aO5.hidden[o]
@@ -465,7 +468,9 @@
 					)
 						UnFix(o, aO5, xTL)
 			}
-
+			/**
+			 * обрезания внутренним и внешним контейнерами
+			 */
 			for (const aO5 of pBase.aAll)
 				if (aO5.act.ready && aO5.act.isfix) {
 					for (const x of 'TLRB') {
@@ -480,8 +485,10 @@
 					}
 					CheckHidden(aO5)
 				}
-
-			// динамическая фиксация остальных на зависших элементах
+			/**
+			 * прилипания и сталкивания
+			 * динамическая фиксация остальных на зависших элементах
+			 */
 			for (const x of xs) {
 				const o = opp[x], q = { [x]: 1, [o]: 1 }
 				let n = 5

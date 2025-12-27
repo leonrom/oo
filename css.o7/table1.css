@@ -1,0 +1,174 @@
+ .o-tableCode {
+     height: auto;
+     max-width: max-content;
+     width: calc(99% - 33px);
+     display: block;
+     margin-left: 33px; }
+
+ .o-tableCode tbody {
+     display: block;
+     width: max-content;
+ }
+
+ .o-tableCode3 tbody,
+ .o-tableCode tbody {
+     overflow-y: auto;
+     overflow-x: hidden;
+ }
+
+ .o-tableCode3 tr,
+ .o-tableCode tr {
+     max-width: 100%;
+     display: inline-flex;
+ }
+
+ .o-tableCode3 td,
+ .o-tableCode td {
+     padding-top: 0;
+     padding-right: 4px;
+     margin: 0px;
+     height: min-content;
+     display: block;
+     max-width: 99%;
+     width: max-content;
+ }
+
+ .o-tableCode td:first-child {
+     padding: 0px;
+     padding-right: 3px;
+     height: auto;
+     border: none;
+     max-width: 99%;
+     width: max-content;
+ }
+
+ .o-tableCode td:first-child pre {
+     background-color: aliceblue;
+     opacity: 0.8;
+     border-color: transparent;
+     width: 1.2em;
+     overflow: hidden;
+     padding: 0px;
+     padding-right: 4px;
+
+     white-space: pre-line;
+     word-wrap: break-word;
+
+     text-align: right;
+     color: gray;
+     font-weight: normal;
+
+     max-width: 100%;
+     min-width: 100%;
+ }
+
+ .o-tableCode td:last-child pre,
+ .o-tableCode td pre {
+     vertical-align: baseline;
+     text-align: left;
+     text-align: -moz-left;
+     text-align: -webkit-left;
+     font-size: x-small;
+     background-color: aliceblue;
+     border: solid lightpink 1px;
+     border-radius: 2px;
+
+     font-family: monospace;
+     padding-right: 12px;
+ }
+
+ table.o-tableCode.scroll {
+     height: 333px;
+     overflow: auto;
+     border: solid lightpink 1px;
+     border-radius: 2px;
+     background-color: white;
+     outline: solid white 2px;
+ }
+
+ table.o-tableCode.scroll td {
+     padding: 0px;
+     padding-bottom: 0px;
+     padding-right: 3px;
+     margin-right: 2px;
+ }
+
+ table.o-tableCode.scroll td:last-child pre {
+     border: none;
+     border-left: solid lightpink 1px;
+ }
+
+ .o-tableName {
+     color: gray;
+     font-weight: normal;
+     font-style: italic;
+     font-family: sans-serif;
+     background-color: transparent;
+ }
+
+ pre span.o-tableName {
+     float: right;
+     font-size: xx-small;
+ }
+
+ .o-tableCode3 {
+     height: auto;
+     display: block;
+     width: calc(99% - 22px);
+     margin-left: 3px;
+     overflow-x: hidden;
+     overflow-y: auto;
+     font-size: smaller;
+ }
+
+ .o-tableCode3 table {
+     display: flex;
+ }
+
+ .o-tableCode3 div {
+     overflow-x: auto;
+     background-color: transparent;
+ }
+
+ .o-tableCode3 td:first-child div {
+     max-width: calc(100% - 0.1em);
+ }
+
+ .o-tableCode3 td:last-child div {
+     max-width: calc(100% - 0.8em);
+ }
+
+ .o-tableCode3 td:last-child pre,
+ .o-tableCode3 td:first-child pre {
+     margin: 0.1em 0px;
+     padding-right: 14px;
+ }
+
+ .o-tableCode3 td:last-child,
+ .o-tableCode3 td:first-child {
+     width: 50%;
+     background-color: aliceblue;
+ }
+
+ .o-tableCode3 td:nth-child(2)  {
+     text-align: center;
+ }
+ .o-tableCode3 td:nth-child(2) div {
+     padding-top: 6px;
+     color: coral;
+ }
+
+.o-tableIllu {
+    line-height: 1.1;
+    width: 100%;
+    border-color: turquoise;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: serif;
+    font-size: revert;
+    color: black;
+}
+
+.o-tableIllu td:nth-child(2) {
+    width: 1.8em;
+}

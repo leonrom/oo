@@ -8,7 +8,7 @@
 	const
 		errs = [],
         m = window.location.search.match(/(?:\?|&)debug(?:=([^&?]*))?(?=[&?]|$)/),
-        o5debug = !m ? 0 : (m[1] === undefined || m[1] === "") ? 1 : (isNaN(+m[1]) ? 3 : +m[1]),
+        o_debug = !m ? 0 : (m[1] === undefined || m[1] === "") ? 1 : (isNaN(+m[1]) ? 3 : +m[1]),
 		msg = {
 			clrs: {	//	копия из CConsole
 				'E': "background: yellow; color: black;border: solid 1px gold;",
@@ -37,7 +37,7 @@
 		},
 		C = window.olga5 ? window.olga5.C : {
 			consts: {
-				o5debug: o5debug
+				o_debug: o_debug
 			},
 			avtonom: true,
 		},
@@ -55,7 +55,7 @@
 					ok = false
 					break
 				}
-			if (!ok || C.consts.o5debug > 0) {
+			if (!ok || C.consts.o_debug > 0) {
 				const src = `обработка 'CInclude'`,
 					rezs = []
 
@@ -164,7 +164,7 @@
 			if (!ok)
 				msg.Error('AskFinish', `ошибка загрузки ${incl.xhr.status}   ${incl.xhr.responseURL}`)
 			else
-				if (C.consts.o5debug > 1)
+				if (C.consts.o_debug > 1)
 					msg.Info('AskFinish', `вставлен URL ${done ? '(последний!)' : ''}  ${incl.xhr.responseURL}`)
 
 			// for (const url in incls)
@@ -246,7 +246,7 @@
 					for (const src of srcs) {
 						const s = outer ? src.outerHTML : src.innerHTML
 						// div.insertAdjacentHTML('beforeEnd', 
-						if (C.consts.o5debug > 1)
+						if (C.consts.o_debug > 1)
 							tag.insertAdjacentHTML('beforeEnd', `\n<!-- вставка с id='${src.id}' -->`)
 							// tag.innerHTML += `\n<!-- вставка с id='${src.id}' -->`
 
@@ -270,7 +270,7 @@
 				xhr = this,
 				incl = xhr.incl
 
-			if (C.consts.o5debug > 1)
+			if (C.consts.o_debug > 1)
 				msg.Info('PageLoad', `загружена страница  (с рез.=${xhr.status})  ${incl.xhr.responseURL}`, xhr.responseText)
 			// 	{
 			// 	console.groupCollapsed(`${W.modul} : прочитан ((рез.=${xhr.status})) url='${xhr.responseURL}'`)
@@ -297,7 +297,7 @@
 		}
 
 	function InclStart(e) {
-		if (C.consts.o5debug > 0) {
+		if (C.consts.o_debug > 0) {
 			console.log('%c%s', "background: aqua; color: black;border: none;",
 				` инициализация `,
 				`${W.modul}.js`,
@@ -305,7 +305,7 @@
 
 			_div.style.display = 'none'
 			_div.id = 'moe'
-			// if (C.consts.o5debug > 1) {
+			// if (C.consts.o_debug > 1) {
 			// 	_div.title = "моя копия: чтобы посмотреть, чего загрузили"
 			// 	document.body.appendChild(_div)
 			// }
@@ -332,7 +332,7 @@
 	if (C.avtonom) {
 		document.addEventListener('DOMContentLoaded', InclStart)
 
-		if (o5debug)
+		if (o_debug)
 			console.log(`}---< ${document.currentScript.src.indexOf(`/${W.modul}.`) > 0 ? 'загружен  ' : 'включён   '}:  ${W.modul}.js`)
 	}
 	else

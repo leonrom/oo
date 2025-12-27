@@ -35,7 +35,7 @@
 				// 				const bord = ask.bords[b]
 				// 				if (!aa[a].bb[b]) aa[a].bb[b] = []
 				// 				if (bord) {
-				// 					aa[a].bb[b][2] = bord.tag.pO5.cnst.name
+				// 					aa[a].bb[b][2] = bord.tag.pO5.name
 				// 					aa[a].bb[b][3] = '=' + MyRound4(bord.tag.pO5.scope.pos.top) + '..' + MyRound4(bord.tag.pO5.scope.pos.bottom)
 				// 				}
 				// 			}

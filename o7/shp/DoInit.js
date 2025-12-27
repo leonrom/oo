@@ -19,7 +19,7 @@
         olga5_modul = "shp",
         modulname = 'DoInit',
         C = window.olga5.C,
-        o5debug = C.consts.o5debug,
+        o_debug = C.consts.o_debug,
         fmtOK = "background: blue; color: white;",
         fmtErr = "background: yellow; color: black;",
         state = {
@@ -35,7 +35,7 @@
                 rez.push({
                     aO5: aO5.name,
                     tagCut: aO5.frms.tagCut.id,
-                    base: aO5.pBase.pO5.cnst.name,
+                    base: aO5.pBase.pO5.name,
                     frms: Array.from(aO5.frms.frames).map(f => f.pO5.cnst.id).join(', ')
                 })
             C.ConsoleInfo(`Обработка ${head}`, rez.length, rez)
@@ -43,7 +43,7 @@
             rez.length = 0
             for (const { bO5, pBase } of wshp.PBases.PBase)
                 rez.push({
-                    base: pBase.pO5.cnst.name,
+                    base: pBase.pO5.name,
                     pOuts: ' ' + (Array.from(pBase.pO5.pOuts)).map(p => p.name).join(', '),
                     // pIncs: ' ' + (Array.from(pBase.pO5.pIncs)).map(p => p.name).join(', '),
                     aAll: ' ' + pBase.aAll.map(tag => tag.id).join(', ')
@@ -54,7 +54,7 @@
             for (const { bO5, pBase } of wshp.PBases.PBase)
                 for (const pOut of pBase.pO5.pOuts)
                     rez.push({
-                        base: pBase.pO5.cnst.name,
+                        base: pBase.pO5.name,
                         pOut: pOut.name,
                         pOuts: ' ' + (Array.from(pOut.pOuts)).map(p => p.name).join(', '),
                         // pIncs: ' ' + (Array.from(pOut.pIncs)).map(p => p.name).join(', ')
@@ -67,7 +67,7 @@
                 rez.push({
                     key: key,
                     tcn: frame.typ + ':' + frame.cod + ':' + frame.num,
-                    pO5: frame.pO5.cnst.name,
+                    pO5: frame.pO5.name,
                     aO5fs: frame.aO5fs.map(a => a.name).join(', '),
                 })
             }
@@ -80,7 +80,7 @@
 
             for (const mtag of mtags) {
                 if (
-                    !mtag.tag.classList.contains('o5shp_none') &&
+                    !mtag.tag.classList.contains('o-shpNone') &&
                     !mtag.quals.find(qual => !qual.includes('=') && qual.match(/n/i))
                 ) {
                     if (!observ)
@@ -96,8 +96,8 @@
             }
 
             if (!found)
-                console.log("%c%s", fmtErr, `Контейнера с классом 'olga5_Start' не содержат '${wshp.W.class}'`,
-                    `(либо вообще, либо без 'o5shp_none' и ':N')`)
+                console.log("%c%s", fmtErr, `Контейнера с классом 'olga-start' не содержат '${wshp.W.class}'`,
+                    `(либо вообще, либо без 'o-shpNone' и ':N')`)
         },
 
         ReadCls = (aO5, ss) => {
@@ -167,42 +167,46 @@
 
     const
         Observe = entries => {
-            const
-                oO5s = new Set()
+            const newO5s = new Set(),
+                reaO5s = new Set()
+
             for (const entry of entries) {
                 const shp = entry.target
-                let aO5 = shp.aO5shp
+                let aO5 = shp.aO5shp,
+                    ready = aO5 ? aO5.act.ready : 0
 
                 if (entry.isIntersecting) {
                     if (!aO5) {
                         const el = observ.getel(shp)
                         aO5 = new wshp.AO5shp.AO5(shp, el.quals)
                         aO5.act.observer = state.observer
-                        oO5s.add(aO5)
+                        newO5s.add(aO5)
                     }
 
                     if (entry.intersectionRatio === 1)  //   && !aO5.act.isfix  (необязательно)
                         // if (!aO5.cls.badtag)
-                            aO5.act.ready = true
+                        aO5.act.ready = true
                 }
-                else {
+                else
                     if (aO5 && !aO5.act.isfix)
                         aO5.act.ready = false
+
+                if (aO5) {
+                    shp.classList.toggle('o-isready', aO5.act.ready)
+                    if (ready !== aO5.act.ready)
+                        reaO5s.add(aO5)
                 }
             }
 
-            if (oO5s.size > 0) {
+            if (newO5s.size > 0) {
                 const bBases = new Set()
                 let isNew = false
-                for (const aO5 of oO5s) {
+                for (const aO5 of newO5s) {
                     if (wshp.PBases.PBase.AddToBase(aO5))  // если добавилась новая база
                         isNew = true
 
                     ReadAttrs(aO5)
                     bBases.add(aO5.pBase)
-
-                    // для тестирования в frames.html
-                    window.dispatchEvent(new CustomEvent('o5_containers', { detail: { aO5: aO5, } }))
                 }
 
                 for (const bBase of bBases)
@@ -212,10 +216,15 @@
                     for (const x of 'TL')
                         wshp.PBases.PBase.SetBorders(x, body.pO5)
 
-                if (o5debug > 1)
-                    DebugShowRez(oO5s)
+                if (o_debug > 1)
+                    DebugShowRez(newO5s)
             }
-            oO5s.clear()
+
+            if (newO5s.size > 0 || reaO5s.size > 0)     // для тестирования в frames.html
+                window.dispatchEvent(new CustomEvent('o5_activate', {
+                    detail: { reaO5s: reaO5s, newO5s: newO5s }
+                }))
+            // oO5s.clear()
         }
 
     /**
@@ -245,7 +254,7 @@
                 if (state.elements.length === 0) {
                     state.observer.disconnect()
                     state.observer = null
-                    if (o5debug)
+                    if (o_debug)
                         console.log("%c%s", fmtOK, `observe: `, ` отключено полностью`)
                 }
             },

@@ -6,15 +6,12 @@
 	<title>2shp</title>
 	<link rel="shortcut icon" href="../add/favicon.svg" type="image/x-icon">
 
-	<link href='./add/all.css' media='screen' rel='stylesheet' />
-	<script type="module" src='./add/all.js'></script>
+	<link href='./js/all.css' media='screen' rel='stylesheet' />
+	<script type="module" src='./js/all.js'></script>
 
-	<script src='../o7/com.js' o5debug=0 data-o_urlrfs="
-      тесты='+ ./tests';
-    "></script>
+	<script src='../../o7/com.js' o_urlrfs="html='+ ../tests.o7/shp/html';"></script>
 
 	<script data-src='+dbg.js' o5load="up"></script>
-
 	<script data-src='+shp.js'></script>
 	<script data-src='+inc.js'></script>
 
@@ -32,12 +29,12 @@
 </head>
 
 <body id="body" style="height: 1500px;">
-	<div class='example olga5_Start'>
+	<div class='example olga-start'>
 		<div class='cboxed'>
-			<div o5include='тесты + /shp/add/0shp.html?.cboxedinc'></div>
+			<div o5include='html + /0shp.html?.cboxedinc'></div>
 		</div>
 
-		<pre id="ref0" class="pre-head"><b>Варианты подвисания <i>olga5_shp</i></b>
+		<pre id="ref0" class="pre-head"><b>Варианты подвисания <i>olga-shp</i></b>
 	</pre>
 		<div class="thetext" style="height: 227px;">
 			<p>
@@ -56,7 +53,7 @@
 				Чисто для примера: у <b>shp1</b> - <i>position</i>: static а у <b>shp0</b> - relative)
 			</p>
 			<div>
-				<div o5include='тесты + /shp/add/all.html?.descript'></div>
+				<div o5include='html + /all.html?.descript'></div>
 			</div>
 		</div>
 
@@ -73,19 +70,19 @@
 							<div id="cbo3" class="cbo"
 								style="background-size: 15px 15px; width: 1900px; height: 1300px; ">
 
-								<div id="shpX" class="moved olga5_shp:n o5shp_none"
+								<div id="shpX" class="moved olga-shp:n o-shpNone"
 									style="left:600px; top:520px; height: 50px; width: 55px;">
 									<p><br>контроль</p>
 								</div>
 
 								<div id="div4" class="div" style="top: 440px; left: 700px;">
                                     <span>div4</span>
-									<div id="shp0" class="moved olga5_shp:TrLb-1A:i=div3/f,div4/c"
+									<div id="shp0" class="moved olga-shp:TrLb-1A:i=div3/f,div4/c"
 										style="left:30px; top:40px;">
 										<p>название объекта</p>
 									</div>
-									<div id="shp1 (static)" class="moved olga5_shp:TL-2:i=div4/c,div3,div2/f"
-										style="left:170px; top:70px; position: static;
+									<div id="shp1 (static)" class="moved olga-shp:TL:i=div4/c,div3,div2/f"
+										style="position: static;
 										transform: translate(130px, 70px);">
 										<p>название объекта</p>
 									</div>
@@ -103,18 +100,18 @@
 						<span>div3a</span>
 						<div id="cbo3a" class="cbo" style="background-size: 15px 15px; width: 1900px; height: 1300px; ">
 
-							<div id="shp9" class="moved olga5_shp:TrLb:i=div3a/fc,div2a/f"
+							<div id="shp9" class="moved olga-shp:TrLb:i=div3a/fc,div2a/f"
 								style="left:750px; top:500px;">
 								<p>название объекта</p>
 							</div>
 
-							<!-- <div id="shp2" class="moved olga5_shp:TrLb:1:i=div3/fc" style="left:900px; top:660px;">
+							<!-- <div id="shp2" class="moved olga-shp:TrLb:1:i=div3/fc" style="left:900px; top:660px;">
 								<p>название объекта</p>
 							</div>
-							<div id="shp3" class="moved olga5_shp:TrLb2A:i=div3/fc" style="left:700px; top:700px; height: 60px;">
+							<div id="shp3" class="moved olga-shp:TrLb2A:i=div3/fc" style="left:700px; top:700px; height: 60px;">
 								<p>название объекта</p>
 							</div>
-							<div id="shp4" class="moved olga5_shp:TrLb:3:i=div3/fc" style="left:950px; top:860px;">
+							<div id="shp4" class="moved olga-shp:TrLb:3:i=div3/fc" style="left:950px; top:860px;">
 								<p>название объекта</p>
 							</div> -->
 						</div>

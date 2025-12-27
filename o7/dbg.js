@@ -28,10 +28,10 @@
 		C.E.DispatchEvent('o5_scriptDone', W.modul)
 	}
 	
-	if (C.consts.o5nomnu || C.consts.o5noact)
+	if (C.consts.o_nomnu || C.consts.o_noact)
 		console.error(`DbgInit не выполняется, т.к. задано:` +
-			C.consts.o5nomnu ? `  o5nomnu=${C.consts.o5nomnu}` : '' +
-				C.consts.o5noact ? `  o5noact=${C.consts.o5noact}` : '')
+			C.consts.o_nomnu ? `  o_nomnu=${C.consts.o_nomnu}` : '' +
+				C.consts.o_noact ? `  o_noact=${C.consts.o_noact}` : '')
 	else {
 		const
 			o5load = actscript.attributes['o5load'],

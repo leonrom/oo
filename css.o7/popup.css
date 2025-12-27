@@ -1,0 +1,31 @@
+
+.o-popup {
+    font-size: 80%;
+}
+
+i[title]:not(.o-popup),
+u[title]:not(.o-popup),
+b[title]:not(.o-popup),
+code[title]:not(.o-popup),
+span[title]:not(.o-popup) {
+    cursor: help;
+    padding: 0 2px 2px;
+    color: black;
+    font-style: italic;
+    background-color: LavenderBlush;
+    border-radius: 6px;
+    font-family: sans-serif;
+    font-size: 88%;
+    border: 1px dotted aqua;
+}
+
+i[title].olga_snd:not(.o-popup),
+b[title].olga_snd:not(.o-popup),
+code[title].olga_snd:not(.o-popup),
+span[title].olga_snd:not(.o-popup) {
+    cursor: pointer;
+    background-color: gold;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+}
+

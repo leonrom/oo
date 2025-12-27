@@ -63,7 +63,6 @@
 .cboxed p {
     margin: 0;
     margin-top: 1px;
-    cursor: auto;
 }
 
 .frame i.button {
@@ -106,7 +105,7 @@
 }
 }
 
-.cboxed div.div-shp {
+.cboxed div.o-shpDiv {
     margin-top: 6px;
     margin-left: 6px;
     border-top: 1px solid gray;
@@ -140,6 +139,9 @@
     border: 1px solid aqua;
     border-radius: 3px;
     cursor: pointer;
+    color: black;
+    background-color: white;
+    height: 12px;
 }
 
 .cboxed span b:nth-child(2) {
@@ -147,12 +149,14 @@
 }
 
 .cboxed span b.disable {
-    cursor: auto;
-    border-color: transparent;
+    cursor: no-drop;
+    color: transparent;
+    border: 1px dashed lightseagreen;
+    background-color: transparent;
 }
 
 .cboxed span {
-    cursor: auto;
+    cursor:  default;
 }
 
 .cboxed b.active {
@@ -176,7 +180,7 @@
 }
 
 div.olga5_shp_copy,
-div.olga5_shp {
+div.olga-shp {
     background-color: yellow;
     border: 6px solid red;
     outline-width: 5px;
@@ -190,17 +194,17 @@ div.olga5_shp {
     position: relative;
 }
 
-/* div.olga5_cart {    должно обрабатываться для всех
+/* div.o-shpCart {    должно обрабатываться для всех
     cursor: pointer;
     z-index: 2;
 } */
 
-/* div.olga5_cart.moved {
+/* div.o-shpCart.moved {
     cursor: pointer;
 } */
 
 .olga5_shp_copy>p,
-.olga5_shp>p {
+.olga-shp>p {
     color: black;
 
     font-family: monospace;
@@ -263,7 +267,7 @@ div.olga5_shp {
     padding-top: 5px;
 }
 
-#main .olga5_shp {
+#main .olga-shp {
     width: 260px;
     padding-left: 4px;
 }
@@ -347,10 +351,6 @@ div.olga5_shp {
     color: gray;
 }
 
-.olga5_shp:not(.o5shp_none) {
-    cursor: pointer;
-}
-
 #o5move{
     opacity: 0.4;
             margin: 0;
@@ -361,10 +361,16 @@ div.olga5_shp {
             border: none;
     background-color:yellow;
 }
-/* .olga5_shp.o5_moved {
+.olga-shp.o-shpMoved {
     outline: dashed blue 1px;
-} */
-.olga5_shp.is-moveable:not(.o5_fixed) {
+}
+.olga-shp:not(.o-isready) {
+    cursor: default;
+}
+.olga-shp.o-isready:not(.o-shpNone) {
+    cursor: pointer;
+}
+.olga-shp.o-isready.is-moveable.is-ready:not(.o-fixed) {
     cursor: grab;
 }
 

@@ -1,0 +1,14 @@
+
+.o-imgDiv {
+    max-height: 355px;
+    overflow: auto;
+    border: 1px solid aqua;
+    border-radius: 5px;
+    width: max-content;
+    height: max-content;
+    max-width: 99%;
+} 
+
+.test-name{
+    font-size: small;
+}

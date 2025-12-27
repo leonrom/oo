@@ -35,7 +35,7 @@
 						if (!nams[nam]) s += (s ? ', ' : '') + nam
 
 					if (s)
-						console.error(`Для ${modul} недозагрузились скрипты: ${s} (таймер o5timload=${C.consts.o5timload}с.)`)
+						console.error(`Для ${modul} недозагрузились скрипты: ${s} (таймер o_timLoad=${C.consts.o_timLoad}с.)`)
 					load.timeout = 0
 				},
 				ScriptLoad = name => {
@@ -44,7 +44,7 @@
 					for (const nam in nams)
 						if (!nams[nam]) lefts.push(nam)
 
-					if (C.consts.o5debug > 2)
+					if (C.consts.o_debug > 2)
 						console.log(`загружено включение '${name}' осталось [${lefts.join(', ')}]`)
 					if (lefts.length == 0) {
 						if (load.timeout > 0) {
@@ -76,7 +76,7 @@
 						Object.assign(load, {
 							is_set: true,
 							path: actpath + modul + '/',
-							timeout: window.setTimeout(OnTimer, 1000 * C.consts.o5timload),
+							timeout: window.setTimeout(OnTimer, 1000 * C.consts.o_timLoad),
 						})
 
 					const script = document.createElement('script')
@@ -93,7 +93,7 @@
 					script.dataset.o5add = modul
 					// script.setAttribute('async', '')
 
-					if (C.consts.o5debug > 1) {
+					if (C.consts.o_debug > 1) {
 						const MakeObjName = obj => obj ? (
 							// (obj.id && obj.id.length > 0) ? ('#' + obj.id) : (
 							(obj.id && obj.id.length > 0) ? obj.id : (
@@ -143,7 +143,7 @@
 				document.addEventListener('readystatechange', DoneO5com)
 		},
 		GetBaseHR = root => { // функции определения адреса текущиещей страницы и корня сайта
-			const url = new window.URL(window.location) //"http://rombase.h1n.ru/o7/2020/olga5-all.html")
+			const url = new window.URL(window.location) 
 			if (root == 'root') return url.origin + '/'
 			else return url.origin + url.pathname.substring(0, url.pathname.lastIndexOf('/') + 1)
 		},
@@ -196,8 +196,8 @@
 						if (u.length > 0) {
 							const prms = u.split(/[=:]/)
 							let nam = Repname(prms[0])
-							if (nam == 'o5nomenu' || nam == 'nomenu') nam = 'o5nomnu'
-							if (nam == 'debug') nam = 'o5debug'
+							if (nam == 'o5nomenu' || nam == 'nomenu') nam = 'o_nomnu'
+							if (nam == 'debug') nam = 'o_debug'
 							if (HasProperty(C.consts, nam)) {
 								const val = TryToDigit(prms[1])
 								xs[nam] = { val: val, source: C.save.urlName }
@@ -257,7 +257,7 @@
 		IncludeScripts: IncludeScripts,
 		E: {
 			DispatchEvent: (eve, modulx, canrep) => {
-				if (C.consts.o5debug > 1 && !canrep) {
+				if (C.consts.o_debug > 1 && !canrep) {
 					console.groupCollapsed(`DispatchEvent: '${eve}' ${modulx ? (' из  ' + modulx) : ''} `)
 					console.trace()
 					console.groupEnd()
@@ -270,7 +270,7 @@
 		o5script: document.currentScript,
 		o5attrs: GetAttrs(document.currentScript.attributes),
 		cstate: {	 			// общее состояние 
-			depends: null,  	// только для подключенных скриптов, но с учетом как o5depends, так и очередности в задании и атрибута async
+			depends: null,  	// только для подключенных скриптов, но с учетом как o_depends, так и очередности в задании и атрибута async
 		},
 		urlrfs: {
 			_url_html: GetBaseHR('href'),
@@ -278,17 +278,15 @@
 			_url_olga5: '' // будет задан при инициализации (document.currentScript.src.match(/\S*\//)[0],)
 		},
 		consts: {
-			o5timload: 3, 	//mtiml ? (mtiml[5] ? mtiml[5] : 1) : (C.o5script.attributes['o5timload'] || 3),
-			o5debug: 0, 	// mdebug ? (mdebug[5] ? mdebug[5] : 1) : (C.o5script.attributes['o5debug'] || 0),
-			o5nomnu: 0,
-			o5noact: 0,
-			o5only: 0,
-			o5incls: '',
-			o5doscr: 'olga5_sdone',
-			o5depends: "inc; pop:ref,snd; ref= inc; snd:ref; shp=snd, ref; mnu; tab",
-			o5_pageLoads: 'readystatechange:d, message:u, inc_ready',
-			o5_pageHides: 'transitionrun:u',
-			o5_pageDones: 'beforeunload, o5_unloadPage',
+			o_timLoad: 3, 	//mtiml ? (mtiml[5] ? mtiml[5] : 1) : (C.o5script.attributes['o_timLoad'] || 3),
+			o_debug: 0, 	// mdebug ? (mdebug[5] ? mdebug[5] : 1) : (C.o5script.attributes['o_debug'] || 0),
+			o_nomnu: 0,
+			o_noact: 0,
+			o_incls: '',
+			o_doscr: 'olga5_sdone',
+			o_depends: "inc; pop:ref,snd; ref= inc; snd:ref; shp=snd, ref; mnu; tab",
+			o_pageLoads: 'readystatechange:d, message:u, inc_ready',
+			o_pageDones: 'beforeunload, o5_unloadPage',
 		},
 		constsurl: {},
 		save: { hash: null, xs: null, p: '', n1: -1, urlName: 'url', libName: 'ядро', }, // сохранение для "красивой" печати - потом удалю
@@ -301,7 +299,7 @@
 				sub = p2 ? p1 : p1.name,
 				Fun = p2 ? p2 : p1
 
-			if (C.consts.o5debug > 1) {
+			if (C.consts.o_debug > 1) {
 				console.log(`${document.currentScript.src.indexOf(`/${modul}.`) > 0 ? 'дозагружен' : 'подключён '}:  ${modul}/${sub}.js`)
 			}
 
@@ -330,7 +328,7 @@
 
 			if (wshp && wshp[sub]) C.ConsoleError(`Повтор подгрузки '${modul}/${sub}'`)
 			else
-				if (C.consts.o5debug > 1)
+				if (C.consts.o_debug > 1)
 					console.log(`${document.currentScript.src.indexOf(`/${modul}.`) > 0 ? 'дозагружен' : 'подключён '}:  ${modul}/${sub}.js`)
 
 			wshp[sub] = {}
@@ -347,7 +345,7 @@
 				console.error('%c%s', "background: yellow; color: black;border: solid 2px red;",
 					`Повтор загрузки '${modul}`)
 			else {
-				if (C.consts.o5debug)
+				if (C.consts.o_debug)
 					console.log(`${document.currentScript.src.indexOf(`/${modul}.`) > 0 ? 'загружен  ' : 'включён   '}:  ${modul}.js`)
 
 				if (!window.olga5[modul])
@@ -356,7 +354,10 @@
 				const wshp = window.olga5[modul]
 
 				wshp.W = W
-				wshp.name = W.modul // просто для облегченияидентификации
+				if ('name' in wshp )
+					console.log(`ModulAdd: wshp есть ф-я '${wshp.name}'`)
+				else
+					wshp.name = modul // просто для облегченияидентификации
 				window.olga5.push(W)
 
 				C.E.DispatchEvent('o5_scriptLoad', W.modul)
@@ -364,11 +365,11 @@
 				return wshp
 			}
 		},
-		MyJoinO5s: aO5s => {
-			let s = ''
-			for (const aO5 of aO5s) s += (s ? ', ' : '') + aO5.name
-			return s
-		},
+		// MyJoinO5s: aO5s => {
+		// 	let s = ''
+		// 	for (const aO5 of aO5s) s += (s ? ', ' : '') + aO5.name
+		// 	return s
+		// },
 	})
 
 	const xs = {}, // временное хранилилище для считываемых параметров

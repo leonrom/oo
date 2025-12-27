@@ -6,9 +6,9 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta http-equiv="Permissions-Policy" content="interest-cohort=()">
 	<title>olga5-shp</title>
-	<link data-href='../css/o5ini.css' media='screen' rel='stylesheet' />
+	<link data-href='../css.o7/ini.css' media='screen' rel='stylesheet' />
 
-	<script src='http://localhost/o5/olga5/com.js' o5consts="o5debug='0'; o5nomnu='0'; o5noact='0'; o5timload=4;"
+	<script src='http://localhost/oo/o7/com.js' o5consts="o_debug='0'; o_nomnu='0'; o_noact='0'; o_timLoad=4;"
 		data-o_urlrfs="
       тесты='+ ../olga5-tests';
       блог_o5='https://olga-5.blogspot.com/2020/02';
@@ -42,28 +42,28 @@
 
 	<link rel="shortcut icon" href="./media/favicon.svg" type="image/x-icon" />
 
-	<link data-href='+../css/olga5-a.css' media='screen' rel='stylesheet' />
-	<link data-href='+../css/olga5-o5.css' media='screen' rel='stylesheet' />
-	<link data-href='+../css/olga5-shp.css' media='screen' rel='stylesheet' />
+	<link data-href='+../css.o7/basis.css' rel='stylesheet' />
+	<link data-href='+../css.o7/popup.css' rel='stylesheet' />
+	<link data-href='+../css.o7/o-shp.css' rel='stylesheet' />
 
 </head>
 <!--  структура вложенности (для справки):
 <body id='body'>
-  <div id="div_strt" class="olga5_Start"
-    div id="shp-demo" class="olga5_shp:Top:A"
+  <div id="div_strt" class="olga-start"
+    div id="shp-demo" class="olga-shp:Top:A"
 		  div id="o5-1"
-			   div id='shp-text' class="olga5_shp:Up:Top olga5_textNshow"
+			   div id='shp-text' class="olga-shp:Up:Top olga5_textNshow"
 			   div id='shp_1÷4'
 			... -->
 
 <body id='body'>
-	<div id="div_strt" class="olga5_Start" dir="ltr" trbidi="on">
-		<!-- <div id="div_strt" class="olga5_Start:pop,ref,shp,mnu,inc,pusto" dir="ltr" trbidi="on"> -->
+	<div id="div_strt" class="olga-start" dir="ltr" trbidi="on">
+		<!-- <div id="div_strt" class="olga-start:pop,ref,shp,mnu,inc,pusto" dir="ltr" trbidi="on"> -->
 		<!-- 
     <img alt="" border="0" width="200" style="display:none" data-original-height="599" data-original-width="662"
       src="https://1.bp.blogspot.com/-7itlS0xWJNo/YEsTdFMovcI/AAAAAAAAEQo/QkYBh8diN_IkenQsf50m3Z3ItIpL9tNBACPcBGAsYHg/s200/shp.png" />
        -->
-		<p class="olga5_page_header" id='shp0'>
+		<p class="o-pageHeader" id='shp0'>
 			Организация <i>зависаний</i> элементов HTML-страницы
 		</p>
 
@@ -71,7 +71,7 @@
 		<div id="div_strt2">
 			<p>
 				Скрипт <code>shp.js</code> входит в <b><i>библиотеку</i></b>
-				<span o5popup='help + /o5help.html; width: 430, height: 390'><code>Olga5</code></span>&nbsp;и
+				<span o5popup='help + /o5help.html; width: 430, height: 390'><code>Olga7</code></span>&nbsp;и
 				предоставляет авторам HTML-страниц возможность создания эффектов зависания блочных элементов,
 				расширяя скудные возможности стандартного свойства <b>position: sticky</b>:
 			</p>
@@ -86,12 +86,12 @@
 				но и функционировать внутри <b>Blogger</b>'а, в частности на шаблоне
 				<i title="После последней модификации данное утверждение нуждается в поверке">Dynamic View</i>.
 				Скрипт выполняет обработку тегов, находящихся в
-				<span o5popup='+../blog/olga5-all.html?o5nomnu#head_43; width: 666, height: 444'>областях
+				<span o5popup='+../blog/olga5-all.html?o_nomnu#head_43; width: 666, height: 444'>областях
 					действия</span>
 				его инициализации.
 			</p>
 			<p>
-				Чтобы тег мог быть "зависабельным" он должен содержать класс <b>olga5_shp</b> а также:
+				Чтобы тег мог быть "зависабельным" он должен содержать класс <b>olga-shp</b> а также:
 			</p>
 			<ul>
 				<li>иметь позиционирование либо <i>position:</i> <b>static</b> (в т.ч. неявно), либо <b>relative</b>
@@ -132,10 +132,19 @@
 					достаточно просматривать скроллингом позиционирование блочных фрагментов фрейма.
 				</p>
 			</div>
-			<div id="shp-demo" class="olga5_shp:T:i=kst/c,w" style="
+			    <div id="shp-demo" class="olga-shp:T:i=kst/c,w" style="
+                    margin-left: 22px;
+					padding:4px;padding-left: 0px; direction: rtl; background-color: palegreen; 
+                    border: solid 8px blueviolet;
+            		width: calc(99% - 63px);
+                    width: 863px;
+                    height: 333px; 
+                    overflow-y: scroll;
+                    overflow-x: hidden; ">
+			<!-- <div id="shp-demo" class="olga-shp:T:i=kst/c,w" style="
 					padding:4px;padding-left: 0px;
             		direction: rtl; background-color: palegreen; outline: solid 3px darkgray;
-            		width: calc(99% - 23px);height: 333px; overflow: scroll;overflow-x: hidden; ">
+            		width: calc(99% - 23px);height: 333px; overflow: scroll;overflow-x: hidden; "> -->
 				<div id="o5-1"
 					style="overflow-y:hidden; direction: ltr;background-color:inherit;cursor: default;padding-left: 6px;">
 					<div>
@@ -161,7 +170,7 @@
 						</p>
 					</div>
 
-					<div id='shp-text' class="olga5_shp:T:id=shp-demo;"	style="
+					<div id='shp-text' class="olga-shp:T:id=shp-demo;"	style="
 					margin-left: 55px;
 					height:127px;
 					width:calc(99% - 66px);
@@ -221,7 +230,7 @@
 					</div>
 
 					<div>
-						<p class="comment">
+						<p class="o-comment">
 							Как кому, а мне поначалу было ну очень трудно уловить соответствие между написанным текстом
 							песни и
 							слышащимся её исполнением. Спасла программа <a
@@ -251,7 +260,7 @@
 							При этом смысл несколько изменился — но в песнях однозначность не всегда обязательна.
 							Турецкие суффиксы в русском получаются предлогами и кое-где их отделил дефисом.
 						</p>
-						<div id='shp_1÷4' class="olga5_shp:-1T:id:shp-demo" olga5_tableKuplet>
+						<div id='shp_1÷4' class="olga-shp:-1T:id:shp-demo" olga5_tableKuplet>
 							<table style="width: 100%;">
 								<tbody>
 									<tr>
@@ -298,7 +307,7 @@
 								В других куплетах — похоже!</li>
 						</ul>
 
-						<div id='shp_5÷8' class="olga5_shp:-1TO:id=shp-demo" olga5_tableKuplet">
+						<div id='shp_5÷8' class="olga-shp:-1TO:id=shp-demo" olga5_tableKuplet">
 							<table>
 								<tbody>
 									<tr>
@@ -335,7 +344,7 @@
 							</li>
 						</ul>
 
-						<div id='shp_9÷12' class="olga5_shp:-1TP:id=shp-demo" olga5_tableKuplet">
+						<div id='shp_9÷12' class="olga-shp:-1TP:id=shp-demo" olga5_tableKuplet">
 							<table>
 								<tbody>
 									<tr>
@@ -372,7 +381,7 @@
 							<li>Cırcır - трещетка, болтун, сорока - "чирикалка"</li>
 						</ul>
 
-						<div id='shp_13÷16' class="olga5_shp:-1UpC:id=shp-demo" olga5_tableKuplet">
+						<div id='shp_13÷16' class="olga-shp:-1UpC:id=shp-demo" olga5_tableKuplet">
 							<table>
 								<tbody>
 									<tr>
@@ -399,7 +408,7 @@
 							</table>
 						</div>
 						<br />
-						<div id='shp_17÷20' class="olga5_shp:-2TopS:id=shp-demo" olga5_tableKuplet">
+						<div id='shp_17÷20' class="olga-shp:-2TopS:id=shp-demo" olga5_tableKuplet">
 							<table>
 								<tbody>
 									<tr>
@@ -434,7 +443,7 @@
 							<li>da — что-то мне кажется, что у них это м.б. и "да", и "же", и даже "тут"</li>
 						</ul>
 
-						<div id='shp_21÷24' class="olga5_shp:-1T:id=shp-demo" olga5_tableKuplet">
+						<div id='shp_21÷24' class="olga-shp:-1T:id=shp-demo" olga5_tableKuplet">
 							<table>
 								<tbody>
 									<tr>
@@ -471,7 +480,7 @@
 								удлинение звучит</li>
 						</ul>
 
-						<div id='shp_25÷28' class="olga5_shp:-1T:id=shp-demo" olga5_tableKuplet">
+						<div id='shp_25÷28' class="olga-shp:-1T:id=shp-demo" olga5_tableKuplet">
 							<table>
 								<tbody>
 									<tr>
@@ -498,10 +507,10 @@
 							</table>
 						</div>
 						<br />
-						<p class="olga5_shp:R:-1" id="remo1">
+						<p class="olga-shp:R:-1" id="remo1">
 							Слова к последним стр. 25 &div; 28:
 						</p>
-						<div class="olga5_shp:N:-1" id="remo1"></div>
+						<div class="olga-shp:N:-1" id="remo1"></div>
 						<ul>
 							<li>şöyle - вот так, таким образом, следующим образом;</li>
 							<li>şöyle bir - кое-как, мельком, поверхностно, немного;</li>
@@ -581,19 +590,19 @@
 				(в секции &lt;<b>head</b>&gt;) HTML (или PHP) файла:
 			</p>
 
-			<p class="olga5_codeTextSeparate">
+			<p class="o-codeTextSeparate">
 				&lt;script src='olga5/<b>shp.js</b>'&gt;&lt;/script&gt;
 				<br />
 				...
 				<br />
-				<i>&lt;script src='olga5/com!.js' o5debug=2 o5_pageLoads&gt;&lt;/script&gt;</i>
+				<i>&lt;script src='olga5/com!.js' o_debug=2 o_pageLoads&gt;&lt;/script&gt;</i>
 			</p>
 			<p>
 				Здесь дополнительное (выделенное курсивом) подключение
 				<a href="блог_o5 + /olga5-all.html" target="olga5-addPage">com!.js</a> -
 				обязательно.
 			</p>
-			<p class="moecomment">
+			<p class="o-comment">
 				Здесь '<i>первый</i>' означает верхний (в документе) из
 				<u title="Т.е. появившихся на экране в процессе скроллирования">увиденных</u> подвисабельных объектов.
 				Такие объекты образуют список который обновляется и сортируется при появлении (в процессе
@@ -616,14 +625,14 @@
 			<p>
 
 				Возможность зависания тега определяется наличием у него атрибута <b>class</b>, содержащего
-				класс <b>olga5_shp</b>, после которого могут (неразрывно) следовать 1 или 2 списка необязательных
+				класс <b>olga-shp</b>, после которого могут (неразрывно) следовать 1 или 2 списка необязательных
 				<i>квалификаторов</i>
 				разделяемых '<b>:</b>'.
 				<br />
 				Пример задания зависания (некоего) тега "shp1":
 			</p>
-			<p class="olga5_codeTextSeparate">
-				&lt;div id="shp1" class="moved <b>olga5_shp</b>:TL:i=div4/c,div3,div2/f" style="left:180px;
+			<p class="o-codeTextSeparate">
+				&lt;div id="shp1" class="moved <b>olga-shp</b>:TL:i=div4/c,div3,div2/f" style="left:180px;
 				top:80px;"&gt;
 			</p>
 			<p>
@@ -639,7 +648,7 @@
 				Пробелы не допускаются, порядок следования (внутри каждого из списков) произвольный.
 			</p>
 
-			<h4 id='head_41'>4.1. Квалификаторы класса <code>olga5_shp</code></h4>
+			<h4 id='head_41'>4.1. Квалификаторы класса <code>olga-shp</code></h4>
 			<div>
 				<style>
 					table {
@@ -692,11 +701,11 @@
 				<p>
 					Например, чтобы задать квалификаторы <b>T</b><i>op</i>, <b>L</b><i>eft</i> и <b>P</b><i>ush</i>
 					можно написать
-					"olga5_shp:Top,Left,Push" или "olga5_shp:TopLeftPush" или "olga5_shp:PushTopLeft" или (что наиболее
+					"olga-shp:Top,Left,Push" или "olga-shp:TopLeftPush" или "olga-shp:PushTopLeft" или (что наиболее
 					удобно)
-					"olga5_shp:TLP".
+					"olga-shp:TLP".
 				</p>
-				<p class="moecomment">
+				<p class="o-comment">
 					Эти квалификаторы действуют одинаково для всех контейнеров. Конечно, можно было бы
 					предусмотреть задание границ подвисания индивидуально для каждого из контейнеров... но кому это
 					надо?
@@ -765,7 +774,7 @@
 						другой
 						объект.
 					</p>
-					<p class="moecomment">
+					<p class="o-comment">
 						Взаимодействие с объектами, подвисшими боковых границах контейнера <u>не предусмотрено</u>!
 					</p>
 					<p>
@@ -818,7 +827,7 @@
 						объекты как правило <i>движутся</i> <u>под</u> зависшим тегом
 						(если не задавать для них специальные значения <b>zIndex</b>).
 					</p>
-					<p class="moecomment">
+					<p class="o-comment">
 						Взаимное влияние объектов может исчезать/проявляться при изменении ширины окна браузера
 						(в зависимости от будут ли они находятся друг над/под другом ).
 					</p>
@@ -878,7 +887,7 @@
 					<i><b>взаимодействие</b></i> (<i>зависание</i> либо <i>обрезание</i>) с контейнером.
 					Для наглядности они могут разделяться между собой таким же '<b>/</b>'.
 				</p>
-				<p class="moecomment">
+				<p class="o-comment">
 					Предполагается, что и 'зависание', и 'обрезание' видимости объекта могут определяться не одним, а
 					несколькими
 					контейнерами.
@@ -939,7 +948,7 @@
 							(т.е. текущий экран).
 						</li>
 					</ul>
-					<p class="moecomment">
+					<p class="o-comment">
 						Вообще говоря, ближайшими могут быть несколько различных контейнеров,
 						например: один по подвисания вертикали, другой - по горизонтали.
 					</p>
@@ -948,7 +957,7 @@
 						Контейнеры ищутся начиная от владельца/родителя (подвисабельного объекта) и до
 						<i>верхнего</i> уровня,
 						которым является либо окно браузера (тег <b>body</b>), либо ближайший обрамляющий контейнер,
-						содержащий класс <b title="который сам является 'подвисабельным' объектом">olga5_shp</b>.
+						содержащий класс <b title="который сам является 'подвисабельным' объектом">olga-shp</b>.
 					</p>
 				</div>
 				<h5>4.2.2. Задание счетчика</h5>
@@ -1044,11 +1053,11 @@
 				<h4 id='head_44'>4.4. Отключение скрипта</h4>
 				<p>
 					Для отключений зависания тегов любой один из содержащих его контейнеров должен иметь класс
-					<b>o5shp_none</b>. Его действие в чём-то подобно использованию квалификатора :<b>None</b>.
+					<b>o-shpNone</b>. Его действие в чём-то подобно использованию квалификатора :<b>None</b>.
 				</p>
 				<p>
 					Использование такого отключения м.б. целесообразным при включении <b>html</b>-фрагмента, содержащего
-					<i>подвисабельный</i> тег (теги) с классом <b>olga5_shp</b>, в различные документы,
+					<i>подвисабельный</i> тег (теги) с классом <b>olga-shp</b>, в различные документы,
 					в некоторых из которых подвисание не требуется.
 				</p>
 			</div>
@@ -1074,7 +1083,7 @@
 					Заполнение веб-страниц, размеры их окон и значения скроллингов в примерах
 					подобраны для более-менее наглядной иллюстрации особенностей параметров.
 				</p>
-				<p class="moecomment">
+				<p class="o-comment">
 					Для показа всплывающих окон в предусмотренных размерах может потребоваться настройка браузера:
 					например, <b title="104.0.2 (64-bit) для MX Linux-1.0">FireFox</b> по-умолчанию
 					<i>всплывает</i> окна в развёрнутом (на весь экран) виде.
@@ -1152,10 +1161,10 @@
 					в правой части окна. Рекомендуется <u>согласованно</u> выбирать их значения,
 					чтобы избежать "странного" исчезновения/появления объекта <b>shp1</b>.
 				</p>
-				<div class='olga5_imgDiv'>
+				<div class='o-imgDiv'>
 					<img _src="images + /shp2.png" />
 				</div>
-				<p class="moecomment">
+				<p class="o-comment">
 					Если в открывшемся окне примера не видны <u>три</u> полоски скроллинга (справа, возе штриховых
 					рамок),
 					то следует вручную расширить это окно.
@@ -1174,7 +1183,7 @@
 					Включение в группе <i>frames</i> опции <b>div2</b> приведет к зависанию объекта <b>shp1</b>
 					на синей штриховой линии (по её достижении).
 				</p>
-				<div class='olga5_imgDiv'>
+				<div class='o-imgDiv'>
 					<img _src="images + /shp21.png" />
 				</div>
 				<p>
@@ -1193,7 +1202,7 @@
 				задать владельца,
 				например, <b>div2</b> (вместо умалчиваемого <b>div4</b>):
 
-				<div class='olga5_imgDiv'>
+				<div class='o-imgDiv'>
 					<img _src="images + /shp22.png" />
 				</div>
 
@@ -1216,10 +1225,10 @@
 					Демонстрируется
 					подвисание нескольких <i>объектов</i> и их взаимное сдвигание при изменении квалификаторов
 					класса
-					<b>olga5_shp</b> для <u>различных</u> размеров окна браузера.
+					<b>olga-shp</b> для <u>различных</u> размеров окна браузера.
 				</p>
 				Например, на скриншоте:
-				<div class='olga5_imgDiv'>
+				<div class='o-imgDiv'>
 					<img _src="images + /shp1.png" />
 				</div>
 				показана ситуация, когда объект <b>shp2</b> имеет включённой опцию <i>подвисания</i> <b>Over</b>
@@ -1254,7 +1263,7 @@
 					является таким же контейнером, как и <b>div1</b>, <b>div2</b>, <b>tab1</b> и содержит в
 					себе вложенный объект <b>shp1</b>:
 				</p>
-				<div class='olga5_imgDiv'>
+				<div class='o-imgDiv'>
 					<img _src="images + /shp3.png" />
 				</div>
 				<p>
@@ -1293,7 +1302,7 @@
 					(т.е. прозрачными или того же цвета, что и у <b>div2</b>) рамку и фон, то объект <b>shp1</b>
 					уже не будет ограничиваться (обрезаться) этим контейнером:
 				</p>
-				<div class='olga5_imgDiv'>
+				<div class='o-imgDiv'>
 					<img _src="images + /shp30.png" />
 				</div>
 				<p>
@@ -1303,7 +1312,7 @@
 					Если же контейнер <b>tab1</b> сделать видимым, например выделив его фоном,
 					то он будет считаться владельцем для <b>shp1</b> и, в данном примере, <i>подрежет</i> его снизу:
 				</p>
-				<div class='olga5_imgDiv'>
+				<div class='o-imgDiv'>
 					<img _src="images + /shp31.png" />
 				</div>
 
@@ -1337,7 +1346,7 @@
 				имитировать
 				изменение размеров экрана генерированием события:
 				<br />
-				<span class='olga5_codeText'>window.dispatchEvent(new window.Event('<b>resize</b>'))</span>,
+				<span class='o-codeText'>window.dispatchEvent(new window.Event('<b>resize</b>'))</span>,
 				<span title="после завершения манипуляций на странице">прописанным</span> в этих '<i>иных</i>
 				<b>js</b>-программах'.
 			</p>
@@ -1347,7 +1356,7 @@
 				которые определены по <b>id</b>, то такое же изенени должно быть <u>продублировано</u>
 				для элементов с [id]<b>_shdw</b>!
 			</p>
-			<p class="moecomment">
+			<p class="o-comment">
 				Иначе размеры подвисабельного элемента и его прототипа могт оказаться различными,
 				что исказит требуемое его размещение.
 				<br />
@@ -1362,7 +1371,7 @@
 				тег
 				следует в них (в обработчиках) предусмотреть:
 				<br />
-				<span class='olga5_codeText'><i>event</i>.<b>cancelBubble</b> = <code>true</code>;</span>.
+				<span class='o-codeText'><i>event</i>.<b>cancelBubble</b> = <code>true</code>;</span>.
 			</p>
 			<p>
 				<b>3.</b> Чтобы подвисший объект не занимал весь экран или большую его часть следует объект
@@ -1372,14 +1381,14 @@
 		</div>
 
 		=====================================================================================
-		<pre id="menu-pre" class="olga5-menuHidden" style="display:none">
+		<pre id="menu-pre" class="o-menuHidden" style="display:none">
         { span: 'Статья', id: "moemenu", right: '5px', top: '5px', add: '233px', },
           { span: '1. Общие сведения', ref: 'head_1' },
           { span: '2. Иллюстрация работы', ref: 'head_2' },
           { span: '3. Подключение скрипта', ref: 'head_3' },
           { span: '4. Задание 'зависабельности' тегов
 ', ref: 'head_4', add: '255px' },
-            { span: '4.1. Квалификаторы класса olga5_shp', ref: 'head_41', },
+            { span: '4.1. Квалификаторы класса olga-shp', ref: 'head_41', },
             { span: '4.2. Перечень контейнеров', ref: 'head_42', },
             { span: '4.3. Реализация зависания', ref: 'head_43', ret: 1},
           { span: '5. Демонстрационные примеры', ref: 'head_5', add: '255px' },

@@ -1,0 +1,174 @@
+/* Общее для .o-tableCode и .o-tableCode3 */
+.o-tableCode,
+.o-tableCode3 {
+    display: block;
+    height: auto;
+}
+
+/* Общее для tbody */
+.o-tableCode tbody,
+.o-tableCode3 tbody {
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: max-content;
+}
+
+/* Общее для tr */
+.o-tableCode tr,
+.o-tableCode3 tr {
+    display: inline-flex;
+    max-width: 100%;
+}
+
+/* Общее для td */
+.o-tableCode td,
+.o-tableCode3 td {
+    display: block;
+    height: min-content;
+    width: max-content;
+    max-width: 99%;
+    margin: 0;
+    padding-top: 0;
+    padding-right: 4px;
+}
+
+/* Общее для pre внутри td (база) */
+.o-tableCode td pre,
+.o-tableCode3 td pre {
+    vertical-align: baseline;
+    text-align: left;
+    font-size: x-small;
+    background-color: aliceblue;
+    border: 1px solid lightpink;
+    border-radius: 2px;
+    font-family: monospace;
+    padding-right: 12px;
+}
+
+/* Специфика .o-tableCode */
+.o-tableCode {
+    width: calc(99% - 33px);
+    max-width: max-content;
+    margin-left: 33px;
+}
+
+.o-tableCode td:first-child {
+    padding: 0 3px 0 0;
+    height: auto;
+    border: none;
+    width: max-content;
+    max-width: 99%;
+}
+
+.o-tableCode td:first-child pre {
+    background-color: aliceblue;
+    opacity: 0.8;
+    border-color: transparent;
+    width: 1.2em;
+    min-width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0 4px 0 0;
+
+    white-space: pre-line;
+    word-wrap: break-word;
+
+    text-align: right;
+    color: gray;
+    font-weight: normal;
+}
+
+/* .scroll — изолировано */
+table.o-tableCode.scroll {
+    height: 333px;
+    overflow: auto;
+    border: 1px solid lightpink;
+    border-radius: 2px;
+    background-color: #fff;
+    outline: 2px solid #fff;
+}
+
+table.o-tableCode.scroll td {
+    margin-right: 2px;
+    padding: 0 3px 0 0;
+}
+
+table.o-tableCode.scroll td:last-child pre {
+    border: none;
+    border-left: 1px solid lightpink;
+}
+
+/* Специфика .o-tableCode3 */
+.o-tableCode3 {
+    width: calc(99% - 22px);
+    margin-left: 3px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: smaller;
+}
+
+.o-tableCode3 table {
+    display: flex;
+}
+
+.o-tableCode3 div {
+    overflow-x: auto;
+    background-color: transparent;
+}
+
+.o-tableCode3 td:first-child div {
+    max-width: calc(100% - 0.1em);
+}
+
+.o-tableCode3 td:last-child div {
+    max-width: calc(100% - 0.8em);
+}
+
+.o-tableCode3 td:first-child pre,
+.o-tableCode3 td:last-child pre {
+    margin: 0.1em 0;
+    padding-right: 14px;
+}
+
+.o-tableCode3 td:first-child,
+.o-tableCode3 td:last-child {
+    width: 50%;
+    background-color: aliceblue;
+}
+
+.o-tableCode3 td:nth-child(2) {
+    text-align: center;
+}
+
+.o-tableCode3 td:nth-child(2) div {
+    padding-top: 6px;
+    color: coral;
+}
+
+/* Прочее */
+.o-tableName {
+    color: gray;
+    font: italic normal normal 1em sans-serif;
+    background-color: transparent;
+}
+
+pre span.o-tableName {
+    float: right;
+    font-size: xx-small;
+}
+
+.o-tableIllu {
+    width: 100%;
+    line-height: 1.1;
+    overflow: hidden;
+    white-space: nowrap;
+    border-color: turquoise;
+    font-family: serif;
+    font-size: revert;
+    color: black;
+}
+
+.o-tableIllu td:nth-child(2) {
+    width: 1.8em;
+}

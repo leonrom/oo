@@ -1,0 +1,124 @@
+/* ====== таблицы-контейнеры ====== */
+
+.o-tableCode,
+.o-tableCode3 {
+    display: block;
+    height: auto;
+}
+
+.o-tableCode {
+    width: calc(99% - 33px);
+    margin-left: 33px;
+}
+
+.o-tableCode3 {
+    width: calc(99% - 22px);
+    margin-left: 3px;
+    font-size: smaller;
+}
+
+/* ====== tbody ====== */
+
+.o-tableCode tbody,
+.o-tableCode3 tbody {
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* ====== строки ====== */
+
+.o-tableCode tr,
+.o-tableCode3 tr {
+    display: inline-flex;
+}
+
+/* ====== ячейки ====== */
+
+.o-tableCode td,
+.o-tableCode3 td {
+    display: block;
+    margin: 0;
+    padding-top: 0;
+    padding-right: 4px;
+}
+
+/* ====== Специфика колонок====== */
+.o-tableCode td:first-child {
+    padding: 0 3px 0 0;
+    border: none;
+}
+
+.o-tableCode3 td:first-child,
+.o-tableCode3 td:last-child {
+    width: 50%;
+    background-color: aliceblue;
+}
+
+/* ====== ОБЩЕЕ ДЛЯ ВСЕХ pre ====== */
+
+.o-tableCode pre,
+.o-tableCode3 pre {
+    display: block;
+
+    font-family: monospace;
+    font-size: x-small;
+    line-height: normal;
+
+    background-color: aliceblue;
+    border: 1px solid lightpink;
+    border-radius: 2px;
+
+    padding-right: 12px;
+    text-align: left;
+}
+
+/* ====== Локальные отличия pre ====== */
+/* нумерация строк */
+.o-tableCode td:first-child pre {
+    width: 1.2em;
+    overflow: hidden;
+    opacity: 0.8;
+
+    padding: 0 4px 0 0;
+
+    white-space: pre-line;
+    word-wrap: break-word;
+
+    text-align: right;
+    color: gray;
+    font-weight: normal;
+
+    border-color: transparent;
+}
+
+/* разделитель в scroll */
+table.o-tableCode.scroll td:last-child pre {
+    border: none;
+    border-left: 1px solid lightpink;
+}
+
+/* версия tableCode3 */
+.o-tableCode3 td:first-child pre,
+.o-tableCode3 td:last-child pre {
+    margin: 0.1em 0;
+    padding-right: 14px;
+}
+
+/* ====== div — только прокрутка ====== */
+
+.o-tableCode3 div {
+    overflow-x: auto;
+    background-color: transparent;
+}
+/* 
+Последние 2: 
+Если визуально ничего не ломается — убирать.
+ */
+.o-tableCode3 td:first-child div {
+    max-width: calc(100% - 0.1em);
+}
+
+.o-tableCode3 td:last-child div {
+    max-width: calc(100% - 0.8em);
+}

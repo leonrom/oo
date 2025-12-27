@@ -4,7 +4,7 @@
 import { TMove } from './TMove.js';
 import { TInit } from './TInit.js';
 
-let o5debug;
+let o_debug;
 class OO5 {
     frame = 'frame'
     pitch = 'pitch'
@@ -19,7 +19,7 @@ class OO5 {
             puts = cls.puts,
             ss = []
         let
-            s = '<b><u>' + aO5.cnst.id + '</u></b>' +
+            s = '<b><u>' + aO5.name + '</u></b>' +
                 `<br/>` +
                 '<b>' + (puts.T ? 'T' : '') + (puts.L ? 'L' : '') + (puts.R ? 'R' : '') + (puts.B ? 'B' : '') + '</b>' +
                 ',<b>' + cls.pitch + '</b>(<i>' + this.pitches[cls.pitch] + '</i>)' +
@@ -28,7 +28,7 @@ class OO5 {
                 `<br/>`
 
         for (const frame of aO5.frms.frames)
-            ss.push(frame.pO5.cnst.name)
+            ss.push(frame.pO5.name)
         s += 'fix: ' + ss.join(', ') + `<br/>`
         s += 'cut: ' + aO5.frms.tagCut.id
 
@@ -36,7 +36,7 @@ class OO5 {
             ps[0].innerHTML = s
         else
             window.olga5.C.ConsoleLog(
-                TMove.head, `shpX_BordNames(): объект ${aO5.cnst.id} не содержит тег <p>`,
+                TMove.head, `shpX_BordNames(): объект ${aO5.name} не содержит тег <p>`,
                 { x: (aO5.posC.left + 10), y: (aO5.posC.top - 16), }, 1)
     }
     #SetaO5 = b5 => {
@@ -91,8 +91,8 @@ class OO5 {
                     aO5.DoFix(x)
             }
 
-        if (o5debug)
-            window.olga5.C.ConsoleLog(TMove.head, `изменено ${aO5.cnst.id}`)
+        if (o_debug)
+            console.log("%c%s", TMove.fmtOK, TMove.head, `изменено ${aO5.name}`)
         this.#BordNames(aO5)
 
         window.dispatchEvent(new CustomEvent('o5_makeScroll',
@@ -213,7 +213,7 @@ class OO5 {
         const
             forclons = cbx.id === 'clons',
             opas = cbx.checked ? 1 : (forclons ? 0.22 : 0.11),
-            objs = document.getElementsByClassName(forclons ? 'olga5_clon' : 'olga5_cart')
+            objs = document.getElementsByClassName(forclons ? 'o-shpClon' : 'o-shpCart')
 
         for (const obj of objs)
             obj.style.opacity = opas
@@ -221,7 +221,7 @@ class OO5 {
     OutLines = cbx => {
         const
             outlin = this.outlin,
-            objs = document.querySelectorAll('.olga5_shp, .olga5_cart')
+            objs = document.querySelectorAll('.olga-shp, .o-shpCart')
 
         if (outlin.e == '')
             for (const obj of objs) {
@@ -240,24 +240,31 @@ class OO5 {
             })
     }
     Activate = e => {
-        const aO5 = e.detail.aO5,
-            shp = aO5.cnst.shp
-        let div = e.detail.div
-        if (!div)
-            for (const dshp of this.dshps)
-                if (dshp.shp === shp) {
-                    div = dshp.div
-                    break
-                }
-        if (div) {
-            div.style.opacity = 1
-            TInit.InitCtrls(aO5, div, this)
-            this.#BordNames(aO5)
-        }
-        else
-            console.error(`Activate - не найден div для aO5=${aO5.cnst.id}`)
+        for (const aO5 of e.detail.newO5s) {
+            const shp = aO5.cnst.shp
+            let div = e.detail.div
+            if (!div)
+                for (const dshp of this.dshps)
+                    if (dshp.shp === shp) {
+                        div = dshp.div
+                        break
+                    }
+            if (div) {
+                div.style.opacity = 1
+                TInit.InitCtrls(aO5, div, this)
+                this.#BordNames(aO5)
+            }
+            else
+                console.error(`Activate - не найден div для aO5=${aO5.name}`)
 
-        this.ActFix({ detail: { aO5: aO5, fix: shp.classList.contains('o5_fixed') } })   // , activate: true
+            this.ActFix({ detail: { aO5: aO5, fix: shp.classList.contains('o-fixed') } })   // , activate: true
+        }
+
+        for (const aO5 of e.detail.reaO5s) {
+            const classList = aO5.cnst.shp.classList
+            if (classList.contains('is-moveable'))
+                classList.toggle('is-ready', aO5.act.ready)
+        }
     }
     ActFix = e => {
         const
@@ -267,24 +274,24 @@ class OO5 {
             shp = aO5.cnst.shp
 
         if (shp.classList.contains('is-moveable')) {
-            const fixed = shp.classList.contains('o5_fixed')
+            const fixed = shp.classList.contains('o-fixed')
             if (fix) {
                 shp.removeEventListener('mousedown', TMove.Start)
                 if (!fixed)
-                    shp.classList.add('o5_fixed')
+                    shp.classList.add('o-fixed')
             }
             else {
                 shp.addEventListener('mousedown', TMove.Start)
                 if (fixed)
-                    shp.classList.remove('o5_fixed')
+                    shp.classList.remove('o-fixed')
             }
         }
     }
     InitShp = () => {
         const
-            elements = document.querySelectorAll('[class*="olga5_shp"]'),
+            elements = document.querySelectorAll('[class*="olga-shp"]'),
             tags = Array.from(elements).filter(element => {
-                return element.className.match(/olga5_shp[\s:]/) && !element.classList.contains('o5shp_none')
+                return element.className.match(/olga-shp[\s:]/) && !element.classList.contains('o-shpNone')
             }),
             divE = document.getElementById('div-etalon'),
             clons = document.getElementById('clons'),
@@ -299,7 +306,7 @@ class OO5 {
                     ref0.scrollIntoView({ behavior: 'smooth', block: 'start' })
                 })
 
-                if (window.name.indexOf('olga5_popup') < 0) // если НЕ было открыто из родителя ---
+                if (window.name.indexOf('o-popup') < 0) // если НЕ было открыто из родителя ---
                     return
 
                 // this.C.E.AddEventListener('beforeunload', function () {
@@ -327,7 +334,7 @@ class OO5 {
 
         // this.wshp = window.olga5.shp
         this.C = window.olga5.C
-        o5debug = this.C.consts.o5debug
+        o_debug = this.C.consts.o_debug
 
         SetWindow()
 
@@ -340,7 +347,7 @@ class OO5 {
         this.OutLines(outli)
 
         for (const tag of tags) {
-            if (tag.classList.contains('o5shp_none')) continue
+            if (tag.classList.contains('o-shpNone')) continue
 
             const
                 shp = tag,
@@ -352,7 +359,7 @@ class OO5 {
             if (nst.position === 'relative' || nst.position === 'static')
                 tag.classList.add('is-moveable')
 
-            div.classList.add('div-shp')
+            div.classList.add('o-shpDiv')
             div.innerHTML = divE.innerHTML
             div.style.opacity = 0.5
             div.aO5bs = []
@@ -365,11 +372,11 @@ class OO5 {
             this.dshps.add({ shp, div })
         }
 
-        if (o5debug)
-            window.olga5.C.ConsoleLog(TMove.head, `  --- инициирован скрипт тестового примера --- `)
+        if (o_debug)
+            console.log("%c%s", TMove.fmtOK, TMove.head, `  --- инициирован скрипт тестового примера --- `)
 
+        window.addEventListener('o5_activate', this.Activate)
         window.addEventListener('o5_testActFix', this.ActFix)
-        window.addEventListener('o5_containers', this.Activate)
         window.addEventListener('o5_makeScroll', this.MakeScroll)
 
     }

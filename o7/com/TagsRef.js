@@ -60,7 +60,7 @@
 
 			/*				сначала из тегов <script>, пропуская те, которые в скомпилированном			*/
 
-			const s = C.consts.o5incls.trim(),
+			const s = C.consts.o_incls.trim(),
 				incls = s ? s.split(/\s*[,;]\s*/) : [],
 				igns = [],
 				needs = {}
@@ -75,7 +75,9 @@
 				if (script.innerText.trim()) continue	// это встроенный скрипт
 
 				const td = C.TagDes(script, 'src', errs)
-				if (!td || !td.orig || !(td.orig[1] === '+' || (td.trans && !C.consts.o5only)))
+				// if (!td || !td.orig || !(td.orig[1] === '+' || (td.trans && !C.consts.o5only)))
+
+				if (!td || !td.orig || td.orig[0] !== '+')
 					continue
 
 				if (incls.length > 0)
@@ -99,7 +101,7 @@
 
 				if (!w || td.code == '_' || (td.trans && td.code != 'data-')) {
 					dochg = !w ? 'новый  ' : 'замена '
-					if (C.consts.o5debug > 1) console.log(`тег <script>: id= '${script.id}' -> в обработку (${dochg}): orig=${td.orig}`)
+					if (C.consts.o_debug > 1) console.log(`тег <script>: id= '${script.id}' -> в обработку (${dochg}): orig=${td.orig}`)
 
 					scrpt.act.W = null
 					let url = td.orig
@@ -109,18 +111,21 @@
 							errs.push({ tag: td.modul, ref: td.from, txt: wref.err })
 						url = wref.url
 					}
+					console.log(td.orig, url)
 					if (!script.getAttribute('async') && !script.getAttribute('defer'))
 						script.setAttribute('async', '')
 					scrpt.script = ReplaceTag('script', script, 'src', url, errs)
 				}
 
-				C.scrpts.push(scrpt)
-				scrs.push({
-					modul: scrpt.modul,
-					orig: scrpt.orig,
-					src: scrpt.script.src,
-					txt: dochg + td.from
-				})
+				if (scrpt.script.src.includes(C.urlrfs._url_olga5)) {  // контроль только тех, кто на том же пути
+					C.scrpts.push(scrpt)
+					scrs.push({
+						modul: scrpt.modul,
+						orig: scrpt.orig,
+						src: scrpt.script.src,
+						txt: dochg + td.from
+					})
+				}
 			}
 			/*				дописываю те, которые в скомпилированном и отсутствуют в SCRIPT's			*/
 			for (const w of window.olga5) {
@@ -133,8 +138,8 @@
 					}
 			}
 
-			/* строю зависимости cкриптов (сначала идут скомпилированные) - сначала по 'o5depends'*/
-			const ss = C.consts['o5depends'].split(/\s*[;]+\s*/),
+			/* строю зависимости cкриптов (сначала идут скомпилированные) - сначала по 'o_depends'*/
+			const ss = C.consts['o_depends'].split(/\s*[;]+\s*/),
 				sinc = 'inc',
 				oinc = C.scrpts.find(scrpt => scrpt.modul == sinc)
 
@@ -169,7 +174,7 @@
 			}
 			/* eslint-enable no-prototype-builtins */
 			/* в отладочном режиме - делаю проверку*/
-			if (C.consts.o5debug > 0) {
+			if (C.consts.o_debug > 0) {
 				let scrpt = null
 				const list = [],
 					errs = [],
@@ -197,16 +202,16 @@
 				if (needs[need]) errneeds.push(need)
 			}
 			if (errneeds.length > 0)
-				C.ConsoleError(`Из заданных в 'o5incls' отсутствуют модули:`, errneeds.join(', '))
+				C.ConsoleError(`Из заданных в 'o_incls' отсутствуют модули:`, errneeds.join(', '))
 			// сюда проверь!?
-			if (C.consts.o5debug > 0) {
+			if (C.consts.o_debug > 0) {
 				if (scrs.length > 0) C.ConsoleInfo("Найденные olga5 SCRIPT'ы : ", scrs.length, scrs)
 				else C.ConsoleInfo("Не найдены olga5 SCRIPT'ы ?")
 
 				if (igns.length > 0)
-					C.ConsoleError(`Проигнорированы скрипты, отсутствующие в 'o5incls': `, igns.join(', '))
+					C.ConsoleError(`Проигнорированы скрипты, отсутствующие в 'o_incls': `, igns.join(', '))
 
-				if (C.consts.o5debug > 1) { // тестирование атрибутов
+				if (C.consts.o_debug > 1) { // тестирование атрибутов
 					const errs = []
 					for (const scrpt of C.scrpts)
 						for (const attr of scrpt.script.attributes)
@@ -253,7 +258,7 @@
 					wshp.o5iniready ||= child.href.match(/\/o5ini\.css$/)
 				}
 
-			if (C.consts.o5debug > 0)
+			if (C.consts.o_debug > 0)
 				if (links.length > 0) C.ConsoleInfo("Скорректированные LINK'и : ", links.length, links)
 				else C.ConsoleInfo("Скорректированных LINK'ов нет ")
 

@@ -24,5 +24,5 @@ cd ./cc/ljs
 cat o7com!.js o7add!.js o7ref!.js o7snd!.js o7shp!.js \
    > o7.js           2>>../cc/log.txt  
 
-@REM cat ../css/olga5-a.css  > ../../tr/css/olga5-a.css
+@REM cat ../css/olga5-a.css  > ../../tr/css.o7/olga5-a.css
 @REM cat js/inc.js  > ../../tr/js/inc.js

@@ -9,7 +9,7 @@
 		W = {
 			modul: 'snd',
 			Init: SndInit,
-			class: 'olga5_snd',
+			class: 'olga_snd',
 			consts: `		
 				o5shift_speed=0.5 # при Shift - замедлять вдвое;
 				o5return_time=0.3 # при возобновлении "отмотать" 0.3 сек ;
@@ -20,33 +20,29 @@
 				actscript: document.currentScript,
 			}
 		},
-		css = {
-			olga5sndError: `olga5-sndError`, olga5sndLoad: `olga5-sndLoad`, olga5sndPause: `olga5-sndPause`,
-			olga5sndPlay: `olga5-sndPlay`, olga5sndNone: `olga5_sndNone`, olga5freeimg: `olga5-freeimg`,
-		},
 		o5css = `
-		.${W.class}:not(.${css.olga5sndNone}) {
+		.${W.class}:not(.o-sndNone) {
 			cursor: pointer;
 		}
-		.${W.class}.${css.olga5sndPlay} {
+		.${W.class}.o-sndPlay {
 			cursor: progress;
 			animation: olga5_viewTextWash 5s infinite linear;
 		}
-		.${W.class}.${css.olga5sndPause} {
+		.${W.class}.o-sndPause {
 			cursor: wait;
 			animation: none;
 		}
-		.${W.class}.${css.olga5sndError} {
+		.${W.class}.o-sndError {
 			opacity: 0.5;
 			outline: 2px dotted black;
 			cursor: help;
 		}
-		.${W.class}.${css.olga5sndLoad} {
+		.${W.class}.o-sndLoad {
 			opacity: 0.5;
 			outline: 1px dotted black;
 			cursor: wait;
 		}
-		img.${W.class}:not(.${css.olga5freeimg}) {
+		img.${W.class}:not(.o-freeimg) {
 			background-color: transparent;
 			position: inherit;
 			padding: 0 !important;
@@ -57,7 +53,7 @@
 			max-height: 28px;
 			max-width:  28px;
 		}
-		img.${W.class}.${css.olga5sndPlay} {
+		img.${W.class}.o-sndPlay {
 			animation: olga5_sndImgSwing 2s infinite linear;
 		}
 		@keyframes olga5_viewTextWash {
@@ -77,16 +73,15 @@
 
 	function SndInit() {
 
-		wshp.css = css
+		// wshp.css = css
 
 		C.ParamsFill(W, o5css)
 
-
-		const excls = document.getElementsByClassName('olga5_sndNone')
+		const excls = document.getElementsByClassName('o-sndNone')
 		for (const excl of excls) {
-			const exs = excl.querySelectorAll('[class *=olga5_snd]')
+			const exs = excl.querySelectorAll('[class *=olga_snd]')
 			for (const ex of exs)
-				ex.classList.add('olga5_sndNone')
+				ex.classList.add('o-sndNone')
 		}
 
 		const mtags = C.SelectByClassName(W.class, W.modul)

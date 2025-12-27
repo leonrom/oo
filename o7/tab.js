@@ -7,11 +7,11 @@
 
 	const
         m = window.location.search.match(/(?:\?|&)debug(?:=([^&?]*))?(?=[&?]|$)/),
-        o5debug = !m ? 0 : (m[1] === undefined || m[1] === "") ? 1 : (isNaN(+m[1]) ? 3 : +m[1]),
+        o_debug = !m ? 0 : (m[1] === undefined || m[1] === "") ? 1 : (isNaN(+m[1]) ? 3 : +m[1]),
 		o5tagTable = "§¶▸▹↢⇔↣ₔᐞ⇅¿",
 		C = window.olga5 ? window.olga5.C : { // заменитель библиотечного
 			consts: {
-				o5debug: o5debug,
+				o_debug: o_debug,
 				o5tag_table: o5tagTable
 			},
 			avtonom: true,
@@ -25,13 +25,13 @@
 			consts: `o5tag_table= ${o5tagTable}`,
 			urlrfs: '',
 		},
-		cc_span = 'tab-span',
-		cc_odd = 'tab-odd',
+		cc_span = 'o-tabSpan',
+		cc_odd = 'o-tabOdd',
 		SortTab = e => {
 			let up =0
 			const th = e.target,
-				cc_Up = 'tab-sortUp',
-				cc_Dn = 'tab-sortDn',
+				cc_Up = 'o-tabSortUp',
+				cc_Dn = 'o-tabSortDn',
 				aO5 = th.aO5tab,
 				tr = th.parentElement,
 				trpa = tr.parentElement,
@@ -356,7 +356,7 @@
 		if (!C.avtonom)
 			C.ParamsFill(W)
 
-		if (o5debug > 0) 
+		if (o_debug > 0) 
 			console.log('%c%s', "background: aqua; color: black;border: none;",
 				` инициализация `, 
 				`${W.modul}.js`,
@@ -387,7 +387,7 @@
 		W.consts = C.consts
 
 		PrepTables()
-		if (o5debug)
+		if (o_debug)
 			console.log(`}---< ${document.currentScript.src.indexOf(`/${W.modul}.`) > 0 ? 'загружен  ' : 'включён   '}:  ${W.modul}.js`)
 	}
 	else

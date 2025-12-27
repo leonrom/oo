@@ -7,18 +7,16 @@
 	>
 	<title>olga5-snd</title>
 	<!-- <link rel="shortcut icon" href="./media/favicon.svg" type="image/x-icon"> -->
-	<!-- <script src="https://rombase.h1n.ru/o5/olga5/dbg/events.js"></script> -->
 
     <link href='./media/favicon.svg' rel='shortcut icon' type='image/x-icon' />
 
 	<!-- 
 		src="../o5/olga5/o5.js"
-		src='https://rombase.h1n.ru/o5/olga5/o5.js'
 		src='http://localhost/o5/olga5/o5.js'  	
 	-->
     <script src="http://localhost/o5/olga5/o5.js"
-		o5debug="0"
-        o5incls="pop,mnu,snd,shp,ref"
+		o_debug="0"
+        o_incls="pop,mnu,snd,shp,ref"
         o_urlrfs="
             _блог_o5 = \'_url_html+../2020/02\';
 			media = + ../media;
@@ -28,7 +26,7 @@
         " 
 	></script>
 
-	<link data-href="+css/o5ini.css" media="screen" rel="stylesheet" />
+	<link data-href="+css/ini.css" media="screen" rel="stylesheet" />
     
     <script data-src="+ inc.js"></script>
     <script data-src="+ shp.js"></script>
@@ -55,26 +53,27 @@
 	></script>
     <script data-src="+ add/pusto.js" moe-attr="мой атрибут"></script>
 
-	<link data-href='+../css/olga5-a.css' media='screen' rel='stylesheet' />
-	<link data-href='+../css/olga5-o5.css' media='screen' rel='stylesheet' />
+	<link data-href='+../css.o7/basis.css' rel='stylesheet' />
+	<link data-href='+../css.o7/table.css' rel='stylesheet' />
+	<link data-href='+../css.o7/popup.css' rel='stylesheet' />
   
 </head>
 
 <body>
-	<div class="olga5_Start:pop,ref:shp:snd:mnu" dir="ltr" trbidi="on">
+	<div class="olga-start:pop,ref:shp:snd:mnu" dir="ltr" trbidi="on">
 
 		<img alt="" border="0" width="200" style="display:none"
 			data-original-height="599" data-original-width="662"
 			src="https://1.bp.blogspot.com/-rW1sKeagSVE/YEsS7GAONII/AAAAAAAAEQY/bSKdPPC_2ccI-0-0DFUfZt2QRRfjOW52QCPcBGAsYHg/s662/snd.png" 					
 		/>
-		<p class="olga5_page_header">
+		<p class="o-pageHeader">
 			Расширение использования стандартного аудиоплейера
 		</p>
 
 		<h3 id='snd_1'>1. Общие сведения</h3>
 		<div>
 			Скрипт <code>snd.js</code> входит в <i>библиотеку</i>
-			<span o5popup='+ ../help/o5help.html; width: 430, height: 390'><code>Olga5</code></span>&nbsp;
+			<span o5popup='+ ../help/o5help.html; width: 430, height: 390'><code>Olga7</code></span>&nbsp;
 			и добавляет к использованию стандартного аудиоплейера (тега &lt;<b>audio</b>&gt;) следующие
 			возможности:
 			<ul>
@@ -97,19 +96,19 @@
 				Данный скрипт, подобно остальным скриптам <i>библиотеки</i>
 				может быть подключен не только к отдельным HTML-страницам,
 				но и функционировать внутри <b>Blogger</b>'а, в частности на шаблоне <i>Dynamic View</i>.
-				Скрипт обрабатывает (наряду с &lt;<b>audio</b>&gt;) теги , у которых задан класс <b>olga5_snd</b>,
+				Скрипт обрабатывает (наряду с &lt;<b>audio</b>&gt;) теги , у которых задан класс <b>olga_snd</b>,
 				находящиеся в
-				<span o5popup='+../blog/olga5-all.html?o5nomnu#head_43; width: 666, height: 444'>областях&nbsp;действия</span>
+				<span o5popup='+../blog/olga5-all.html?o_nomnu#head_43; width: 666, height: 444'>областях&nbsp;действия</span>
 				его инициализации.
 				Скрипт должен использоваться обязательно в паре с ядром <i>библиотеки</i> <code>com!.js</code>.
 				Для обработки именованных ссылок также (но не обязательно) может подключаться скрипт
-				<span id='pop' o5popup='+../blog/olga5-ref.html?o5nomnu; width: 666, height: 444'> <code>ref.js</code>
+				<span id='pop' o5popup='+../blog/olga5-ref.html?o_nomnu; width: 666, height: 444'> <code>ref.js</code>
 				</span>.
 			</p>
 			<p>
 				Пример подключения скрипта:
 			</p>
-			<table class="olga5_tableCode">
+			<table class="o-tableCode">
 				<tbody>
 					<tr>
 						<td>
@@ -117,14 +116,14 @@
 						</td>
 						<td>
 							<pre>
-<span class="olga5_tableName">подключение скрипта в секции &lt;<b>head</b>&gt;</span>
+<span class="o-tableName">подключение скрипта в секции &lt;<b>head</b>&gt;</span>
 &lt;script async src='olga5/snd.js'
     o_urlrfs="
         btn_play = _url_html + /media/image/play.png;
         btn_stop = _url_html + /media/image/play_Freepik.png
     "
 &gt;&lt;/script&gt;
-&lt;script async src='olga5/com!.js' o5debug=2 &gt;&lt;/script&gt;
+&lt;script async src='olga5/com!.js' o_debug=2 &gt;&lt;/script&gt;
 </pre>
 						</td>
 					</tr>
@@ -136,13 +135,13 @@
 				проигрывания
 				звуков.
 				Подробнее об использовании <i>атрибутов</i> и <i>параметров</i> написано
-				<span o5popup='+../blog/olga5-all.html?o5nomnu#head_6; width: 666, height: 444'>здесь</span>).
+				<span o5popup='+../blog/olga5-all.html?o_nomnu#head_6; width: 666, height: 444'>здесь</span>).
 			</p>
 			<p>
 				Чтобы т.с. <i>повесить</i> обработку аудио на произвольный тег (в теле документа), ему следует указать
-				класс <b>olga5_snd</b>, после которого могут указываться уточняющие квалификаторы.
+				класс <b>olga_snd</b>, после которого могут указываться уточняющие квалификаторы.
 			</p>
-			<p class="moecomment">
+			<p class="o-comment">
 				Для клика по тегу &lt;<b>A</b>&gt; (с классом <b>olga5-snd</b>) первичным сделано управление звучанием,
 				а переход по ссылке выполняться будет только при клике в <u>режиме&nbsp;'Pause'</u>.
 			</p>
@@ -181,26 +180,26 @@
 			</style>
 			<div id='ks1'>
 				<p>
-					Подключение аудио к произвольным тегам определяется наличием у них класса <b>olga5_snd</b>.
+					Подключение аудио к произвольным тегам определяется наличием у них класса <b>olga_snd</b>.
 					Ниже показаны
 					<span title="Иконки и ссылки в примерах - интерактивны - кликайте по ним">примеры</span> их
 					использования:
 				</p>
-				<div id='div1' class="olga5_shp:Up:Top" o5ofram="i:olga5-Start_hr,n" olga5_owners="id:ks1"
+				<div id='div1' class="olga-shp:Up:Top" o5ofram="i:olga5-Start_hr,n" olga5_owners="id:ks1"
 					style="height:255px;    padding-top: 3px;">
 					<style>
 						td>img {
 							height: 32px;
 						}
 					</style>
-					<table class="tableIllu">
+					<table class="o-tableIllu">
 						<tbody>
 							<tr>
 								<td>1</td>
 								<td>
-									<img class="olga5_snd:+Ceza1-25" title="img01" id="01" loop src="+ myTunes-icon" />
+									<img class="olga_snd:+Ceza1-25" title="img01" id="01" loop src="+ myTunes-icon" />
 								</td>
-								<td>&lt;<b>img</b> class="olga5_snd:+Ceza1-25"
+								<td>&lt;<b>img</b> class="olga_snd:+Ceza1-25"
 									<b>src</b>= "+myTunes-icon"/&gt;
 									<br />&nbsp;&nbsp;&nbsp;
 									простейший пример для &lt;<b>img</b>&gt;,- звучание по клику, прекращение по уходу
@@ -210,10 +209,10 @@
 							<tr>
 								<td>2</td>
 								<td>
-									<img class="olga5_snd:alive:'  +   Ceza1-25  '" title="img02" id='02' />
+									<img class="olga_snd:alive:'  +   Ceza1-25  '" title="img02" id='02' />
 								</td>
 								<td>&lt;<b>img</b>
-									class="olga5_snd:alive:'&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;Ceza1-25&nbsp;&nbsp;'" /&gt;
+									class="olga_snd:alive:'&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;Ceza1-25&nbsp;&nbsp;'" /&gt;
 									<br />&nbsp;&nbsp;&nbsp;
 									не прерывается по уходу курсора; <b>src</b> не указан,- берутся <b>btn-stop</b> и
 									<b>btn-play</b>
@@ -221,10 +220,10 @@
 							</tr>
 							<tr>
 								<td>3</td>
-								<td><img class="olga5_snd:L:A:Ceza1-25" title="img03" id='03' src="+myTunes-icon"
+								<td><img class="olga_snd:L:A:Ceza1-25" title="img03" id='03' src="+myTunes-icon"
 										image_play="https://icons.iconarchive.com/icons/froyoshark/enkel/48/Spotify-icon.png" />
 								</td>
-								<td>&lt;<b>img</b> class="olga5_snd:L:A:Ceza1-25"
+								<td>&lt;<b>img</b> class="olga_snd:L:A:Ceza1-25"
 									<b>src</b>= "+myTunes-icon" <b>image_play</b>=".../Spotify-icon.png"/&gt;
 									<br />&nbsp;&nbsp;&nbsp;
 									зацикленное звучание по клику до следующего клика ('L'= 'loop', 'A'= 'alive')
@@ -232,10 +231,10 @@
 							</tr>
 							<tr>
 								<td>4</td>
-								<td><img class="olga5_snd:over:sounds+Ceza2-25.mp3" title="img04" id='04'
+								<td><img class="olga_snd:over:sounds+Ceza2-25.mp3" title="img04" id='04'
 										src="images+ /solfedjio.png" image_play=btn_play />
 								</td>
-								<td>&lt;<b>img</b> class="olga5_snd:over:sounds+Ceza2-25.mp3"
+								<td>&lt;<b>img</b> class="olga_snd:over:sounds+Ceza2-25.mp3"
 									<b>src</b>="images+ /solfedjio.png" <b>image_play</b>=btn_play/&gt;
 									<br />&nbsp;&nbsp;&nbsp;
 									однократное звучание (с изменением иконки) по наведению курсора.
@@ -243,11 +242,11 @@
 							</tr>
 							<tr>
 								<td>5</td>
-								<td><img class='dlassaaa:A olga5_snd:over : a-11_z: loop :  "  sounds + Ceza1-25.mp3" '
+								<td><img class='dlassaaa:A olga_snd:over : a-11_z: loop :  "  sounds + Ceza1-25.mp3" '
 										title="img05" id='05' _src=solfedjio />
 								</td>
 								<td>&lt;<b>img</b> class='dlassaaa:A
-									<b>olga5_snd</b>:<b>o</b>ver&nbsp;:&nbsp;<b>a</b>Яё:&nbsp;<b>l</b>oop&nbsp; :&nbsp;&nbsp;
+									<b>olga_snd</b>:<b>o</b>ver&nbsp;:&nbsp;<b>a</b>Яё:&nbsp;<b>l</b>oop&nbsp; :&nbsp;&nbsp;
 									"&nbsp;&nbsp; sounds + Ceza1-25.mp3" '
 									<b>_src</b>=solfedjio/&gt;
 									<br />&nbsp;&nbsp;&nbsp;
@@ -257,33 +256,33 @@
 							<tr>
 								<td>6</td>
 								<td>
-									<a id='6' class='olga5_snd:href' target="olga5-addPage" href="sounds+/Ceza1-25.mp3"
+									<a id='6' class='olga_snd:href' target="olga5-addPage" href="sounds+/Ceza1-25.mp3"
 										title="кликни чтобы прослушать">&lt;<b>a</b>&gt;</a>
 									<br />
-									<a id='6a' class='olga5_snd:over:href' target="olga5-addPage" href=sounds+/Ceza1-25.mp3
+									<a id='6a' class='olga_snd:over:href' target="olga5-addPage" href=sounds+/Ceza1-25.mp3
 										title="задержи курсор чтобы прослушать">&lt;<b>a</b>&gt;</a>
 									<br />
-									<b id='6b' class="olga5_snd:alive:'sounds+ /Ceza2-25.mp3'"
+									<b id='6b' class="olga_snd:alive:'sounds+ /Ceza2-25.mp3'"
 										title="кликни чтобы прослушать"
 										style="background-color: transparent;">&lt;<b>b</b>&gt;
 									</b>
 								</td>
 								<td>
-									&lt;<b>a</b> class='olga5_snd:<b>href</b>' target="olga5-addPage"
+									&lt;<b>a</b> class='olga_snd:<b>href</b>' target="olga5-addPage"
 									href="sounds+/Ceza1-25.mp3" &gt;
-									<a id='7' class='olga5_snd:href' target="olga5-addPage" href="sounds+/Ceza1-25.mp3"
+									<a id='7' class='olga_snd:href' target="olga5-addPage" href="sounds+/Ceza1-25.mp3"
 										title="кликни чтобы прослушать">кликнуть тут</a>
 									&lt;/a&gt;
 									<br />
-									&lt;<b>a</b> class='olga5_snd:<b>over</b>:<b>href</b>' target="olga5-addPage"
+									&lt;<b>a</b> class='olga_snd:<b>over</b>:<b>href</b>' target="olga5-addPage"
 									href=Ceza1-25 &gt;
-									<a id='7a' class='olga5_snd:over:href' target="olga5-addPage"
+									<a id='7a' class='olga_snd:over:href' target="olga5-addPage"
 										href="sounds+/Ceza1-25.mp3" title="задержи курсор чтобы прослушать">навести
 										курсор</a>
 									&lt;/a&gt;
 									<br />
-									&lt;<b>b</b> class="olga5_snd:alive:'sounds+/Ceza2-25.mp3'"&gt;
-									<b id='7b' class="olga5_snd:alive:'sounds+/Ceza2-25.mp3'"
+									&lt;<b>b</b> class="olga_snd:alive:'sounds+/Ceza2-25.mp3'"&gt;
+									<b id='7b' class="olga_snd:alive:'sounds+/Ceza2-25.mp3'"
 										title="кликни чтобы прослушать">кликнуть тут</b>
 									&lt;/b&gt;
 								</td>
@@ -298,7 +297,7 @@
 						<tbody>
 							<tr>
 								<td>
-									<div><audio id="a1" controls="controls" class='olga5_snd:H'
+									<div><audio id="a1" controls="controls" class='olga_snd:H'
 											_src="sounds+/Ceza1-25.mp3">
 										</audio></div>
 								</td>
@@ -309,7 +308,7 @@
 							</tr>
 							<tr>
 								<td>
-									здесь: <b>class</b>='olga5_snd:H' - игнорируется в <b>snd</b>
+									здесь: <b>class</b>='olga_snd:H' - игнорируется в <b>snd</b>
 									<br />&lt;audio <b>_src</b>="sounds+/Ceza1-25.mp3"&gt;
 									<br />атрибут <b>_src</b> будет обработан модулем <b>ref</b>
 									<br />и 'сразу' заменит <b>src</b>.
@@ -372,9 +371,9 @@
 					</li>
 				</ul>
 
-				<p class='moecomment'>
+				<p class='o-comment'>
 					<b>Пояснения</b>:
-				<ul class='moecomment'>
+				<ul class='o-comment'>
 					<li> для атрибута <b>image_play</b> и квалификатора <b>audio_play</b> (см. ниже п.3) допускается
 						присвоение
 						<span
@@ -382,7 +381,7 @@
 						<b>src</b> или <b>href</b> от <u>текущего</u> тега (даже если сами эти атрибуты
 						были определены через префиксы '<b>_</b>' или '<b>data-</b>').
 						Использование таких ссылок можно посмотреть
-						<span class="olga5_popup" onclick="window.olga5.PopShow(  700, 466, 'тесты+/snd5.html')">
+						<span class="o-popup" onclick="window.olga5.PopShow(  700, 466, 'тесты+/snd5.html')">
 							тут</span>;
 					</li>
 					<li>если после открытияя страницы сразу навести курсор на тег с квалификатором <b>:over</b>,
@@ -393,7 +392,7 @@
 			</div>
 			<p>
 				Теги &lt;<b>audio</b>&gt; внизу <i>иллюстрации</i> подключены <u>без</u> использования класса
-				<b>olga5_snd</b>.
+				<b>olga_snd</b>.
 				Однако скрипт всё равно синхронизирует их звучание, а для второго тега еще и обеспечивает
 				<i>отложенную</i> загрузку файла.
 			</p>
@@ -411,15 +410,15 @@
 				(по умодчанию 0.5,- см. нтже п.2).
 			</p>
 			<p>
-				<i>Скрипт</i> автоматически синхронизирует звучание всех тегов: как с классом <b>olga5_snd</b>,
+				<i>Скрипт</i> автоматически синхронизирует звучание всех тегов: как с классом <b>olga_snd</b>,
 				так и обычных тегов &lt;<b>audio</b>&gt;.
 			</p>
 			<p>
 				Показанный выше пример (с дополнительными пояснениями) можно посмотреть
-				<span class="olga5_popup" onclick="window.olga5.PopShow(  700, 488, 'тесты+/snd4.html')">
+				<span class="o-popup" onclick="window.olga5.PopShow(  700, 488, 'тесты+/snd4.html')">
 					тут</span> в виде отдельного файла. 
 			</p>
-			<p class="moecomment">
+			<p class="o-comment">
 				Перед проверкой звучания по наведению курсора не забудьте активировать окно (например, кликом мыши).
 			</p>
 		</div>
@@ -491,13 +490,13 @@
 				<li><b>data-src</b> для отложенной загрузки (эквивалент квалификатора <b>audio_play</b>).</li>
 			</ul>
 			</p>
-			<p class='moecomment'>
+			<p class='o-comment'>
 				Наличие атрибута <b>_src</b> игнорирует атрибут <b>src</b>, а <b>data-src</b> - игнорирует
 				оба атрибута <b>src</b> и <b>_src</b>.
 			</p>
 			<p>
 				Демонстрация различных вариантов отложенного подключения тегов &lt;<b>audio</b>&gt; показана в
-				<code class="olga5_popup"
+				<code class="o-popup"
 					onclick="window.olga5.PopShow( 500, 400, 'тесты+/snd1.html')">примере</code>.
 				Для просмотра (желательно НЕ в браузере FireFox, т.к. в нём теги &lt;<b>audio</b>&gt; плохо
 				отрисовываются) следует кликнуть
@@ -525,7 +524,7 @@
 			<p>
 				Подключение к тегу &lt;<b>img</b>&gt; в общем случае может иметь вид:
 			</p>
-			<table class="olga5_tableCode">
+			<table class="o-tableCode">
 				<tbody>
 					<tr>
 						<td>
@@ -533,7 +532,7 @@
 						<td>
 							<pre>
 &lt;img id = "a-02" title = "пример подключения"
-    <b>class</b> = "olga5_snd:over:sounds+/gitme.mp3"
+    <b>class</b> = "olga_snd:over:sounds+/gitme.mp3"
     <b>src</b> = "https://icons.iconarchive.com/icons/froyoshark/enkel/48/iTunes-icon.png"
     <b>image_play</b> = "https://icons.iconarchive.com/icons/froyoshark/enkel/48/Spotify-icon.png"
 /&gt;
@@ -546,7 +545,7 @@
 				где показаны <span title="специфические для библиотеки">следующие</span> атрибуты тега <b>img</b>:
 			</p>
 			<ul>
-				<li><b>class</b> &mdash; должен содержать класс <b>olga5_snd</b> с
+				<li><b>class</b> &mdash; должен содержать класс <b>olga_snd</b> с
 					<i>квалификаторами</i>, из которох <b>audio_play</b> - необходимая ссылка на аудиофайл;
 				</li>
 				<li><b>src</b> &mdash; необязательный адрес изображения при выключенном звучании;
@@ -566,7 +565,7 @@
 			</p>
 			<p>
 				Демонстрация и объяснение различных вариантов подключения аудио к <b>img</b>-тегам показаны
-				<code class="olga5_popup"
+				<code class="o-popup"
 					title="Просмотр - клик по ссылке, анализ - см. в отладчике исходный код примеров"
 					onclick="window.olga5.PopShow( 700, 370, 'тесты+/snd2.html')">тут</code>
 				(демонстрируется манипуляция иконками,- файл <b>snd2</b>.html).
@@ -575,7 +574,7 @@
 				По умолчанию все иконки, используемые в <i>аудио</i>тегах <b>img</b> ограничиваются
 				<b>CSS</b>-свойствами, прошитыми в скрипте:
 			</p>
-			<table class="olga5_tableCode">
+			<table class="o-tableCode">
 				<tbody>
 					<tr>
 						<td>
@@ -583,8 +582,8 @@
 						</td>
 						<td>
 							<pre>
-<span class="olga5_tableName">стили подключения тега &lt;<b>img</b>&gt;</span>
-img.olga5_shp:not(.<b>olga5-freeimg</b>) {
+<span class="o-tableName">стили подключения тега &lt;<b>img</b>&gt;</span>
+img.olga-shp:not(.<b>olga5-freeimg</b>) {
     background-color: transparent;
     position: inherit;
     padding: 0 !important;
@@ -603,7 +602,7 @@ img.olga5_shp:not(.<b>olga5-freeimg</b>) {
 			<p>
 				откуда видно, что для отмены использование данного <b>CSS</b>'а следует (к классам этого тега)
 				добавить класс <b>olga5-freeimg</b>. Тот же эффект будет если
-				в теговом классе <b>olga5_snd</b> указать уточняющий квалификатор <b>F</b><i>reeImg</i>.
+				в теговом классе <b>olga_snd</b> указать уточняющий квалификатор <b>F</b><i>reeImg</i>.
 				Впрочем, можно просто задавать тегу конкретные стили атрибутом <b>style</b>.
 			</p>
 		</div>
@@ -617,7 +616,7 @@ img.olga5_shp:not(.<b>olga5-freeimg</b>) {
 				CSS-файл для подключения через тег &lt;<b>link</b>&gt;.
 			</p>
 			<p>
-				<i>Умалчиваемое</i> поведение для объекта класса <b>olga5_snd</b>:
+				<i>Умалчиваемое</i> поведение для объекта класса <b>olga_snd</b>:
 			</p>
 			<ul>
 				<li>клик мышкой вызывает звучание аудиофайла (после его загрузки);</li>
@@ -630,8 +629,8 @@ img.olga5_shp:not(.<b>olga5-freeimg</b>) {
 				<li>при загрузке аудио и при его звучании курсор имеет вид '<i>progress</i>', а при паузе -
 					'<i>wait</i>';</li>
 			</ul>
-			<b class='moecomment'>Пояснения</b>:
-			<ul class='moecomment'>
+			<b class='o-comment'>Пояснения</b>:
+			<ul class='o-comment'>
 				<li> при <i>продолжении</i> (после паузы) звучание начнется не с момента прерывания,
 					а чуть-чуть раньше. В <i>библиотечном</i> <b>css</b> это <i>чуть-чуть</i> определяется скриптовым
 					атрибутом
@@ -642,7 +641,7 @@ img.olga5_shp:not(.<b>olga5-freeimg</b>) {
 			</ul>
 
 			<p>
-				Для изменения <i>умалчиваемого</i> поведения в классе <b>olga5_snd</b> используются уточняющие
+				Для изменения <i>умалчиваемого</i> поведения в классе <b>olga_snd</b> используются уточняющие
 				квалификаторы:
 			</p>
 			<ul>
@@ -652,12 +651,12 @@ img.olga5_shp:not(.<b>olga5-freeimg</b>) {
 				<li><b>O</b><i>ver</i> - (4,5,6a) звучание
 					<span title="предварительно страница д.б. активирована">начинается</span> по наведению курсора.
 				</li>
-				<li><b>F</b><i>ree</i> - не использовать встроенный класс <b>olga5_snd</b> для отображения тега;</li>
-				<li><b>N</b><i>one</i> - не обрабатывать звучание, однако использовать встроенный класс <b>olga5_snd</b>
+				<li><b>F</b><i>ree</i> - не использовать встроенный класс <b>olga_snd</b> для отображения тега;</li>
+				<li><b>N</b><i>one</i> - не обрабатывать звучание, однако использовать встроенный класс <b>olga_snd</b>
 					для отображения тега;</li>
 			</ul>
 			Здесь в скобках указаны соответствующие номера
-			<span id="snd_11s" class="olga5_popup"
+			<span id="snd_11s" class="o-popup"
 				onClick="window.olga5.PopShow( 940, 455,'#snd_11')"><u>иллюстрации&nbsp;1.1</u></span>,
 			приведенной выше.
 			<p>
@@ -670,16 +669,16 @@ img.olga5_shp:not(.<b>olga5-freeimg</b>) {
 				пробелы допускаются, обязательной является только первая буква.
 				Примеры, где жирным выделен квалификатор <b>audio_play</b>:
 			<ul>
-				<li><i title="тут таки можно не давать кавычки, т.к. конфликты отсутствуют ">olga5_snd :over
+				<li><i title="тут таки можно не давать кавычки, т.к. конфликты отсутствуют ">olga_snd :over
 						:<b>имя_аудио_файла </b>: loop : alive</i> ;</li>
-				<li><i title="здесь кавычки обязательны, т.к. значение содержит символ ':'">olga5_snd
+				<li><i title="здесь кавычки обязательны, т.к. значение содержит символ ':'">olga_snd
 						:<b>'https://archive.org/download/clouds_20200310/Ceza1-25.mp3'</b>:O:L:A</i>..</li>
 			</ul>
 			</p>
-			<p class="moeattention">
+			<p class="o-attention">
 				В <b>audio_play</b> могут использоваться именованные ссылки, определённые <u>в&nbsp;ядре</u> <i>библиотеки</i>
 				<br/>
-				<span class='moecomment'>
+				<span class='o-comment'>
 				(не допустимо их определение в модуле <code>ref</code> т.к. он не может обработать атрибут <b>class</b>)</span>. 
 			</p>
 			<p>
@@ -688,7 +687,7 @@ img.olga5_shp:not(.<b>olga5-freeimg</b>) {
 				Однако, увод курсора во время паузы (после клика) всегда приведёт к прекращению звучания - независимо от
 				наличия <b>:Alive</b>.
 			</p>
-			<p class='moecomment'>
+			<p class='o-comment'>
 				<em>Пояснение</em>: квалификаторы действуют только при инициализации тегов после чего удаляются из
 				<b>className</b> тега.
 			</p>
@@ -725,7 +724,7 @@ img.olga5_shp:not(.<b>olga5-freeimg</b>) {
 			<p>
 				Чтобы прервать звучание из другого модуля необходимо сгенерировать событие '<b>o5snd_stopSound</b>', например:
 			</p>
-		<p class="olga5_codeTextSeparate">
+		<p class="o-codeTextSeparate">
 			window.dispatchEvent(new CustomEvent('o5snd_stopSound', { detail: { tag: null, type: '', } }))
 		</p>
 		</div>
@@ -758,13 +757,13 @@ img.olga5_shp:not(.<b>olga5-freeimg</b>) {
 				<i>именованных</i> ссылок
 				в группе сообщений "Результирующие именованные ссылки".
 				Подробнее об анализе ошибок в <i>именованных</i> ссылках написано в документации по
-				<code class="olga5_popup"
-					onclick="window.olga5.PopShow( 940, 444, '_url_olga5 + ../blog/olga5-ref.html?o5nomnu#head_4')">ref.js</code>.
+				<code class="o-popup"
+					onclick="window.olga5.PopShow( 940, 444, '_url_olga5 + ../blog/olga5-ref.html?o_nomnu#head_4')">ref.js</code>.
 			</p>
 			<br />
 		</div>
 		<!-- ===================================================================================== -->
-		<pre id="menu-pre" class="olga5-menuHidden" style="display:none">
+		<pre id="menu-pre" class="o-menuHidden" style="display:none">
 			{ span: 'Статья', id: "moemenu", right: '5px', top: '5px', add: '233px', small: '1' },
 				{ span: '1. Общие сведения', ref: 'snd_1', add: '333px' },
 					{ span: '1.1. Иллюстрация вариантов обработки аудио', ref: 'snd_11', ret: '1' },

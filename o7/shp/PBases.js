@@ -12,7 +12,7 @@
         olga5_modul = "shp",
         modulname = 'PBases',
         C = window.olga5.C,
-        o5debug = C.consts.o5debug,
+        o_debug = C.consts.o_debug,
         opp = { T: 'B', L: 'R', R: 'L', B: 'T' },
         FindAndFill = (aO5, adds) => {
             let bO5, nst, scrls, tag = aO5.cnst.parent
@@ -35,7 +35,7 @@
                 }
                 if (p && !bO5) bO5 = p
 
-                if (o5debug)
+                if (o_debug)
                     adds.add(c + C.MakeObjName(tag))
 
                 tag = tag.parentNode
@@ -150,13 +150,13 @@
                             aO5.aO5s[m].add(iO5)
                     }
 
-                    if (o5debug > 2)
+                    if (o_debug > 2)
                         console.log(`${aO5.cnst.id}[${m}]: ` + Array.from(aO5.aO5s[m]).map(a => a.id).join(', '))
                     this.bO5s[m].add(aO5)
                 }
             }
 
-            if (o5debug > 1) {
+            if (o_debug > 1) {
                 const ra = []
                 for (const aO5 of this.aAll) {
                     const r = { aO5: aO5.cnst.id }
@@ -183,7 +183,7 @@
                 return
             }
 
-            if (o5debug > 1)
+            if (o_debug > 1)
                 console.log(`AddToBase: ${aO5.name}: ${Array.from(adds).join(', ')} `)
 
             // подключаем (и создаём) pbase
@@ -262,7 +262,7 @@
                     }
                     pBase.bChgs[m] = chg
 
-                    if (o5debug > 1 && (chg || tis0))
+                    if (o_debug > 1 && (chg || tis0))
                         console.log(
                             `скролл. ${pcO5.name} по [${m}] для ${pBase.pO5.cnst.id} '${chg}'   ` +
                             `${pBase.pBordss[m].map(b => b.name + ':' + ('' + b.scops[m]).padStart(4)).join(', ')}`

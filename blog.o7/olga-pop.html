@@ -7,19 +7,7 @@
 	<link rel="shortcut icon" href="./media/favicon.svg" type="image/x-icon">
 	</link>
 
-	<!--   	https://olga-5.blogspot.com/2020/02/olga5-pop.html
-			https://rombase.neocities.org/o5/blog/olga5-blog.html
-			https://rombase.h1n.ru/o5/blog/olga5-pop.html
-
-	src='https://rombase.neocities.org/olga5/com!.js'
-	src='https://rombase.h1n.ru/o5/olga5/com!.js'
-	src='http://localhost/o5/olga5/com!.js' 
-	_блог_o5 = 'https://olga-5.blogspot.com/2020/02' 
-    тесты='http://rombase.h1n.ru/o5/olga5-tests'
-    тесты='http://localhost/o5/olga5-tests'  
--->
-	<!-- <script src='https://rombase.h1n.ru/o5/olga5/com!.js' o5consts="o5debug=1" o_urlrfs=" -->
-	<script src='../olga5/com.js' o5consts="o5debug=1" data-o_consts="o5nomnu='0'; o5noact='-1'; o5doscr=olga5_sdone"
+	<script src='../o7/com.js' o5consts="o_debug=1" data-o_consts="o_nomnu='0'; o_noact='-1'; o_doscr=olga5_sdone"
 		o_urlrfs="
 			_блог_o5 = `_url_olga5+../2020/02`;
 			тесты = `_url_olga5 + ../olga5-tests`;
@@ -31,8 +19,7 @@
 			# _url_olga5=`# адрес загрузки файла com!.js`;
 		"></script>
 
-	<!-- <script src='https://rombase.h1n.ru/o5/olga5/dbg/events.js'></script> -->
-	<link data-href='../css/o5ini.css' media='screen' rel='stylesheet'>
+	<link data-href='../css.o7/ini.css' media='screen' rel='stylesheet'>
 	</link>
 	<!-- <script data-src='+ inc.js'></script> -->
 	<script data-src='+pop.js'></script>
@@ -50,16 +37,16 @@
 	</script>
 	<script data-src='+add/pusto.js' data-o_consts="moe-attr=мой атрибут"></script> -->
 
-	<link data-href='+../css/olga5-a.css' media='screen' rel='stylesheet' />
-	<link data-href='+../css/olga5-o5.css' media='screen' rel='stylesheet' />
+	<link data-href='+../css.o7/basis.css' rel='stylesheet' />
+	<link data-href='+../css.o7/popup.css' rel='stylesheet' />
 
 </head>
 
 <body id="o5body">
-	<div class="olga5_Start:pop,mnu" dir="ltr" trbidi="on">
+	<div class="olga-start:pop,mnu" dir="ltr" trbidi="on">
 		<img alt="" border="0" width="200" style="display:none" data-original-height="529" data-original-width="707"
 			src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiey9cGL7f4R6ltnfUcGzV6UZpTl5lfMkeVlT9VZdxFX9TymRa45A5oQJSy1leJcF8RcjH66uOS577U4ER26uS83d2vBXygZPYC81S2hMe7S3aLHj0ELa7-lUYaG-IXj8DhPlPLD6Eg5a1w1xQxZUtcfwf76VSWa1e1D3p-e3_d3qxfvG-DPWim1INW/s320/pop.png" />
-		<p class="olga5_page_header">
+		<p class="o-pageHeader">
 			Подключение <i>всплывающих</i> окон.
 		</p>
 		<p>
@@ -68,7 +55,7 @@
 		</p>
 		<p>
 			В отличие от большинства скриптов <i>библиотеки</i>
-			<span o5popup='+ ../help/o5help.html; width: 430, height: 390'><code>Olga5</code></span>&nbsp;
+			<span o5popup='+ ../help/o5help.html; width: 430, height: 390'><code>Olga7</code></span>&nbsp;
 			данный скрипт может использоваться автономно,- как без подключения ядра <code>com!.js</code>
 			так и при его подключении, но при этом скрипт д.б. размещен <u title="в заголовке 'head' документа">выше</u> скрипта ядра.
 		</p>
@@ -94,7 +81,7 @@
 				(т.е. по событию <i>onClick</i>) открывалось окно, содержащее файл <i>add/popup.html</i>, его можно
 				записать:
 			</p>
-			<p class='olga5_codeTextSeparate'>
+			<p class='o-codeTextSeparate'>
 				&lt;span on<b>Click</b>="window.olga5.<b>PopUp</b>(this, './add/popup.html',
 				'width: 211, height: 211')&gt;
 				<span
@@ -122,39 +109,39 @@
 				Так, для тегов, обрабатывающих событие <b>onClick</b>, добавляется правило:
 			</p>
 
-			<pre class='olga5_codeTextSeparate'>
-.<b>olga5_popup</b>, .<b>olga5_popup_Act</b>, 
+			<pre class='o-codeTextSeparate'>
+.<b>o-popup</b>, .<b>olga5_popup_Act</b>, 
 .<b>olga5_popup_PopUp</b>{cursor: pointer;}</pre>
 			<p>
-				Для тегов, содержащих класс <b>olga5_popup</b> (либо атрибут
+				Для тегов, содержащих класс <b>o-popup</b> (либо атрибут
 				<b title="описанный ниже в п.4">o5popup</b>) добавляются правила:
 			</p>
 			<ul>
 				<li>пассивного состояния тега
-					<pre class='olga5_codeTextSeparate'>
-.<b>olga5_popup</b>&nbsp;&nbsp;&nbsp;&nbsp;{cursor: pointer;color: black;background-color: lavender;
+					<pre class='o-codeTextSeparate'>
+.<b>o-popup</b>&nbsp;&nbsp;&nbsp;&nbsp;{cursor: pointer;color: black;background-color: lavender;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border-radius: 4px;border: 1px dashed gray;}
-<b>span.olga5_popup</b>&nbsp;{padding-left: 4px;padding-right: 3px;}
-<b>img.olga5_popup</b>&nbsp;&nbsp;{border: none;background-color: transparent;position: relative;}
+<b>span.o-popup</b>&nbsp;{padding-left: 4px;padding-right: 3px;}
+<b>img.o-popup</b>&nbsp;&nbsp;{border: none;background-color: transparent;position: relative;}
 .<b>olga5_popup_errArg</b> {opacity:0.5;}</pre>
 				</li>
 				<li> при задании ненулевого значения атрибута <b>o5timer</b> (см. п.5) добавляется мигание тега при
 					<i>всплытом</i> окне
-					<pre class='olga5_codeTextSeparate'>
-.<b>olga5_popup</b>.<b>olga5_popup_act</b> {outline-offset: 2x;animation: blink <b><i>XXX</i></b>ms infinite linear;}
+					<pre class='o-codeTextSeparate'>
+.<b>o-popup</b>.<b>olga5_popup_act</b> {outline-offset: 2x;animation: blink <b><i>XXX</i></b>ms infinite linear;}
 @<b>keyframes blink</b> {
     99% {outline: 2px dashed  black;outline-offset: 2x;}66% {outline: 3px dashed  white;}
     33% {outline: 2px dashed  black;}0% {outline: 3px dashed white;outline-offset: -2x;}
 }</pre>
 				</li>
 			</ul>
-			<p class="moecomment">
+			<p class="o-comment">
 				Здесь '<b><i>XXX</i></b>' - подставляемое автоматически значение <b>o5timer</b>, пересчитанное в
 				миллисекунды.
 			</p>
 			<p>
 				Добавление (удаление) класса <b>olga5_popup_act</b> для тега выполняется при <i>всплытии</i> (закрытии)
-				дополнительного окна,- независимо от наличия у тега класса <b>olga5_popup</b>.
+				дополнительного окна,- независимо от наличия у тега класса <b>o-popup</b>.
 			</p>
 			<p>
 				После появления <i>всплытого</i> окна оно становится активным, т.е. будет обрабатывать все клавиатурные
@@ -185,7 +172,7 @@
 						Если значение <i>адреса файла</i> не пустое и не содержит один из символов
 						['<b>\</b>', '<b>/</b>', '<b>.</b>', '<b>#</b>', ], то оно считается внутренней ссылкой
 						на текущий документ и автоматически дополняется его
-						<b title="т.е. строкой: document.URL+'?o5nomnu#'">URL</b>-адресом.
+						<b title="т.е. строкой: document.URL+'?o_nomnu#'">URL</b>-адресом.
 					</p>
 					<p>
 						Пустое значение <i>адреса</i> файла не считается ошибкой,- т.к. если тегу задан <b>id</b> то
@@ -193,7 +180,7 @@
 						значениями для
 						других тегов.
 						<br />
-						<span class="moecomment">
+						<span class="o-comment">
 							При подключении модуля совместно с <code>com!.js</code> (ядром
 							<i>библотеки</i>) этот <i>адрес</i> файла может содержать именованные ссылки.
 						</span>
@@ -233,7 +220,7 @@
 					определяют
 					список параметров</i> открываемого окна. Такой список может (не) содержать любые стандартные
 					атрибуты
-					<span class="olga5_popup" onclick="window.olga5.PopUp(this, 
+					<span class="o-popup" onclick="window.olga5.PopUp(this, 
 					'https://developer.mozilla.org/en-US/docs/Web/API/Window/open#Window_features', 
 					'width:720, height:800')" title="в значения параметров тут кавычки - одинарные">
 						спецификации</span>
@@ -243,7 +230,7 @@
 
 				<p>
 					В программе прописаны следующие <i>умалчиваемые</i> параметры согласно
-					<span class="olga5_popup" onclick="window.olga5.PopUp(this, 
+					<span class="o-popup" onclick="window.olga5.PopUp(this, 
 				'https://developer.mozilla.org/en-US/docs/Web/API/Window/open#Window_features', 
 				'width:720, height:800')">
 						спецификации</span>, описывающие:
@@ -270,7 +257,7 @@
 					а позиционирование окна обеспечивается таким образом,
 					чтобы оно было целиком видно на экране <i>активного</i> экрана.
 				</p>
-				<p class='moecomment'>
+				<p class='o-comment'>
 					При нескольких дисплеях под 'активным' экраном подразумевается тот дисплей,
 					на котором <i>в основном</i> расположено окно браузера. При позиционировании окна его координаты
 					устанавливаются с учетом <u>доступной</u> зоны экрана, при
@@ -279,7 +266,7 @@
 					сторон этой
 					зоны.
 				</p>
-				<p class='moecomment'>
+				<p class='o-comment'>
 					При <i>первоначальном</i> всплытии могут игнорироваться заданные размеры окна, например, в
 					<span title="104.0.2 (64-bit) для MX Linux-1.0">FireFox</span> всплывшее окно по умолчанию
 					показывается в
@@ -308,7 +295,7 @@
 				<p>
 					Эти параметры используются скриптом для синхронизации отображения всплывших окон
 				</p>
-				<p calss="moecomment">
+				<p calss="o-comment">
 					Если ссылочный тег содержит несколько вызовов <b>PopUp()</b> или атрибутов <b>popup</b>,
 					то параметры будут браться у <i>первого</i> из них. Поэтому в <i>ссылаемых</i>
 					тегах желательно обрабатывать не более одного события.
@@ -342,7 +329,7 @@
 				<p>
 					Примеры использования <i>ссылочных</i> тегов можно посмотреть, кликнув:
 					<!-- здесь для примера два варианта вызова: -->
-					<span class="olga5_popup"
+					<span class="o-popup"
 						onClick="window.olga5.PopUp(this, 'тесты+./pop2a.html', 'width: 666, height: 444')">автономно</span>
 					или
 					<span o5popup="тесты+./pop2c.html; width: 666, height: 444; " )>
@@ -354,21 +341,21 @@
 
 		<!-- <p> Соответствующие примеры приведены в
 				onClick="window.olga5.PopShow( 940, 455,
-				<span class="olga5_popup" title="кликните для проверки!"
+				<span class="o-popup" title="кликните для проверки!"
 					onClick="window.olga5.PopShow( 940, 455,'head_6')">'п.6'</span>,
 				)"
 			</p> -->
 		<!-- Например, в атрибуте <b>onClick</b>:
-			<p class='olga5_codeTextSeparate'>
+			<p class='o-codeTextSeparate'>
 				onClick="window.olga5.PopShow( 940, 455,
-				<span class="olga5_popup" title="кликните для проверки!"
+				<span class="o-popup" title="кликните для проверки!"
 					onClick="window.olga5.PopShow( 940, 455,'head_3')">'head_3'</span>,
 				)"
 			</p>
 			ссылка на '<i>head_3</i>' будет открываться
-			(<span class="moecomment">при загрузке документа с локального сервера <b>localhost</b></span>) для адреса:
-			<p class='olga5_codeTextSeparate'>
-				http://localhost/o5/blog/olga5-pop.html?o5nomnu#<b>head_3</b>
+			(<span class="o-comment">при загрузке документа с локального сервера <b>localhost</b></span>) для адреса:
+			<p class='o-codeTextSeparate'>
+				http://localhost/o5/blog/olga5-pop.html?o_nomnu#<b>head_3</b>
 			</p> -->
 
 		<h3 id="head_4">4. Использование атрибута <b>o5popup</b></h3>
@@ -378,7 +365,7 @@
 				задавать атрибут <b>o5popup</b>,
 				являющийся <i>обёрткой</i> вызова (описанной выше) функции <b>PopUp()</b> для события
 				<b title="независимо от заданиия 'onclick' в теге">click</b>
-				с автоматическим добавлением класса <b>olga5_popup</b> (определяющий визуальное отображение тега).
+				с автоматическим добавлением класса <b>o-popup</b> (определяющий визуальное отображение тега).
 				Значением является строка <i>аргументов</i>, разделённых символами '<b>;</b>' и/или
 				'<b>,</b>'.
 			</p>
@@ -394,22 +381,22 @@
 				В дополнение к <i>списку параметров</i> открываемого окна (из п.&nbsp;3) может задаваться
 				<b>nocss</b> (или коротко,- '<b>n</b>'),
 				<span title="например, при использовании тега как контейнера для 'ссылки' на id">запрещающий</span>
-				добавление класса <b>olga5_popup</b> (как и при наличии тегового атрибута <b>o5nocss</b>,- см. ниже п.5)
+				добавление класса <b>o-popup</b> (как и при наличии тегового атрибута <b>o5nocss</b>,- см. ниже п.5)
 			</p>
 			<p>
 				Вместо вызова
 			</p>
-			<p class='olga5_codeTextSeparate'>
-				&lt;span <b>class</b>="olga5_popup" on<b>Click</b>=
+			<p class='o-codeTextSeparate'>
+				&lt;span <b>class</b>="o-popup" on<b>Click</b>=
 				<br />"window.olga5.<b>PopUp</b>(this, 'тесты+./add/popup.html', 'width: 211, height: 211')"&gt;
-				<span class="olga5_popup"
+				<span class="o-popup"
 					onClick="window.olga5.PopUp(this, 'тесты+./add/popup.html', 'width: 211, height: 211')"><u>показать</u></span>
 				&lt;/span&gt;,
 			</p>
 			<p>
 				записываем:
 			</p>
-			<p class='olga5_codeTextSeparate'>
+			<p class='o-codeTextSeparate'>
 				&lt;span <b>o5popup</b>="тесты+./add/popup.html; width: 211, height: 211")&gt;
 				<span o5popup="тесты+./add/popup.html; width: 211, height: 211; click" )>
 					<u>показать</u>
@@ -419,7 +406,7 @@
 			<p>
 				Тут жирным шрифтом выделены необходимые атрибуты.
 			</p>
-			<p class="moecomment">
+			<p class="o-comment">
 				При незаданном <b>url</b>'е (в т.ч. при отсутствии разделителя &nbsp;'<b>;</b>')
 				значение <b>o5popup</b> используется только для подстановки (по <b>id</b> тега) в другие
 				вызовы всплывающих окон аналогично как <b>PopUp()</b>.
@@ -437,7 +424,7 @@
 				Подключение скрипта <code>pop.js</code> выполняется в заголовке
 				(в секции &lt;<b>head</b>&gt;) HTML (или PHP) файла:
 			</p>
-			<p class='olga5_codeTextSeparate'>
+			<p class='o-codeTextSeparate'>
 				&lt;script src="../olga5/<b>pop</b>.js" <b>o5params</b>="width:666px" <b>o5nocss</b>=0
 				<b>o5timer</b>=0&lt;/script&gt;
 			</p>
@@ -474,7 +461,7 @@
 				даёт следующие преимущества:
 			<ul>
 				<li>в обрабатываемых тегах <b>html</b>-файла могут использоваться символические ссылки;</li>
-				<li>в системном журнале при задании <b>o5debug</b> протоколирование выполняется более <i>красочно</i>.
+				<li>в системном журнале при задании <b>o_debug</b> протоколирование выполняется более <i>красочно</i>.
 				</li>
 			</ul>
 			</p>
@@ -530,15 +517,15 @@
 			<p>Ниже приведены примеры работы модуля <code>pop></code> с использованием ядра <i>библиотеки</i>
 				<code>com!.js</code>.
 			</p>
-			<p class="moecomment">
+			<p class="o-comment">
 				<b>Напоминание</b>: при появлении всплывших окон они <i>захватывают</i> фокус на себя,
 				поэтому нажатия клавиш действуют на активное <i>всплывшее</i> окно,
 				а управление основным окном осуществляется <u>только</u> мышкой.
 			</p>
 
-			<div class='example olga5_Start'>
+			<div class='example olga-start'>
 				<style>
-					.moecomment {
+					.o-comment {
 						font-size: smaller;
 						line-height: 0.85em;
 						font-family: serif;
@@ -610,7 +597,7 @@
 						- клик по тегу &lt;<b>input</b>&gt; с заданным атрибутом <b>o5popup</b>
 						и параметрами окна
 						<br /><span class='inLine'>top =1, left: 9999; width=222, h:111; group=""</span>.
-						<br /><span class="moecomment">
+						<br /><span class="o-comment">
 							Здесь, для примера, смешано использование символов: '<b>=</b>'|'<b>:</b>' и
 							'<b>;</b>'|'<b>,</b>',
 							а также вместо '<b>height</b>' указано '<b>h</b>'
@@ -619,83 +606,83 @@
 						<span style="border:1px, solid, gray;">Данный тег имеет <b>id="p1"</b></span>
 						и на его параметры будут ссылки в последующих примерах;
 					</li>
-					<li><span class="olga5_popup"
+					<li><span class="o-popup"
 							onclick="window.olga5.PopUp(this, 'тесты+add/popup.html', 'group=0, t:111, p1, text:закр. окно')">'открыть'</span>
-						- клик по локальному тегу &lt;<b>span</b>&gt; с классом <b>olga5_popup</b> с заданным
+						- клик по локальному тегу &lt;<b>span</b>&gt; с классом <b>o-popup</b> с заданным
 						<b>onClick</b> и
 						параметрами
 						<br /><span class='inLine'>PopUp(this, 'тесты+add/popup.html', 'group=0, t:111, p1, text:закр.
 							окно')</span>;
 					</li>
-					<li><span class="olga5_popup" onclick="window.olga5.PopUp(this, 
-							'https://rombase.ru/o5/olga5-tests/add/popup.html', 
+					<li><span class="o-popup" onclick="window.olga5.PopUp(this, 
+							'https://rombase.ru/o7/tests.o7/add/popup.html', 
 							'group=0, t:177, p1, text:закр. окно')">'открыть'</span>
-						- клик по тегу &lt;<b>span</b>&gt; с классом <b>olga5_popup</b> и заданным <b>onClick</b> и
+						- клик по тегу &lt;<b>span</b>&gt; с классом <b>o-popup</b> и заданным <b>onClick</b> и
 						параметрами
 						<br /><span class='inLine'>PopUp(this,
-							'https://rombase.ru/o5/olga5-tests/add/popup.html', 'group=0, t:177, p1, text:закр.
+							'https://rombase.ru/o7/tests.o7/add/popup.html', 'group=0, t:177, p1, text:закр.
 							окно')</span>
 						<!-- 
-							http://localhost/o5/olga5-tests/add/popup.html
-							https://rombase.ru/o5/olga5-tests/add/popup.html
-							https://leonrom.github.io/o5/olga5-tests/add/popup.html
-							https://rombase.neocities.org/o5/olga5-tests/add/popup.html
+							http://localhost/o7/tests.o7/add/popup.html
+							https://rombase.ru/o7/tests.o7/add/popup.html
+							https://leonrom.github.io/o7/tests.o7/add/popup.html
+							https://rombase.neocities.org/o7/tests.o7/add/popup.html
 -->
 					</li>
 				</ul>
 
 				<p>
 					2) <span id="p01">Варианты вызова </span><b>PopUp</b>() при различном задании первого параметра
-					(задан class="<b>olga5_popup</b>"):
+					(задан class="<b>o-popup</b>"):
 				</p>
 				<ol style="white-space: nowrap;">
-					<li><span id="li1" class="olga5_popup"
+					<li><span id="li1" class="o-popup"
 							onclick="window.olga5.PopUp('p01', 'тесты+add/popup.html', 'p1')">
 							<span class='inLine'>...PopUp('<b>p01</b>', 'тесты+add/popup.html', 'p1')</span>
 						</span>&nbsp; - <i>мигает</i> часть заголовка данного абзаца,- тег с id='<b>p01</b>';
 					</li>
-					<li><span id="li2" class="olga5_popup"
+					<li><span id="li2" class="o-popup"
 							onclick="window.olga5.PopUp(this, 'тесты+add/popup.html', 'p1')">
 							<span class='inLine'>...PopUp(this, 'тесты+add/popup.html', 'p1')&nbsp;</span>
 						</span>&nbsp; - <i>мигает</i> вызывающий тег;
 					</li>
-					<li><span id="li3" class="olga5_popup"
+					<li><span id="li3" class="o-popup"
 							onclick="window.olga5.PopUp(p01, 'тесты+add/popup.html', 'p1')">
 							<span class='inLine'>...PopUp(p01, 'тесты+add/popup.html', 'p1')&nbsp;&nbsp;</span>
 						</span>&nbsp; - &nbsp;&nbsp;как 1;
 					</li>
-					<li><span id="li4" class="olga5_popup"
+					<li><span id="li4" class="o-popup"
 							onclick="window.olga5.PopUp('', 'тесты+add/popup.html', 'p1')">
 							<span class='inLine'>...PopUp('', 'тесты+add/popup.html', 'p1')&nbsp;&nbsp;&nbsp;</span>
 						</span>&nbsp;&nbsp; - &nbsp;как 2;
 					</li>
-					<li><span id="li5" class="olga5_popup" onclick="window.olga5.PopUp('тесты+add/popup.html', 'p1')">
+					<li><span id="li5" class="o-popup" onclick="window.olga5.PopUp('тесты+add/popup.html', 'p1')">
 							<span class='inLine'>...PopUp(&nbsp;&nbsp;&nbsp;'тесты+add/popup.html', 'p1')
 								&nbsp;&nbsp;&nbsp;</span>
 						</span>&nbsp; - &nbsp;&nbsp;показывает 'не ту' ссылку (пропущен <i>ссылочный</i> тег);
 					</li>
-					<!-- <li><span id="li6" class="olga5_popup" onclick="window.olga5.PopUp('тесты+add/popup.html')">
+					<!-- <li><span id="li6" class="o-popup" onclick="window.olga5.PopUp('тесты+add/popup.html')">
 							<span class='inLine'>...PopUp(&nbsp;&nbsp;'тесты+add/popup.html')
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 						</span>&nbsp; - &nbsp;правильный вызов (с умалчиваемыми параметрами);
 					</li>
-					<li><span id="li7" class="olga5_popup" onclick="window.olga5.PopUp('p01')">
+					<li><span id="li7" class="o-popup" onclick="window.olga5.PopUp('p01')">
 							<span class='inLine'>...PopUp(&nbsp;&nbsp;'p01')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 						</span>&nbsp; - &nbsp;будет показан текущий абзац (с умалчиваемыми параметрами);
 					</li> -->
-					<li><span id="li8" class="olga o5popup" o5popup='тесты+add/popup.html;'>
+					<li><span id="li8" class="o-popup" o5popup='тесты+add/popup.html;'>
 							<span class='inLine'>&nbsp;&nbsp;&nbsp;o5popup='тесты+add/popup.html; p1'
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 						</span>&nbsp; - &nbsp;&nbsp;&nbsp;аналог 2;
 					</li>
-					<li><span id="li9" class="olga5_popup"
+					<li><span id="li9" class="o-popup"
 							onclick="window.olga5.PopShow(444,333, 'тесты+add/popup.html')">
 							<span class='inLine'>...PopShow(444, 333, 'тесты+add/popup.html')&nbsp;</span>
 						</span>&nbsp; - &nbsp;&nbsp;&nbsp;аналог 2, но меньшего размера.
 					</li>
 				</ol>
-				<p class="moecomment">
+				<p class="o-comment">
 					В последнем примере показно использование еще одной <i title="не описанной в документе">обёртки</i>
 					над функцией <b>PopUp</b>.
 				</p>
@@ -716,14 +703,14 @@
 						onmouseenter="window.olga5.PopUp(this, 'тесты+add/popup.html', '  p2, left:0%, top:99%, group:p22a')" />
 					<img src="data:image/png;base64,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"
 						style="height:22px; vertical-align: middle; margin: 0; padding: 0;" id="img21b"
-						title="в центре: https://rombase.ru/o5/olga5-tests/add/popup.html"
-						o5popup='https://rombase.ru/o5/olga5-tests/add/popup.html; p2, left:50%, top:0%, group:p21b'
-						onmouseenter="window.olga5.PopUp(this, 'https://rombase.ru/o5/olga5-tests/add/popup.html', '  p2, left:50%, top:99%, group:p22b')" />
+						title="в центре: https://rombase.ru/o7/tests.o7/add/popup.html"
+						o5popup='https://rombase.ru/o7/tests.o7/add/popup.html; p2, left:50%, top:0%, group:p21b'
+						onmouseenter="window.olga5.PopUp(this, 'https://rombase.ru/o7/tests.o7/add/popup.html', '  p2, left:50%, top:99%, group:p22b')" />
 					<img src="data:image/png;base64,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"
 						style="height:22px; vertical-align: middle; margin: 0; padding: 0;" id="img21c"
-						title="вправа: https://rombase.neocities.org/o5/olga5-tests/add/popup.html"
-						o5popup='https://rombase.neocities.org/o5/olga5-tests/add/popup.html; p2, left:99%, top:0%, group:p21c'
-						onmouseenter="window.olga5.PopUp(this, 'https://rombase.neocities.org/o5/olga5-tests/add/popup.html', '  p2, left:99%, top:99%, group:p22c')" />
+						title="вправа: https://rombase.neocities.org/o7/tests.o7/add/popup.html"
+						o5popup='https://rombase.neocities.org/o7/tests.o7/add/popup.html; p2, left:99%, top:0%, group:p21c'
+						onmouseenter="window.olga5.PopUp(this, 'https://rombase.neocities.org/o7/tests.o7/add/popup.html', '  p2, left:99%, top:99%, group:p22c')" />
 					всплытия с разных доменов,- конкретноый <i>[адрес]</i> приводится во всплывающей подсказке (после
 					наведения курсора) по двум различным событиям на одном &lt;<b>img</b>&gt;-теге&nbsp;, где -
 				<ul>
@@ -746,7 +733,7 @@
 				<span class='inLine'>o5popup="width:33.3%,height:33.3%,left:33.3%,top:0%"</span>,
 				из которых <b>left</b> и <b>top</b> переопределяются в самих тегах.
 				</p>
-				<p class="moecomment">
+				<p class="o-comment">
 					<b><u><i>Пояснение</i></u></b> к всплытию по наведению курсора: из соображений безопасности оно
 					по-умолчанию отключено в браузерах.
 					Его можно разрешить, но в разных браузерах - по-разному.
@@ -798,7 +785,7 @@
 						<br />окно в центре, сокращены названия параметров
 					</div>
 				</div>
-				<span class="moecomment">
+				<span class="o-comment">
 					<b>Напоминание:</b> фокусировка всплывших окон может не срабатывать,
 					поэтому следует <b>отключить</b> полноэкранный режим основного окна.</span>
 			</div>
@@ -855,7 +842,7 @@
 			</p>
 		</div>
 		<br /> <!-- ===================================================================================== -->
-		<pre id="menu-pre" class="olga5-menuHidden" style="display:none">
+		<pre id="menu-pre" class="o-menuHidden" style="display:none">
 			{ span: 'Статья', id: "mymenu", right: '5px', top: '5px', add: '266px',  },
 			{ span: '1. Подключение всплываемого окна', ref: 'head_1' },
 			{ span: '2. Визуализация состояния всплытия окна', ref: 'head_2' },

@@ -1,5 +1,30 @@
-проверить чё там с data_o5 в ParamsFillFromScript
 
+классы!!!!
+
+в olga-snd.html проверь работу:
+<td><img class='dlassaaa:A olga_snd:over : a-11_z: loop :  "  sounds + Ceza1-25.mp3" '
+
+что за 'k' - kill ? он еще работает?
+<h4 class='olga-shp:k' id='head_32'>3.2. Подключение нового скрипта</h4>
+
+что за o5contents в pops.js? Переименовать!
+
+в shp.js вставить класс o-shpNone - бывший o5shp_none
+
+snd.js
+olga5-sndNone o-sndNone
+olga5-sndPlay o-sndPlay
+olga5-freeimg
+olga5-sndPause
+olga5-sndLoad
+
+Ao5snd.js
+  olga5sndError - найти и подставить в o-sndError  (o-sndError)
+
+Prep.js
+olga5freeimg -> o-freeImg
+
+проверить classList.remove
 
 папку media забрать из blog и разбить на отдельные составляющие (в т.ч. аудио, картинки, видосы)
 
@@ -28,7 +53,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy#syn
 
 https://cloud.google.com/blog/products/data-analytics/iframe-sandbox-tutorial
 
-http://localhost/o5/olga5-tests/ext4.html
+http://localhost/o7/tests.o7/ext4.html
 почему 
   догружаеьт модули com
   не загрузился http://localhost/o5/olga5/ref.js
@@ -38,12 +63,12 @@ http://localhost/o5/olga5-tests/ext4.html
 разобраться с возможностью '.' в назв. каталогов IsUrlNam и IsFullUrl 
 IsUrlNam -> IsUrlRef
 
-http://localhost/o5/olga5-tests/shp1.html
+http://localhost/o7/tests.o7/shp1.html
 не заполняет поля
 
  сделать с mdebug как в inc.js
 
-давать инициализацию толькодля тех, которые указаны в olga5_Start 
+давать инициализацию толькодля тех, которые указаны в olga-start 
 проверить все модули на отсутствие ненужных констант! Написать об этом в доке
 
 поубирать все o5blog
@@ -59,7 +84,7 @@ id: "gadget-dock"
 
 дописать про <b>beforeunload</b> и olga5_unload
 
-https://rombase.h1n.ru/o5/olga5-tests/shp3.html   -   для aO5.hovered все null
+https://rombase.h1n.ru/o7/tests.o7/shp3.html   -   для aO5.hovered все null
 
 если отработало по готовности, то не давать сообщение "---> ядро библиотеки ожидает события:"  [transitionend]
 
@@ -129,7 +154,7 @@ dblclick
 
 переключать видимость cart-shdw  после скроллина, а вначале  cart - невидимый
 
-в докуингтпции про меню написять про display:none в <pre id="menu-pre" class="olga5-menuhidden" style="display:none">    
+в докуингтпции про меню написять про display:none в <pre id="menu-pre" class="o-menuHidden" style="display:none">    
 
 
 отредактировать   olga5-blog.html:
@@ -162,7 +187,7 @@ o5blog)// там определена 'olga5-Start_hr'
 
 сделать и показать примеры, когда к обработки подкл.чается лишь пара скриптов из скомпилированного файла. 
 Написать, что мол если всё не нужно, а перекомпилировать лень, то...
-Переделать "4.2. Второй этап - инициализация"  с учетом olga5_Start. проверить и оттестировать !!!!!!!!!!
+Переделать "4.2. Второй этап - инициализация"  с учетом olga-start. проверить и оттестировать !!!!!!!!!!
 
 +--------------------------------------------------------------------+
 + в дальнейшем убрать классы, а всю организаци повесить на имя файла +

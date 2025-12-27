@@ -34,7 +34,7 @@
 			// 	spairs.push(m[0].replace(/\s+/g, ''))
 			// // ,m2=s(Symbol.matchAll(regexp))
 
-			if (C.consts.o5debug > 0) {
+			if (C.consts.o_debug > 0) {
 				const comments = s.match(regcomments)
 				if (comments)
 					comments.forEach(comment => {
@@ -92,7 +92,7 @@
 					urlerrs.push({ ori: nam, err: `не определено`, url: '' })
 			}
 
-			if (C.consts.o5debug > 0 && urlsets.length == 0)
+			if (C.consts.o_debug > 0 && urlsets.length == 0)
 				C.ConsoleInfo(`${modul}: именованные ссылки отсутствуют`, '   ?')
 
 			if (urlerrs.length > 0)
@@ -122,7 +122,7 @@
 
 			if (err) C.ConsoleError('>>  создание CSS  ' + err, 'InitCSS')
 			else {
-				if (C.consts.o5debug > 1)
+				if (C.consts.o_debug > 1)
 					console.log(`>>  СОЗДАНИЕ CSS   ${W.class} (для модуля ${W.modul}) с id='${id}'`)
 				csslist[W.class] = W.modul
 
@@ -197,10 +197,10 @@
 					for (const nam in xs)
 						W[p][nam] = xs[nam].val
 
-					if (C.consts.o5debug > 0) PrintParams(W.modul, xs, p, n1)
+					if (C.consts.o_debug > 0) PrintParams(W.modul, xs, p, n1)
 				}
 				else
-					if (C.consts.o5debug > 0) C.ConsoleInfo(`${W.modul}: параметры и ссылки берутся только из скрипта ядра библиотеки`)
+					if (C.consts.o_debug > 0) C.ConsoleInfo(`${W.modul}: параметры и ссылки берутся только из скрипта ядра библиотеки`)
 			}
 		}
 
@@ -212,7 +212,7 @@
 			SplitParams: SplitParams,
 		})
 
-		if (C.consts.o5debug > 0) PrintParams(C.save.libName, C.save.xs, C.save.p, C.save.n1)
+		if (C.consts.o_debug > 0) PrintParams(C.save.libName, C.save.xs, C.save.p, C.save.n1)
 
 		const p = 'urlrfs',
 			xs = {}, // временное хранилилище для считываемых параметров
@@ -224,7 +224,7 @@
 		DeCodeUrlRfs(defs, C.save.libName)
 
 		for (const nam in defs) { xs[nam].url = defs[nam] }
-		if (C.consts.o5debug > 0) PrintParams(C.save.libName, xs, p, n1)
+		if (C.consts.o_debug > 0) PrintParams(C.save.libName, xs, p, n1)
 
 		return true
 	})

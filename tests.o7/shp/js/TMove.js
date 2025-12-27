@@ -1,16 +1,18 @@
 "use strict";
 export class TMove {
     static head = ' Тестовый пример:  '
+    static fmtOK = "background: lightgray; color: black;"
+    static fmtErr = "background: yellow; color: black;"
     static #StopMove(e) {
         const
             o5Move = TMove.#o5Move,
             aO5 = o5Move.aO5,
-            shp = aO5.shp,
+            shp = aO5.cnst.shp,
             dif = o5Move.mousDiff,
             t = aO5.transform
 
         Object.assign(o5Move.div.style, { display: 'none', })
-        shp.classList.remove('o5_moved')
+        shp.classList.remove('o-shpMoved')
         shp.style.outline = o5Move.divStrt.outline
 
         if (shp.classList.contains('is-moveable')) {
@@ -32,7 +34,7 @@ export class TMove {
                     if (
                         p1.left < p2.left || p1.top < p2.top || p1.bottom > p2.bottom || p1.right > p2.right
                     ) {
-                        errs.push(`выводить  ${aO5.id} за пределы видимости`)
+                        errs.push(`выводить  ${aO5.name} за пределы видимости`)
                         break
                     }
                 }
@@ -43,7 +45,8 @@ export class TMove {
                 if (xO5 !== aO5) {
                     const
                         pF = xO5.fixs,
-                        p2 = (pF.T.xO5 || pF.L.xO5 || pF.R.xO5 || pF.B.xO5) ? xO5.posC : xO5.shp.getBoundingClientRect()
+                        p2 = (pF.T.xO5 || pF.L.xO5 || pF.R.xO5 || pF.B.xO5) ? xO5.posC
+                            : xO5.cnst.shp.getBoundingClientRect()
                     if (
                         (
                             (p1.left <= p2.right && p1.right >= p2.left) ||
@@ -53,10 +56,10 @@ export class TMove {
                             (p2.top <= p1.bottom && p2.bottom >= p1.top)
                         )
                     )
-                        errs.push(`накладывать ${aO5.id} на тег '${xO5.cnst.id}'`)
+                        errs.push(`накладывать ${aO5.name} на тег '${aO5.name}'`)
                 }
             if (errs.length)
-                window.olga5.C.ConsoleLog(TMove.head, ` Не следует ${errs.join('; ')}`, '', 1, e)
+                window.olga5.C.ConsoleLog(TMove.head, ` Не следует ${errs.join('; ')}`, 1, e)
         }
         aO5.pBase.ReorderAO5s()
     }
@@ -109,7 +112,7 @@ export class TMove {
             height: p.height + 'px',
         })
 
-        shp.classList.add('o5_moved')
+        shp.classList.add('o-shpMoved')
         // shp.classList.add('o5_moved_' + + performance.now().toString(36))
 
         TMove.#DoMove(e)
@@ -145,8 +148,8 @@ export class TMove {
         e.stopPropagation()
 
         if (TMove.#o5Move) {
-            window.olga5.C.ConsoleLog(
-                TMove.head, ` Не сброшен предыдущий o5Move для '${TMove.#o5Move.aO5.name}'`, '', 1, e)
+            console.log("%c%s", TMove.fmtErr, TMove.head, 
+                ` Не сброшен предыдущий o5Move для '${TMove.#o5Move.aO5.name}'`, '', 1, e)
             TMove.#StopMove(e)
         }
         TMove.#o5Move = new TMove()
@@ -157,8 +160,7 @@ export class TMove {
     }
     static #Finish(e) {
         if (!TMove.#o5Move) {
-            window.olga5.C.ConsoleLog(
-                TMove.head, ` Завершение сдвига при пустом o5Move`, '', 1, e)
+            console.log("%c%s", TMove.fmtErr, TMove.head, ` Завершение сдвига при пустом o5Move`, '', 1, e)
             return
         }
         document.removeEventListener('mouseleave', TMove.#Finish)

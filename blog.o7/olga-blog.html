@@ -6,7 +6,7 @@
 	<title>olga5-blog</title>
 	<link rel="shortcut icon" href="./media/favicon.svg" type="image/x-icon">
 
-	<link data-href='../css/o5ini.css' media='screen' rel='stylesheet' />
+	<link data-href='../css.o7/ini.css' media='screen' rel='stylesheet' />
 	<script data-src='+mnu.js' scrollY='-32'></script>
 	<script data-src='+shp.js'></script>
 	<script data-src='+pop.js'></script>
@@ -26,14 +26,13 @@
 	<script data-src='+snd.js' btn_play='images + /play.png' btn_stop='images + /play_Freepik.png'></script>
 	<script data-src='+add/pusto.js' moe-attr='мой атрибут'></script>
 
-	<link data-href='+../css/olga5-a.css' media='screen' rel='stylesheet' />
-	<link data-href='+../css/olga5-o5.css' media='screen' rel='stylesheet' />
-
-	<!-- <script o5debug='2' _src='https://rombase.neocities.org/olga5/com!.js' -->
-	<!-- src='https://rombase.h1n.ru/o5/olga5/com!.js' -->
+	<link data-href='+../css.o7/basis.css' rel='stylesheet' />
+	<link data-href='+../css.o7/popup.css' rel='stylesheet' />
+	
+	<!-- <script o_debug='2' _src='https://rombase.neocities.org/o7/com!.js' -->
 	<!-- src='https://leonrom.github.io/o5/olga5/com!.js' -->
 	<!-- ../olga5/com.js -->
-	<script src='../olga5/com.js' _блог_o5='https://olga-5.blogspot.com/2020/02'
+	<script src='../o7/com.js' _блог_o5='https://olga-5.blogspot.com/2020/02'
 		#_url_html='# адрес текущей страницы (этот и 2 следующих - закомментированы)'
 		#_url_root='# адрес сайта (с текущей страницей)' #_url_olga5='# адрес загрузки файла com!.js'>
 	</script>
@@ -64,15 +63,15 @@
 			margin: 0 !important;
 		}
 	</style>
-	<div class="olga5_Start:pop" dir="ltr" trbidi="on">
-		<div class="olga5_diagonal"> статья ещё&nbsp;редактируется
+	<div class="olga-start:pop" dir="ltr" trbidi="on">
+		<div class="o-diagonal"> статья ещё&nbsp;редактируется
 			<br /><span style="font-size: small;">(завершу, если будет потребность)</span>
 		</div>
 		<img alt="" border="0" width="200" style="display:none" data-original-height="599" data-original-width="662"
 			src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiMZJcdnxsSFyvnAZw8l77whFlmFtK2lSFVWMBOP5WOUjT8hDKjwdeaCga7KWb_PyfB_0LyGLEpt8klkk87WClaUNusaa-gy4vqPutNiXnU59nF8ar1tMFKexagvv4IOCG8hngjxEzP_4mZy1q8ElksZZMm8CSHAJw6rfWZ-VpDwpCUCEtKdQyx57nk/s200/blog.png" />
-		<p class="olga5_page_header">
+		<p class="o-pageHeader">
 			Особенности подключения <i>библиотеки</i>
-			&nbsp;<a id="a_1" href="+ ../blog/olga5-all.html" target="olga5-addPage"><code>Olga5</code></a>&nbsp;
+			&nbsp;<a id="a_1" href="+ ../blog/olga5-all.html" target="olga5-addPage"><code>Olga7</code></a>&nbsp;
 			к блогам
 		</p>
 
@@ -99,7 +98,7 @@
 		</p>
 		<p>
 			Посмотреть пример подключения скриптов <i>библиотеки</i> к <u><b>данному</b></u> блогу
-			можно <code class="olga5_popup"
+			можно <code class="o-popup"
 				onmouseup="window.olga5.PopShow( 690, 640, '+/help/blogger.html')">здесь</code>.
 		</p>
 		<h3>Подключение модулей к Blogger'у</h3>
@@ -109,7 +108,7 @@
 		</p>
 		<img id="img1"
 			src="https://1.bp.blogspot.com/-lsAxN0jO9bI/YE-gYHFY27I/AAAAAAAAESE/3awWY0iyHG0B2yoxM7PqjojogluihpK3gCLcBGAsYHQ/s783/toblog1.png" />
-		<p class="moecomment">
+		<p class="o-comment">
 			Для увеличения избражения наведите на него курсор.
 		</p>
 		<p>
@@ -148,7 +147,7 @@
 		Также при вставке скриптов в <b>html</b>-заголовок блога рекомендуется:
 		<ul>
 			<li>задавать конкретное значение для
-				<span o5popup='+ ../blog/olga5-shp.html?o5nomnu#head_42; width: 430, height: 390'>olga5_owners</span>,
+				<span o5popup='+ ../blog/olga5-shp.html?o_nomnu#head_42; width: 430, height: 390'>olga5_owners</span>,
 				например <b>olga5_owners</b>="n";
 			</li>
 			<li>все вставляемые теги должны быть аккуратно закрыты;</li>
@@ -176,7 +175,7 @@
 			кликом по показанной на рисунке (крайней слева) кнопкой.
 		</p>
 
-		<h4 id='o5_pageLoads'>Инициализация страниц блога</h4>
+		<h4 id='o_pageLoads'>Инициализация страниц блога</h4>
 		<p>
 			Поскольку показ страниц в <b>Blogger</b>'е' выполняется по алгоритму, определяемому блоговским шаблоном,
 			то 'стандартное' т.с. событие <b>DOMContentLoaded</b> не обязательно свидетельствует об отображении
@@ -198,7 +197,7 @@
 		а остальные события для этой страницы игнорируются.
 
 		<p>
-			Поэтому в атрибуте <b>o5_pageLoads</b> (скрипта <code>com!.js</code>) следует указывать
+			Поэтому в атрибуте <b>o_pageLoads</b> (скрипта <code>com!.js</code>) следует указывать
 			конкретное событие, инициализирующее страницы блога.
 		</p>
 		<p>
@@ -224,7 +223,7 @@
 			либо через меню редактора 'Вставить изображение' (в обоих режимах,- и 'HTML', и 'Режим верстки').
 			<br />При вставке <b>Blogger</b> создаёт довольно сложную конструкцию:
 		</p>
-		<pre class="olga5_codeTextSeparate">
+		<pre class="o-codeTextSeparate">
 &lt;div class="separator" style="clear: both;"&gt;
     &lt;a href="[первый <b>url</b> иконки]"
         style="display: block; padding: 1em 0; text-align: center; "&gt;
@@ -240,7 +239,7 @@
 			При этом, для того, чтобы картинка <i>не светилась</i> на странице добавляется
 			параметр <i>display:none</i>. В итоге вставка может иметь вид:
 		</p>
-		<pre class="olga5_codeTextSeparate">
+		<pre class="o-codeTextSeparate">
 &lt;img alt="" border="0" width="200" 
     data-original-height="599" data-original-width="662"
     src="[второй <b>url</b> иконки]" 
@@ -254,13 +253,13 @@
 			находящийся в подпапке <b>wp-includes</b> корневой папки проекта.
 			Для этого следует (в конец) <b>functions.php</b> дописать:
 		</p>
-		<pre class="olga5_codeTextSeparate">
+		<pre class="o-codeTextSeparate">
 	add_action( 'wp_head', 'olga5_script_to_head', 25 );
 	 
 	function olga5_script_to_head() {	 
 		echo '
 		&lt;!-- 
-			упомянутый <code class="olga5_popup" onmouseup="window.olga5.PopShow( 555, 555, '+/help/blogger.html')">перечень</code> скриптов <i>библиотеки</i>
+			упомянутый <code class="o-popup" onmouseup="window.olga5.PopShow( 555, 555, '+/help/blogger.html')">перечень</code> скриптов <i>библиотеки</i>
 		--&gt;
 		';
 	}

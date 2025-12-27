@@ -81,7 +81,7 @@
 
 			clsNs.forEach(clsN => {
 				if (!cssAlls.find(cssAll => { return cssAll.val == clsN.val }))
-					if (clsN.val != 'olga5_isLoading')//может отсутствовать css/o5ini.css
+					if (clsN.val != 'o-isLoading')//может отсутствовать css/ini.css
 						errCSS.push({ css: clsN.val, used: clsN.txt })
 			})
 			const s0 = `  ==${lognam}== конец  проверки - `

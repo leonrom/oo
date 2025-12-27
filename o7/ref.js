@@ -94,7 +94,7 @@
 
 			if (rez.length < 1) C.ConsoleError(`${W.modul}: не выполнено ни одной подстановки?`)
 			else
-				if (C.consts.o5debug > 0) C.ConsoleInfo(`${W.modul}: выполнено подстановок для тегов:`, rez.length, rez)
+				if (C.consts.o_debug > 0) C.ConsoleInfo(`${W.modul}: выполнено подстановок для тегов:`, rez.length, rez)
 
 			if (undefs.length > 0)
 				C.ConsoleError(`${W.modul}: неопределённые адреса: `, undefs.length, undefs)
@@ -117,7 +117,7 @@
 				onPlayerStateChange = e => {
 					const act = e.target.getPlayerState(),
 						aO5 = e.target.g.aO5
-					if (C.consts.o5debug > 0) {
+					if (C.consts.o_debug > 0) {
 						let s = ''
 						switch (act) {
 							case 0: s = 'воспроизведение видео завершено'; break
@@ -218,7 +218,7 @@
 		if (s) {
 			const params = C.SplitParams(s, o_attrs, ';\n'),
 				otags = ParseTagAttrs(params)
-			if (C.consts.o5debug > 0) C.ConsoleInfo(`${W.modul}: обрабатываемые атрибуты тегов`, o_attrs, otags)
+			if (C.consts.o_debug > 0) C.ConsoleInfo(`${W.modul}: обрабатываемые атрибуты тегов`, o_attrs, otags)
 			ConvertUrls(otags)
 		}
 

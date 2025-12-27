@@ -138,7 +138,7 @@
 									else errs.push(modul)
 							}
 							C.owners.push({ start: tag, modules: quals, origcls: m }) // специально чуть по-иному
-							if (C.consts.o5debug > 1)
+							if (C.consts.o_debug > 1)
 								console.log(`${olga5_modul}/${modulname} QuerySelectorInit: id='${tag.id}',  '${m}', \n\t${quals}`)
 						}
 					}
