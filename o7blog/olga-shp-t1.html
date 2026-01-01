@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+    <title>olga5-shp-t1</title>
+    <link data-href='../o7css/ini.css' media='screen' rel='stylesheet' />
+
+    <script src='http://localhost/oo/olga7/com.js' o5consts=" o_nomnu='0'; o_noact='0';"
+        data-o_urlrfs="
+      тесты='+ ../olga5-tests';
+      блог_o5='https://olga-5.blogspot.com/2020/02';
+      images=_olga + ../media/image;       
+			help=_olga + ../help;
+      # _html='# адрес текущей страницы (этот и 2 следующих - закомментированы)';
+      # _root='# адрес сайта с текущей страницей';
+      # _olga='# адрес загрузки файла com!.js';
+    ">
+    </script>
+    <script data-src='+dbg.js' data-load="up"></script>
+    <script data-src='+shp.js'></script>
+    <!-- <script data-src='+pop.js'></script>
+    <script data-src='+mnu.js' data-scrollY='-32'></script>
+    <script data-src='+ref.js' o_attrs="img=image_play;a,img,audio=href,data-href,src,_src;" o_urlrfs="images=_olga + ../media/image;
+			sounds=https://archive.org/download/clouds_20200310;
+
+			iTunes-icon='images + /myMusikIT.png' # --- только для snd ---;
+	       	Ceza1-25=sounds+/Ceza1-25.mp3;
+
+		    мой-блог=https://turkceile.blogspot.com/2017/02/; # --- только для shp ---;
+        	_блог_Olga=http://turkish4dummies1.blogspot.com/;
+
+			#Duduk_cip=//www.youtube.com/embed/1Vm4dD-a-yA?rel=0&amp;vq=hd240';			
+			Duduk_cip=;
+			">
+            </script>
+    <script data-src='+snd.js' btn_play='images + /play.png' btn_stop='images + /play_Freepik.png'>
+    </script>
+    <script data-src='+add/pusto.js' moe-attr='мой атрибут'></script> -->
+    <script data-src='+inc.js'></script>
+
+    <link rel="shortcut icon" href="./media/favicon.svg" type="image/x-icon" />
+
+	<link data-href='+../o7css/basis.css' rel='stylesheet' />
+	<link data-href='+../o7css/popup.css' rel='stylesheet' />
+	<link data-href='+../o7css/o-shp.css' rel='stylesheet' />
+
+    <link data-href='+../o7css/o-shp.css' media='screen' rel='stylesheet' />
+    <script>
+        // document.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('o_isInited', () => {
+            const div = document.getElementById("shp-demo")
+            if (div) {
+                const top = div.offsetTop
+                window.scrollTo(0, top)
+                div.addEventListener('o_isInited', () => {
+                    window.scrollTo(0, 260)
+                    let div;
+                    div = document.getElementById('shp1'); if (div) div.scrollTo(150, 100)
+                })
+            }
+        })
+
+        function CbVisible(cbx) {
+            const fix = cbx.checked ? 1 : 0,
+                demo = document.getElementById("shp-demo"),
+                text = document.getElementById("shp-text_clon")
+
+            const p1 = text.getBoundingClientRect()
+            demo.style.position = fix ? 'fixed' : 'relative'
+            const p2 = text.getBoundingClientRect()
+            console.log(`p1.top=${p1.top}, p2.top=${p2.top}, `)
+
+            window.olga7.shp.DoChgs.MakeScroll(0.1, 0, body.pO5, true)
+        }
+        function DoScroll(scV) {
+            if (Math.abs(scV) < 1) {
+                const wshp = window.olga7.shp
+                wshp.DoChgs.MakeScroll(scV, 0, body.pO5, true)
+                // window.dispatchEvent(new CustomEvent('o_makeScroll',
+                //     { detail: { scV: scV, scH: 0, pO5: body, revers: false } }
+                // ))
+            }
+            else{
+                window.olga7.canDoScroll = true
+                window.scrollBy(0, scV)}
+        }
+    </script>
+
+</head>
+
+<body id='body'>
+    <div id="div_strt" class="olga-start" dir="ltr" trbidi="on">
+
+        <h3 id='head_2'>2. Иллюстрация работы</h3>
+        <div id='kst'>
+            <div>
+                <p>
+                    Для ознакомления с <b>работой скрипта</b> - следует
+                    <span
+                        title="используя полоску скроллинга, расположенную слева от 'зелёного' текста">прокрутить</span>
+                    приведенный ниже <i>зелёный</i> фрейм.
+                    Вникать в написанное в нём не нужно (писалось давно, когда еще только
+                    <span title=" и (неофитствуя) полагал, что уже много чего знаю">начинал</span> учить Турецкий),-
+                    достаточно просматривать скроллингом позиционирование блочных фрагментов фрейма.
+                </p>
+            </div>
+            <div id="shp-demo" class="olga-shp:T:i=kst/c,w" style="
+                    margin-left: 22px;
+					padding:4px;padding-left: 0px; direction: rtl; background-color: palegreen; 
+                    border: solid 8px blueviolet;
+            		width: calc(99% - 63px);
+                    width: 863px;
+                    height: 333px; 
+                    overflow-y: scroll;
+                    overflow-x: hidden; ">
+                <div id="o5-1"
+                    style="overflow-y:hidden; direction: ltr;background-color:inherit;cursor: default;padding-left: 6px;">
+                    <div>
+                        <p>
+                            Во-первых, в ней отсутствуют "любовные терзания". Ну... <i>почти</i> отсутствуют, потому,
+                            что
+                            без них трудно представить себе турецкого эстрадного певца.
+                            Это раньше... при низко-эффективном производстве... у турок (как и у русских) песня служила
+                            синхронизации коллективной деятельности.
+                            Трудовой или военно-грабительской. А ныне, во время социального благоденствия потребления...
+                            да
+                            ещё в тёплом
+                            турецком климате...
+                            ну о чём еще людям беспокоиться-то, кроме как не о синхронизации любовных влечений?
+                        </p>
+                    </div>
+
+                    <div id='shp-text' class="olga-shp:T:id=shp-demo;" style="
+                        margin-left: 55px;
+                        height:127px;
+                        width:calc(99% - 66px);
+                        width:766px;
+                        background-color:darkseagreen;
+                        overflow-y: scroll;">
+
+                        <pre class="test-name">
+1.Söz gümüşse sükut altındır
+2.Masal okuyor bilmiyor o zır deli
+3.Rüzgar eken fırtına biçer
+4.Kendi düşen ağlamaz yani
+
+5.Sen sen ol kalp kırma
+6.Uykuların kaçar sonra
+7.Akıllı ol oyuna gelme
+8.Tepe takla olursun eden bulur sonunda
+
+9.Pireyi deve yaptı dilli düdük
+10.Ateşe bile bile körükle gidiyor
+11.Kendi kuyusunu kazıyor enayi
+12.Cırcır ötüyor
+
+13.Bana göre hava hoş kendi bilir
+14.Beni bilen iyi biliyor
+15.Boşa çabaları bu gönüllerde
+16.Hükmü geçmiyor
+
+17.Hadi sev hadi hadi hadi gözünü karart ta
+18.Koy elini kalbine şu yalan hayatta
+19.Gelen geçer kalan göçer unutma
+20.Sana da kalmaz bu ölümlü dünya
+
+21.Caka satıyor utanması yok
+22.O kendini üstün buluyor, ama yanılıyor
+23.Burnu Kaf dağında mübarek
+24.O kendini bu alemin kralı sanıyor
+
+25.Şöyle bir silkelen de gel kendine
+26.Hududunu haddini bil ileri gitme
+27.İki kere iki dört hesabı kolay
+28.Aç kalbini gel dır dır etme..
+</pre>
+                    </div>
+
+                    <div>
+                        <p class="comment">
+                            Как кому, а мне поначалу было ну очень трудно уловить соответствие между написанным текстом
+                            песни и
+                            слышащимся её исполнением. Спасла программа <a
+                                href="http://www.audacityteam.org/download/">Audacity</a>,
+                            позволившая прослушивать
+                            отдельные фрагменты на замедленной скорости.
+                        </p>
+                        <p>Чтобы передать все придыхания и причмокивания исполнителя дополнительно подредактировал текст
+                            песни:
+                        </p>
+                        <ul>
+                            <li>надстрочными буквами показаны "добавленные" звуки (либо просто мычание между согласными,
+                                либо
+                                удлинение тех букв, которые должны бы писаться "с крышечкой")</li>
+                            <li>подстрочными - наоборот: "проглоченные". Если была замена, то еще и перечеркнута</li>
+                            <li>значком тильды показано явное отделение суффиксов от корня. У турок суффикс иногда
+                                вообще
+                                звучит
+                                отдельным словом.</li>
+                        </ul>
+                        <p>
+                            Ниже приведен разбор отдельных куплетов <b style="color: blue;">с дословным переводом</b>.
+                        </p>
+                        <p>
+                            Строки перенёс так, как мне "звучит" ритм песни, но прописные буквы оставлены как в исходном
+                            тексте.
+                            При этом смысл несколько изменился — но в песнях однозначность не всегда обязательна.
+                            Турецкие суффиксы в русском получаются предлогами и кое-где их отделил дефисом.
+                        </p>
+
+                        <div id='shp_5÷8' class="olga5_shp_:-1TO:id=shp-demo" olga5_tableKuplet">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <pre>5.Sen sen ol kalp kırma
+6. Uy<sup>u</sup>kuların kaçar sonra
+7. Akıllı ol oyuna gelme
+8. Tepe takla olur~
+   sun ede<sup>E</sup>n bulur
+   sonunda<sup>A</sup>
+</pre>
+                                        </td>
+                                        <td>
+                                            <pre>Ты ты [тобой] будь сердце не-ломай
+Сны-твои побегут потом
+С-разумом будь к-игре не-приходи
+Вершина кувыркание возможный~
+  ты делающий найдёт
+  в-конце
+</pre>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        Слова к стр. 5 &div; 8:
+                        <ul>
+                            <li>Uy<sup>u</sup>kuların — похоже, турки гласными крутят, как цыган солнцем. Вставляют где
+                                попало…
+                                и без особых правил — абы не напрягаться при произношении.</li>
+                            <li>"eden bulur sonunda" — "ищите и обрящете" + "работающему воздастся" (ага, когда-то…
+                                потом...)
+                            </li>
+                        </ul>
+
+                        <div id='shp_9÷12' class="olga5_shp_:-1TP:id=shp-demo" olga5_tableKuplet">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; border-top: 1px solid #000000;
+							  padding-bottom: 0.1cm; padding-left: 0.1cm; padding-right: 0cm; padding-top: 0.1cm;">
+                                            <pre>9. Pir<sub>e</sub>yi deve yaptı
+   dilli düdük
+10. Ateş<sub>e</sub> bile bile körükle gidiyor
+11. Kendi kuyusunu
+   kazıyor enayi
+12. Cırcır ötüyo<sup>O</sup>r
+</pre>
+                                        </td>
+                                        <td style="border: 1px solid #000000; padding: 0.1cm;">
+                                            <pre>Блоху в-верблюда сделал
+   языкастый дудка
+К-огню намеренно с-мехами идёт
+Сам яму-свою
+   копает дурак
+Балаболка щебечет
+</pre>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        Слова к стр. 9 &div; 12:
+                        <ul>
+                            <li>Pir<sub>e</sub>yi — перья… блохи прячутся в перьях</li>
+                            <li>bile bile — "два подряд — наречие" — намеренно, знаючи</li>
+                            <li>kendi — сам, свой, собственный</li>
+                            <li>enayi - балда, дурак, идиот, чудак</li>
+                            <li>Cırcır - трещетка, болтун, сорока - "чирикалка"</li>
+                        </ul>
+
+                        <div id='shp_13÷16' class="olga5_shp_:-1UpC:id=shp-demo" olga5_tableKuplet">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <pre>13. Bana göre hava hoş
+   kendi bilir
+14. Beni bile<sup>E</sup>n iyi biliyor
+15. Boşa çabaları
+   bu gönüllerde
+16. Hükmü geç~miyor
+</pre>
+                                        </td>
+                                        <td>
+                                            <pre>Мне взгляду погода хороша
+   сам знает
+Меня знающий хорошее узнает
+Напрасно усилия
+   это в-сердцах
+Приказ не~продвинется
+</pre>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <div id='shp_17÷20' class="olga5_shp_:-2TopS:id=shp-demo" olga5_tableKuplet">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <pre>17. Hadi sev hadi hadi
+   hadi gözünü karart<sup>I</sup> ta
+18. Koy elini kalbine şu yalan hayat<sup>I</sup>ta
+19. Gelen <sup>I</sup> geç<sub>e</sub><sup>A</sup>r<sup>I</sup> k<sub>a</sub><sup>O</sup>lan göç<sub>e</sub><sup>A</sup>r<sup>I</sup>unut<sup>U</sup>ma
+20. Sana da kalmaz
+   bu ölümlü dünya
+</pre>
+                                        </td>
+                                        <td>
+                                            <pre>Давай люби давай давай
+   давай глаза-твои сомкни да
+Положи руку-твою к-сердцу-твоему эту лживая в-жизни
+Входящий пройдёт остающийся переедет не-забывай
+Тебе тут не-остаться
+   этот смертный в-мир
+</pre>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        Слова к стр. 17 &div; 20:
+                        <ul>
+                            <li>hadi hadi — давай давай, ходи ходи</li>
+                            <li>koy - похоже на русское "койка"</li>
+                            <li>göz-ünü — именно глаз<b>а</b> (мн.ч.), также, как göz-lerini</li>
+                            <li>da — что-то мне кажется, что у них это м.б. и "да", и "же", и даже "тут"</li>
+                        </ul>
+
+                        <div id='shp_21÷24' class="olga5_shp_:-1T:id=shp-demo" olga5_tableKuplet">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <pre>21. Caka satıyor utan~
+22. ması yok O ken~dini üstün buluyor,
+   ama ya~nılıyor
+23. Bur<sup>U</sup>nu Kaf dağında mübarek
+24. O kendini bu a<sup>A</sup>lemin
+   kralı sanıyor
+</pre>
+                                        </td>
+                                        <td>
+                                            <pre>Важничание представляет смущение-
+то нет. Он сам-ого выше находит,
+   но ошибается
+Нос Каф на-горе святой
+Он себя этот мира
+   король считает
+</pre>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        Слова к стр. 21 &div; 24:
+                        <ul>
+                            <li>caka – важничание, хвастовство</li>
+                            <li>satmak – продавать, хвастаться/представляться, предавать — т. е. вовсе не торговля</li>
+                            <li>сака satmak - выпендриваться, напускать на себя важность</li>
+                            <li>utanmak - стыдиться, смущаться, конфузиться</li>
+                            <li>alem — вообще-то "флаг" (наверное al=алый флаг), а мир пишется как âlem — поэтому там и
+                                удлинение звучит</li>
+                        </ul>
+
+                        <div id='shp_25÷28' class="olga5_shp_:-1T:id=shp-demo" olga5_tableKuplet">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <pre>25. Şöyle bir<sup>I</sup> sil<sup>I</sup>kelen
+   de gel ken~dine
+26. Hududunu haddini bil ileri git~me
+27. İ<sub>k</sub><sup>Ç</sup>i kere i<sub>k</sub><sup>Ç</sup>i dört hesabı kolay
+28. Aç kalbini gel
+  dIr dIr etme...
+</pre>
+                                        </td>
+                                        <td>
+                                            <pre>таквот чуть встряхнись
+   да приди в-себя
+Ограничению-твоему предел знай перёд не-уходи
+Два раз два четыре счёт легкий
+Открой сердце-твоё приди
+   галдеж не-делай
+</pre>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <p class="olga5_shp_:R:-1" id="remo1">
+                            Слова к последним стр. 25 &div; 28:
+                        </p>
+                        <div class="olga5_shp_:N:-1" id="remo1"></div>
+                        <ul>
+                            <li>şöyle - вот так, таким образом, следующим образом;</li>
+                            <li>şöyle bir - кое-как, мельком, поверхностно, немного;</li>
+                            <li>silkelemek - стряхнуть, отряхнуть</li>
+                            <li>de gel — наверное, одинаково, что "да приди", что "тут приди" (в смысле местного падежа
+                                -de)
+                            </li>
+                            <li>ileri — перёд, передняя часть. Вот и догадывайся,- &lt;haddini bil = предел знай&gt; или
+                                &lt;bil
+                                ileri git~me = знай не-уходи&gt; - хотя суть-то одна.</li>
+                            <li>вместо "İki kere iki" слышится "İçi kere içi" — такое у них часто бывает. Хоть и пишут,
+                                что
+                                у
+                                турок буквы как написаны, так и читаются — ага...</li>
+                            <li>dırdır - [неумолкаемая] надоедливая болтовня, трескотня, галдёж (в словаре Баксакова —
+                                одним
+                                словом)</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <div>
+                <button type="button" onclick="DoScroll(0.1)">up0</button>&nbsp;
+                <button type="button" onclick="DoScroll(-0.1)">dn0</button>&nbsp;
+                <button type="button" onclick="DoScroll(1.1)">up1</button>&nbsp;
+                <button type="button" onclick="DoScroll(-1.1)">dn1</button>&nbsp;
+                <span><input id="fixclons" type="checkbox" onclick="CbVisible(this)" title="исходники">fix</span>
+                <span><input id='blockScroll' type="checkbox" title="блокировать скроллинги">блк.скролл</span>
+            </div>
+
+            <br />
+            <br />
+            <pre>
+
+
+
+
+Подвисание <i>зелёного</i> фрейма 
+вверху окна браузера
+(как и его отдельных 
+<span title="выделены светлыми фонами">куплетов</span>)
+определяется настройками 
+соответствующих тегов.
+Этот фрейм будет 'упираться' в 
+верх экрана до тех пор, пока на экране не появится текст после
+заголовка
+п.4.2 в <span tutle="точнее,- в его теге <p>">котором</span> помещен 
+валификатор отмены зависания.
+При скроллинге же самог&#243; 
+<i>зелёного</i> контейнера (полосками в его левой стороне) <i>первый
+блок</i>,
+содержащий полный текст песни (
+у него есть слева своя полоска скроллинга) и <i>Youtube</i>'вский
+видеоклип,
+<i>зависнет</i> вверху этого контейнера.
+Тексты каждого из куплетов 
+будут <i>подвисать</i> под этим <i>первым блоком</i>.
+В примере проиллюстрированы
+способы замещения предыдущего куплета (числа - диапазон строк текста):
+Специальный пример иллюстрирующий 
+варианты подвисания приведен ниже в
+<span o5popup='#head_51; width: 666, height: 444'> п.&nbsp;5.2</span>.
+То, что часть куплетов, вытолкнутая 
+после <i>подвисания</i>)
+позже оказывается видимой 
+под <i>первым блоком</i>
+а часть - исчезает напрочь - 
+объясняется их возвратом в исходное п
+оложением в скроллируемом тексте.				
+			</pre>
+        </div>
+    </div>
+</body>
+
+</html>

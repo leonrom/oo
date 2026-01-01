@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>4shp1</title>
+	<link rel="shortcut icon" href="../add/favicon.svg" type="image/x-icon">
+
+	<link href='./js/all.css' media='screen' rel='stylesheet' />
+	<!-- <script src='./add/move.js'></script> -->
+	<script type="module" src='./js/all.js'></script>
+
+	<script src='../../olga7/com.js' o_urlrfs="html='+ ../o7tests/shp/html';"></script>
+
+	<script data-src='+dbg.js' data-load="up"></script>
+
+	<script data-src='+shp.js'></script>
+	<script data-src='+inc.js'></script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			window.scrollTo(0, 260)
+			let div;
+			div = document.getElementById('div1'); if (div) div.scrollTo(950, 750)
+			div = document.getElementById('div2'); if (div) div.scrollTo(750, 650)
+			div = document.getElementById('div3'); if (div) div.scrollTo(550, 450)
+			// div = document.getElementById('shp1'); if (div) div.scrollTo(150, 50)  // не срабатывает ??
+			div = document.getElementById('div1a'); if (div) div.scrollTo(950, 750)
+			div = document.getElementById('div2a'); if (div) div.scrollTo(750, 650)
+			div = document.getElementById('div3a'); if (div) div.scrollTo(550, 450)
+		})
+		window.addEventListener('o_isInited', () => {
+			window.scrollTo(0, 260)
+			let div;
+			div = document.getElementById('shp1'); if (div) div.scrollTo(150, 100)  
+		})
+	</script>
+</head>
+
+<body id="body" style="height: 1500px;">
+	<div class='example olga-start'>
+		<div class='cboxed'>
+			<div o5include='html + /0shp.html?.cboxedinc'
+			style="
+     overflow: hidden; 
+    /* margin: 10px; */
+    height: 100%;
+"
+			></div>
+		</div>
+
+		<pre id="ref0" class="pre-head"><b>Варианты подвисания <i>olga-shp</i></b>
+	</pre>
+		<div class="thetext" style="height: 227px;">
+			<p>
+				Демонстрация подвисабельных тегов <b>shp2</b> и <b>shp3</b>, находящихся внутри подвисабельного же тега <b>shp1</b>.
+				Для них не заданы специальные квалификаторы <b><i>контейнеров</b></i> зависания, 
+				поэтому таковыми принемается (по умолчанию) тег <b>shp1</b> 
+				<br>
+				При этом наблюдать:
+			</p>
+			<ul>
+				<li>зависение тегов <b>shp0</b> и <b>shp1</b> относительно контейнеров <b>div3</b>&mdash;<b>div1</b></li>
+				<li>зависение тегов <b>shp2</b> и <b>shp3</b> относительно тега <b>shp1</b></li>
+			</ul>
+			<!-- <p class="o-comment">
+				ВозможносТеги <b>shp2</b> и <b>shp3</b>, будучи заключеными никак не взаимодействуют с .
+			</p> -->
+			<div>
+				<div o5include='html + /all.html?.descript'></div>
+			</div>
+		</div>
+
+		<div id="div1" class="div" style="top:11px;left: 22px;">
+			<span>div1</span>
+			<div id="cbo1" class="cbo" style="background-size: 25px 25px; width: 3300px; height: 2200px;">
+
+				<div id="div2" class="div" style="left:1000px; top:800px;">
+					<span>div2</span>
+					<div id="cbo2" class="cbo">
+
+						<div id="div3" class="div" style="left:800px; top:700px;">
+							<span>div3</span>
+							<div id="cbo3" class="cbo"
+								style="background-size: 15px 15px; 
+									width: 1900px; height: 1300px; ">
+
+								<div id="shp1" class="moved olga-shp:TrLb-2A:i=div3/c,w" 
+									style="left:620px; top:490px; 
+                                    width: 310px; height: 222px;
+										background-color: d;   
+                                         border: 6px solid red;  
+                                         opacity: 0.82; overflow: auto; ">
+									<p style="position: sticky; left:2px;   top: 2px;">название объекта</p>
+									<div id="scbo1" class="cbo" style="background-size: 15px 15px; 
+									border: 2px blue solid;
+									width: 600px; height: 600px; 
+								    background-image: none;">
+										<div id="shp2" class="moved olga-shp:TrLb-1A:i=div3,shp1"
+											style="left:230px; top:110px; ">
+											<p>название объекта</p>
+										</div>
+										<div id="shp3" class="moved olga-shp:TrLb1A:i=div2,shp1"
+											style="left:170px; top:140px; ">
+											<p>название объекта</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+</html>

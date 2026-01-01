@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>1shpT</title>
+	<link rel="shortcut icon" href="../add/favicon.svg" type="image/x-icon">
+
+	<link href='./js/all.css' media='screen' rel='stylesheet' />
+	<!-- <script src='./add/move.js'></script> -->
+	<script type="module"  src='./js/all.js'></script>
+
+	<script src='../../olga7/com.js' o_urlrfs="html='+ ../o7tests/shp/html';"></script>
+
+	<script data-src='+dbg.js' data-load="up"></script>
+
+	<script data-src='+shp.js'></script>
+	<script data-src='+inc.js'></script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			window.scrollTo(0, 260)
+			let div;
+			for (const m of ['', 'a']) {
+				div = document.getElementById('div3' + m); if (div) div.scrollTo(550, 450)
+				div = document.getElementById('div2' + m); if (div) div.scrollTo(750, 650)
+				div = document.getElementById('div1' + m); if (div) div.scrollTo(950, 750)
+			}
+		})
+	</script>
+</head>
+
+<body id="body" style="height: 1500px;">
+	<div class='example olga-start'>
+		<div class='cboxed'>
+			<div o5include='html + /0shp.html?.cboxedinc'></div>
+		</div>
+
+		<pre id="ref0" class="pre-head"><b>Варианты подвисания <i>olga-shp</i></b>
+	</pre>
+		<div class="thetext" style="height: 227px;">
+			<p>
+				Демонстрация вариантов <i>подвисания</i> объекта <b>shp0</b> . 
+				Рекомендуется проанализировать поведение при скроллировании <u>всех</u> 
+				(т.е. <i>div3</i>, <i>div2</i>, <i>div1</i> и <i>body</i> ) контейнеров. 
+				<br>
+				При этом изменять:
+			</p>
+			<ul>
+				<li>список  <u>всех</u> контейнеров подвисания </li>
+				<li>выбор контейнера обрезания (<i>т.е. div3</i> или <i>div4</i>)</li>
+				<li>сторона подвисания - '<b>T</b>, '<b>L</b>, '<b>R</b>, '<b>B</b>'</li>
+			</ul>
+			<div>
+				<div o5include='html + /all.html?.descript'></div>
+			</div>
+		</div>
+
+		<div id="div1" class="div" style="top:11px;left: 22px;">
+			<span>div1</span>
+			<div id="cbo1" class="cbo" style="background-size: 25px 25px; width: 3300px; height: 2200px;">
+
+				<div id="div2" class="div" style="left:1000px; top:800px;">
+					<span>div2</span>
+					<div id="cbo2" class="cbo">
+
+						<div id="div3" class="div" style="left:800px; top:700px;
+    border-top-width: 8px;">
+							<span>div3</span>
+							<div id="cbo3" class="cbo"
+								style="background-size: 15px 15px; width: 1900px; height: 1300px; ">
+
+								<div id="shpX" class="moved olga-shp:n o-shpNone"
+									style="left:600px; top:520px; height: 50px; width: 55px;">
+									<p><br>контроль</p>
+								</div>
+
+								<div id="div4" class="div" style="top: 440px; left: 700px;" >
+                                    <span>div4</span>
+									<div id="shp0" class="moved olga-shp:TLRBA-1:i=div3"
+										style="left:50px; top:50px; display: flex;
+                                        transform: translate(30px, 20px) rotateX(12deg) rotateY(12deg) scale(2, 0.5);
+                                        ">
+										<p>название объекта</p>
+									</div>
+									<!-- <div id="shp0" class="moved olga-shp:TLRBA-1:i=div3/c,div3,div2/f"
+										style="left:50px; top:50px; display: flex;">
+										<p>название объекта</p>
+									</div> -->
+								</div>
+								<!-- <div id="shp1" class="moved olga-shp:TrLb-1A:i=div3/fc"
+									style="left:620px; top:600px; height: 60px; width: 322px;">
+									<p>название объекта</p>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
