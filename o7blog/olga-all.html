@@ -1,4 +1,3 @@
-`
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -15,18 +14,9 @@
 		src='http://localhost/bin/com!.js'             # локальная отладка
 		src='http://localhost/bin/o7.js'  	
 	-->
-	<script src='../olga7/o7c.js' data-consts=" nomnu='0'; noact='0';" data-urlrfs="
-			тесты='+ ../olga-tests';
-			блог_o5='https://olga-5.blogspot.com/2020/02';
-			images=_olga + ../media/image;       
-			# _html='# адрес текущей страницы (этот и 2 следующих - закомментированы)';
-			# _root='# адрес сайта с текущей страницей';
-			# _olga='# адрес загрузки файла com!.js';
-		">
-		</script>
 
 	<script data-src='+com.js'></script>
-	<script data-src='+shp.js'></script>
+	<!-- <script data-src='+shp.js'></script>
 	<script data-src='+pop.js'></script>
 	<script data-src='+mnu.js' data-scrollY='-32'></script>
 
@@ -38,7 +28,17 @@
 		">
 		</script>
 	<script data-src='+snd!.js' btn_play='images + /play.png' btn_stop='images + /play_Freepik.png'></script>
-	<script data-src='+add/pusto.js' data-moe-attr='мой атрибут'></script>
+	<script data-src='+add/pusto.js' data-moe-attr='мой атрибут'></script> -->
+
+	<script src='../o7/o7.js' data-consts=" nomnu='0'; noact='0';" data-urlrfs="
+			тесты='+ ../olga-tests';
+			блог_o5='https://olga-5.blogspot.com/2020/02';
+			images=_olga + ../media/image;       
+			# _html='# адрес текущей страницы (этот и 2 следующих - закомментированы)';
+			# _root='# адрес сайта с текущей страницей';
+			# _olga='# адрес загрузки файла com!.js';
+		">
+		</script>
 
 	<link data-href='+../o7css/basis.css' rel='stylesheet' />
 	<link data-href='+../o7css/table.css' rel='stylesheet' />
@@ -218,11 +218,11 @@
 				'<i><b
 						title="будет выполнен 'пересчет' реальных адресов файлов с учетом именованных ссылок">преобразование</b></i>'
 				адресов а также контролирует загрузку и выполнение тех тегов &lt;<b>script</b>&gt;,
-				(размещенных в секции &lt;<b>head</b>&gt;), у которых задан атрибут <b>data-src</b>. 
+				(размещенных в секции &lt;<b>head</b>&gt;), у которых задан атрибут <b>data-src</b>.
 			</p>
-			<p> 
-				При этом значение должно начинаться символом '<b>+</b>', 
-				после которого следует относиельный путь к модулю. 
+			<p>
+				При этом значение должно начинаться символом '<b>+</b>',
+				после которого следует относиельный путь к модулю.
 			</p>
 			<!-- <ul>
 				<li>задан атрибут <b>data-src</b> или
@@ -683,7 +683,7 @@
 						<br />
 						Пояснения к приведенному <i>коду</i>:
 					</p>
-<h1>исправить номера строк</h1>					
+					<h1>исправить номера строк</h1>
 					<ul>
 						<li>&nbsp;<b>5&divide;13</b> &mdash; структура описания модуля, сохраняемая в
 							<i>общебиблиотечном</i> объекте <b>window.olga7</b>,- см. стр. 35.
@@ -1183,7 +1183,7 @@
 					<span title="" class="o-popup"
 						onmouseup="window.olga7.PopShow( 666, 555, '_html+./olga-all.html?nomnu#head_21')">п.
 						2.1</span>.
-				</p>				
+				</p>
 				<p class="o-comment">
 					Модуль <code>ref</code> дополнительно использует атрибут <b>data-attrs</b>.
 				</p>
@@ -1225,7 +1225,7 @@
 				<p>
 					Все <i>функциональные</i> <u>скрипты</u> могут использовать <i>параметры</i> (т.е. <i>константы</i>
 					и <i>ссылки</i>),
-					заданные в  атрибутах <b>data-consts</b> и <b>data-urlrfs</b> скрипта <code>com!.js</code> 
+					заданные в атрибутах <b>data-consts</b> и <b>data-urlrfs</b> скрипта <code>com!.js</code>
 					или в адресной строке браузера.
 				</p>
 				<p>
@@ -1304,7 +1304,8 @@
 					</tbody>
 				</table>
 				<p>
-					Тут <b>btn_play</b> и <b>data-moe-attr</b> (точнее,- <b>moeAttr</b>) будут доступны для всех модулей, включенных в
+					Тут <b>btn_play</b> и <b>data-moe-attr</b> (точнее,- <b>moeAttr</b>) будут доступны для всех
+					модулей, включенных в
 					<code>o7.js</code>.
 				</p>
 			</div>
