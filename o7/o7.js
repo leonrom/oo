@@ -12,7 +12,8 @@
     class LM {         //  контроль загрузки подмодулей модуля - элелменты Load.incls[]   
         #timer = 0           // таймаут загрузки если madds=\ null      
         #done = dones.init   // завершена/не-требуется загрузка подмодулей
-        #Funs = new Set()      // функция после загрузки
+        #Fun = null         // функция после загрузки
+        src = '?'            // путь загрузки 
         Done(err = null) {
             //два madd.Done() прилетят почти одновременно или или Done() вызван по timeout, а потом по load
             if (this.#done === dones.done)
@@ -25,12 +26,9 @@
                 this.#timer = 0
             }
 
-            if (this.#Funs.size) {
-                if (!err)
-                    for (const Fun of this.#Funs)
-                        Fun()
-                this.#Funs.clear()
-            }
+            if (this.#Fun && !err)  // иначе callback-функции игнорирутся
+                this.#Fun()
+            this.#Fun = null
 
             if (err)
                 console.error('%c%s', fmtErr, `'${this.name}': ${err} `, ` (src: ${this.src})`);
@@ -46,7 +44,7 @@
             let err = ''
 
             if (typeof Fun === 'function')
-                this.#Funs.add(Fun)
+                this.#Fun = Fun
             else {
                 const type = typeof Fun
                 if (type !== 'undefined')
@@ -65,7 +63,7 @@
                 }
             }
             else
-                err += `Повтор при #done /='init' для "${this.src}"`
+                err += `Повтор (загрузки скрипта) при #done /='init' для "${this.src}"`
 
             if (err)
                 console.log("%c%s", fmtErr, err)
@@ -76,20 +74,30 @@
     }
 
     class Madd extends LM {         //  контроль загрузки подмодулей модуля - элелменты Load.incls[]
-        name = '?'           // как оно называется для  console.error
-        src = '?'            // путь загрузки 
-        constructor(mds) {
-            super(mds)
-            for (const md in mds)
-                this[md] = mds[md]
+        name = '?'              // как оно называется для  console.error
+        constructor(name, src) {
+            super()
+            this.name = name
+            if (src)
+                this.src = src
         }
     }
 
     class Load extends Madd {        //  контроль загрузки модулей
-        madds = new Set()   // надо ли что-то подгружать, и что именно
-        omod = null         // обратная ссылка на 
-        orig = ''           // модуль дозагружался если orig=\'' и "другое имя файла"                
-        W = null            // признак, что уже загружена основная часть модуля            
+        static _loads = {}      // загрузчики - для каждого модуля
+        dataset = {}            // копия из <script>
+        madds = []              // надо ли что-то подгружать, и что именно
+        modul = ''              // имя модуля в window.o7[
+        omod = null             // обратная ссылка на 
+        orig = ''               // модуль дозагружался если orig=\'' и "другое имя файла"                
+
+        constructor(name, orig, modul) {
+            super(name)
+            this.orig = orig
+            this.modul = modul
+
+            Load._loads[modul] = this
+        }
     }
 
     const
@@ -172,11 +180,11 @@
                     e = new CustomEvent(eve, modul ? { detail: { modul: modul } } : {})
                 window.dispatchEvent(e)
             }
-            FillFromScript(Z, dtst) {
+            FillFromScript(Z) {
                 const
-                    dataset = dtst ? dtst : this.#curScr.dataset,
+                    dataset = (Z.load && Z.load.dataset) ? Z.load.dataset : this.#curScr.dataset,
                     FromNamedData = name => {      // поиск констант, заявленных в needs
-                        const needs = name.needs?.replace(/[^\p{L}\p{N}+.,;_]+/gu, '').split(';') || []
+                        const needs = Z[name].needs?.replace(/[^\p{L}\p{N}+.,;_]+/gu, '').split(';') || []
                         for (const need of needs) {
                             const
                                 ss = need.split('='),
@@ -197,7 +205,7 @@
                             const
                                 ss = cns.split('='),
                                 c = ss[0].trim()
-                            if (c && c[0]!=='#') {
+                            if (c && c[0] !== '#') {
                                 const v = ss[1].trim()
                                 if (isconst) Z[name][c] = TryToDigit(v)
                                 else
@@ -268,7 +276,7 @@
                 const
                     modul = W.modul,
                     omod = window.o7[modul],
-                    load = omod.load,
+                    load = Load._loads[modul],
                     madds = load.madds,
                     CheckFinish = () => {
                         let alldone = true       // проверка,- а вдруг уже всё подмодули загружены
@@ -280,15 +288,14 @@
 
                         if (alldone) {      // информация для запускальщика программ инициализации модулей
                             if (load.Done())
-                                C.DispatchEvent('o_modulLoad', load.W.modul)
+                                C.DispatchEvent('o_modulLoad', load.modul)
                         }
                     }
 
-                load.W = W
-                load.Done()         // done = dones.done
+                // load.Done()         // done = dones.done
 
                 omod.W = W
-                this.FillFromScript(W, W.dataset)
+                this.FillFromScript(W)
                 Object.freeze(W)
 
                 if (W.isComp || !W.incls)   // C.DispatchEvent('o_modulLoad', modul)
@@ -302,10 +309,10 @@
                         const
                             src = W.path + modul + '/' + incl + '.js',
                             name = `${modul}.${incl}`,
-                            madd = new Madd({ src, name }),
+                            madd = new Madd(name, src),
                             script = document.createElement('script')
 
-                        madds.add(madd)
+                        madds.push(madd)
                         if (parentNode)
                             parentNode.insertBefore(script, curScript)
 
@@ -313,80 +320,63 @@
                     }
                 }
                 if (mdebug) {
-                    const orig = omod.load.orig
+                    const orig = Load._loads[modul].orig
                     console.log('%c%s', fmtOK, orig ? `загружен из ${orig} ` : `взят из 'o7'`,
-                        madds.size ? `подмодули: ${Array.from(madds).map(m => m.name).join(', ')}` : `без подмодулей`
+                        madds.length ? `подмодули: ${madds.map(m => m.name).join(', ')}` : `без подмодулей`
                     )
                 }
 
                 return omod
             }
+
             CurScr(script) {
                 const curScr = _CurScr(script)
-                curScr.consts ??= {}
-                curScr.urlrfs ??= {}
+                curScr.consts = {}
+                curScr.urlrfs = {}
                 return Object.freeze(curScr)
             }
         },
         LoadModules = function () {
             for (const script of document.scripts) {
-                const orig = script.dataset.src
+                const orig = script.dataset.src.replace((/\s+/g, ''))
                 if (orig && orig[0] === '+') {
                     const
                         f = orig.slice(orig.lastIndexOf('/') + 1, orig.lastIndexOf('.')),
                         compiled = f[f.length - 1] === '!',
                         fnam = (f[0] === '+') ? f.substring(1) : f,
                         modul = compiled ? fnam.slice(0, fnam.length - 1) : fnam,
-                        name = `модуль '${modul}'`
+                        name = `модуль '${modul}'`,
+                        load = new Load(name, orig, modul)
+
+                    for (const [key, val] of Object.entries(script.dataset))
+                        load.dataset[key] = val
 
                     let omod = window.o7[modul]
                     if (omod) { //  уже есть в (частично) скомпилир., только дополнить его dataset'ы
-                        const dataset = omod.W.dataset
-                        for (const [key, val] of Object.entries(script.dataset))
-                            dataset[key] = val
-
-                        omod.load = new Load({ src: script.src, orig: orig, name, omod })
-                        omod.load.Done()
+                        load.src = script.src
+                        load.omod = omod
+                        load.Done()
                     } else {
-                        omod = window.o7[modul] = {}
-                        const
-                            src = C.urlrfs._olga + orig.substring(1),
-                            load = new Load({ src, orig, name, omod })
-
-                        omod.load = load
+                        load.src = C.urlrfs._olga + orig.substring(1)
+                        load.omod = window.o7[modul] = {}
                         load.StartLoad(script, C.consts.timLoad)
-
-                        // script.src = src        // ! после load.StartLoad
                     }
                 }
             }
         }
-    /**
-     *          варианты загрузки модуля, где 'xxx' - имя модуля
-     *                      проверка в AddModule(W)
-     * data-src = xxx.js    есть timer              | надо дозагружыть
-     * data-src = xxx!.js   -"-                     | не надо
-     * src = xxx.js         нету timer              | надо дозагружыть
-     * src = xxx!.js        -"-                     | не надо
-     * в составе o7c!.js    W.cls.curScript=C.cls.curScript | не надо , проверка в #AddScrpt
-    */
 
     window.o7 = { C }
 
-    /**
-     *  параметры вызова скрипта
-     */
     C.FillFromScript(C);
 
-    /**
-     *   вызов LoadModules только после парсинга скриптов - т.е. после загрузки документа 
-     */
+    //   вызов LoadModules только после парсинга скриптов - т.е. после загрузки документа  
     (fn => {
         document.readyState === 'loading'
             ? document.addEventListener('DOMContentLoaded', fn, { once: true })
             : fn();
     })(LoadModules);       //  загрузка подключаемых скриптов
 
+    // отладка - убрать ---------------------------------------------------------
     if (mdebug)
         setTimeout(
             () => {
@@ -401,14 +391,13 @@
                     if (modul !== 'C') {
                         const
                             omod = window.o7[modul],
-                            load = omod?.load
+                            load = Load._loads[modul]
                         if (load) {
                             const
-                                madds = load.madds,
                                 consts = Fill('consts', omod),
                                 urlrfs = Fill('urlrfs', omod)
                             console.groupCollapsed("%c%s", fmtOK, load.name,
-                                Array.from(madds).map(m => m.name).join(', '),
+                                load.madds.map(m => m.name).join(', '),
                                 `\n\t  W...src= ${omod.W.dataset.src.padEnd(12)}, done= '${load.done}', orig='${load.orig}'`
                             )
                             console.table(consts)
@@ -416,7 +405,7 @@
                             console.groupEnd()
                         }
                         else
-                            console.error(`? нету load для 'modul'`)
+                            console.error(`? нету load для '${modul}'`)
                     }
                 console.log('==============================================')
             },
