@@ -4,22 +4,20 @@
 /*jshint esversion: 6*/
 (function () {              // ---------------------------------------------- o7 ---    
     'use strict';
-    const dones = Object.freeze({ init: 'init', load: 'load', done: 'done' }),
+    const
         fmtOK = "background: cornsilk; color: black;",
         fmtErr = "background: yellow; color: black;",
         mdebug = true
+1. переименовать CurScr в RegisterScript
+2. проверять после Done - был ли скрипт зарегистрирован в RegisterScript
 
     class LM {         //  контроль загрузки подмодулей модуля - элелменты Load.incls[]   
-        #timer = 0           // таймаут загрузки если madds=\ null      
-        #done = dones.init   // завершена/не-требуется загрузка подмодулей
+        #timer = 0           // страховка от вечного ожидания
+        #done = false   // завершена/не-требуется загрузка подмодулей
         #Fun = null         // функция после загрузки
         src = '?'            // путь загрузки 
         Done(err = null) {
-            //два madd.Done() прилетят почти одновременно или или Done() вызван по timeout, а потом по load
-            if (this.#done === dones.done)
-                return false
-
-            this.#done = dones.done
+            this.#done = true
 
             if (this.#timer) {
                 clearTimeout(this.#timer)
@@ -41,7 +39,6 @@
 
             if (mdebug)
                 console.log('%c%s', fmtOK, `StartLoad`, this.src)
-            let err = ''
 
             if (typeof Fun === 'function')
                 this.#Fun = Fun
@@ -50,23 +47,15 @@
                 if (type !== 'undefined')
                     err += `Fun (${type}) не 'function' для "${this.src}"; `
             }
-            if (this.#done === dones.init) {
 
-                this.#done = dones.load
-                this.#timer = setTimeout(() => { this.Done(`? таймаут`) }, time * 1000)
+            this.#timer = setTimeout(() => { this.Done(`? таймаут`) }, time * 1000)
 
-                if (script) {
-                    script.addEventListener('load', () => this.Done(null), { once: true })
-                    script.addEventListener('error', () => this.Done('? ошибка загрузки'), { once: true })
+            if (script) {
+                script.addEventListener('load', () => this.Done(null), { once: true })
+                script.addEventListener('error', () => this.Done('? ошибка загрузки'), { once: true })
 
-                    script.src = this.src
-                }
+                script.src = this.src
             }
-            else
-                err += `Повтор (загрузки скрипта) при #done /='init' для "${this.src}"`
-
-            if (err)
-                console.log("%c%s", fmtErr, err)
         }
         get done() {
             return this.#done
@@ -96,7 +85,10 @@
             this.orig = orig
             this.modul = modul
 
-            Load._loads[modul] = this
+            if (Load._loads[modul])
+                console.error('%c%s', this.fmtErr, `Повторная загрузка модуля '${name}'`, orig)
+            else
+                Load._loads[modul] = this
         }
     }
 
@@ -281,7 +273,7 @@
                     CheckFinish = () => {
                         let alldone = true       // проверка,- а вдруг уже всё подмодули загружены
                         for (const madd of load.madds)
-                            if (madd.done !== dones.done) {
+                            if (!madd.done) {
                                 alldone = false
                                 break
                             }
@@ -291,8 +283,6 @@
                                 C.DispatchEvent('o_modulLoad', load.modul)
                         }
                     }
-
-                // load.Done()         // done = dones.done
 
                 omod.W = W
                 this.FillFromScript(W)
@@ -338,29 +328,31 @@
         },
         LoadModules = function () {
             for (const script of document.scripts) {
-                const orig = script.dataset.src.replace((/\s+/g, ''))
-                if (orig && orig[0] === '+') {
-                    const
-                        f = orig.slice(orig.lastIndexOf('/') + 1, orig.lastIndexOf('.')),
-                        compiled = f[f.length - 1] === '!',
-                        fnam = (f[0] === '+') ? f.substring(1) : f,
-                        modul = compiled ? fnam.slice(0, fnam.length - 1) : fnam,
-                        name = `модуль '${modul}'`,
-                        load = new Load(name, orig, modul)
+                if (!script.dataset || !script.dataset.src) continue
+                const src=script.dataset.src,
+                    orig = src.replace(/\s+/g, '')
+                if (!orig || orig[0] !== '+') continue
 
-                    for (const [key, val] of Object.entries(script.dataset))
-                        load.dataset[key] = val
+                const
+                    f = orig.slice(orig.lastIndexOf('/') + 1, orig.lastIndexOf('.')),
+                    compiled = f[f.length - 1] === '!',
+                    fnam = (f[0] === '+') ? f.substring(1) : f,
+                    modul = compiled ? fnam.slice(0, fnam.length - 1) : fnam,
+                    name = `модуль '${modul}'`,
+                    load = new Load(name, orig, modul)
 
-                    let omod = window.o7[modul]
-                    if (omod) { //  уже есть в (частично) скомпилир., только дополнить его dataset'ы
-                        load.src = script.src
-                        load.omod = omod
-                        load.Done()
-                    } else {
-                        load.src = C.urlrfs._olga + orig.substring(1)
-                        load.omod = window.o7[modul] = {}
-                        load.StartLoad(script, C.consts.timLoad)
-                    }
+                for (const [key, val] of Object.entries(script.dataset))
+                    load.dataset[key] = val
+
+                let omod = window.o7[modul]
+                if (omod) { //  уже есть в (частично) скомпилир., только дополнить его dataset'ы
+                    load.src = script.src
+                    load.omod = omod
+                    load.Done()
+                } else {
+                    load.src = C.urlrfs._olga + orig.substring(1)
+                    load.omod = window.o7[modul] = {}
+                    load.StartLoad(script, C.consts.timLoad)
                 }
             }
         }
