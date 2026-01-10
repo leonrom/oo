@@ -117,18 +117,18 @@
 
 			if (!ready)
 				return
-			for (const scrpt of C.scrpts)			{
+			for (const scrpt of C.scrpts) {
 				if (!scrpt.timera)
 					scrpt.timera = new MyTimer(` инициирован `)
 				if (start != scrpt.start && scrpt.W && !scrpt.W.incls)
-					if (scrpt.need && scrpt.W.cls.Init) {
+					if (scrpt.need && scrpt.W.Init) {
 						const depend = scrpt.depends.find(depend => (depend.act.need && depend.act.done != start))
 						if (!depend) {
 							if (debug > 1)
-								console.log(`${head} начало нинициализации  ${scrpt.W.cls.modul} `)
+								console.log(`${head} начало нинициализации  ${scrpt.W.modul} `)
 							scrpt.start = start
-							scrpt.timera.Start(act.W.cls.modul)
-							scrpt.W.cls.Init()
+							scrpt.timera.Start(act.W.modul)
+							scrpt.W.Init()
 						}
 					} else
 						Object.assign(act, { start: start, done: start })
@@ -191,7 +191,7 @@
 						C.IncludeScripts({
 							modul: w.modul,
 							names: w.incls.names,
-							curScript: w.cls.curScript,
+							curScript: W.curScript,
 							iniFun: Included,
 							args: [w.modul]
 						})
@@ -459,7 +459,7 @@
 
 		static pageLoads = new MyEvents(C.consts.pageLoads)
 		static pageDones = new MyEvents(C.consts.pageDones)
-		static scriptLoad = new MyEvents('o_modulLoad')
+		static scriptLoad = new MyEvents('o_modulReady')
 		static scriptDone = new MyEvents('o_scriptDone')
 
 		static {
@@ -478,7 +478,7 @@
 			// this.pageLoads = new MyEvents(C.consts.pageLoads)
 			// this.pageDones = new MyEvents(C.consts.pageDones)
 
-			// this.scriptLoad = new MyEvents('o_modulLoad')
+			// this.scriptLoad = new MyEvents('o_modulReady')
 			// this.scriptDone = new MyEvents('o_scriptDone')
 
 			this.pageLoads.AddEvents(this.PageLoad.bind(this))	//{ capture: true }
@@ -490,26 +490,26 @@
 	}
 
 	const wshp = C.AddModuleSub(olga5_modul, modulname, () => {
-	console.log('%c%s', "background: aqua; color: black;border: none;",
-		` инициализация `,
-		`${olga5_modul}/${modulname}.js`)
-	if (C.consts.nomnu > 0)
-		document.body.classList.add('o_nomnu')
+		console.log('%c%s', "background: aqua; color: black;border: none;",
+			` инициализация `,
+			`${olga5_modul}/${modulname}.js`)
+/*			
+		if (C.consts.nomnu > 0)
+			document.body.classList.add('o_nomnu')
 
-	if (C.consts.noact > 0) {
-		((C && debug > 0) ? C.ConsoleError : console.log)("}---> загружено `ядро библиотеки`, но инициализация ОТКЛЮЧЕНА по o_noact= '" + C.consts.noact + "'")
-		return
-	}
+		if (C.consts.noact > 0) {
+			((C && debug > 0) ? C.ConsoleError : console.log)("}---> загружено `ядро библиотеки`, но инициализация ОТКЛЮЧЕНА по o_noact= '" + C.consts.noact + "'")
+			return
+		}
 
-	if (C.scrpts.length > 0)
-		C.page = new Page()
-	else {
-		C.ConsoleInfo(`IniScripts.js: вообще нет скриптов для обработки`)
-		C.DispatchEvent('o_isInited')
-	}
-
-		return true
-	} )
+		if (C.scrpts.length > 0)
+			C.page = new Page()
+		else {
+			// C.ConsoleInfo(`IniScripts.js: вообще нет скриптов для обработки`)
+			// C.DispatchEvent('o_isInited')
+		}
+		*/
+	})
 
 	// if (wshp.AscInclude)
 	// 	wshp.AscInclude()

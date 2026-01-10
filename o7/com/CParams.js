@@ -113,17 +113,17 @@
 			if (typeof cmodul === 'undefined') {
 				for (const ch of chs)
 					if (ch.nodeName == "STYLE" && ch.id == id) {
-						err = `Стиль id='${id}' (модуль: '${W.cls.modul}', класс: '${W.class}) уже определён в документе`
+						err = `Стиль id='${id}' (модуль: '${W.modul}', класс: '${W.class}) уже определён в документе`
 						break
 					}
 			} else
-				if (cmodul != W.cls.modul) err = `Класс '${W.class}' повторяется в модулях '${cmodul}' и '${W.cls.modul}. '`
+				if (cmodul != W.modul) err = `Класс '${W.class}' повторяется в модулях '${cmodul}' и '${W.modul}. '`
 
 			if (err) C.ConsoleError('>>  создание CSS  ' + err, 'InitCSS')
 			else {
 				if (debug > 1)
-					console.log(`>>  СОЗДАНИЕ CSS   ${W.class} (для модуля ${W.cls.modul}) с id='${id}'`)
-				csslist[W.class] = W.cls.modul
+					console.log(`>>  СОЗДАНИЕ CSS   ${W.class} (для модуля ${W.modul}) с id='${id}'`)
+				csslist[W.class] = W.modul
 
 				const styl = document.createElement('style')
 				styl.setAttribute('type', 'text/css')
@@ -152,10 +152,10 @@
 			if (W.isReady)
 				return
 
-			const scrpt = C.scrpts.find(scrpt => scrpt.modul == W.cls.modul)
+			const scrpt = C.scrpts.find(scrpt => scrpt.modul == W.modul)
 
 			if (!scrpt) {
-				C.ConsoleError(`В 'C.scrpts' не наден модуль `, W.cls.modul)
+				C.ConsoleError(`В 'C.scrpts' не наден модуль `, W.modul)
 				return
 			}
 
@@ -190,7 +190,7 @@
 					if (p == 'urlrfs') {
 						const urls = {}
 						for (const nam in xs) urls[nam] = xs[nam].val
-						DeCodeUrlRfs(urls, `${W.cls.modul}: `)
+						DeCodeUrlRfs(urls, `${W.modul}: `)
 						for (const nam in xs)
 							xs[nam].url = urls[nam]
 					}
@@ -202,14 +202,15 @@
 					for (const nam in xs)
 						W[p][nam] = xs[nam].val
 
-					if (debug > 0) PrintParams(W.cls.modul, xs, p, n1)
+					if (debug > 0) PrintParams(W.modul, xs, p, n1)
 				}
 				else
-					if (debug > 0) C.ConsoleInfo(`${W.cls.modul}: параметры и ссылки берутся только из скрипта ядра библиотеки`)
+					if (debug > 0) C.ConsoleInfo(`${W.modul}: параметры и ссылки берутся только из скрипта ядра библиотеки`)
 			}
 		}
 
 	C.AddModuleSub(olga5_modul, modulname, url_olga5 => {
+/*  ???????????????????????????
 		C.urlrfs._olga = url_olga5
 
 		Object.assign(C, {
@@ -223,7 +224,6 @@
 		const p = 'urlrfs',
 			xs = {}, // временное хранилилище для считываемых параметров
 			defs = C[p]
-/*  ???????????????????????????
 		const n1 = C.ParamsFillFromScript(xs, defs, C.o5attrs, p)
 		for (const nam in xs) defs[nam] = xs[nam].val
 		DeCodeUrlRfs(defs, C.save.libName)

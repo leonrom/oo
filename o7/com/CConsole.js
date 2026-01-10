@@ -17,19 +17,6 @@
 			'S': "background: blue;   color: white;border: solid 1px bisque;",
 			'I': "background: beige;  color: black;border: solid 1px bisque;",
 		},
-		TableNoIndex = data => {
-			if (!Array.isArray(data)) {
-				console.table(data);
-				return;
-			}
-
-			const keys = Object.keys(data[0] || {});
-			const header = keys.join('\t');
-			console.log(header);
-			for (const row of data) {
-				console.log(keys.map(k => row[k]).join('\t'));
-			}
-		},
 		ConsoleMsg = (styp, txts, add, tab) => {
 			const txt = (txts && txts[txts.length - 1] != '') ? txts + ' ' : txts,
 				type = styp.substr(0, 1).toUpperCase(),
@@ -108,7 +95,6 @@
 				}
 				if (tt.length > 0) {
 					console.table(tt)
-					// TableNoIndex(tt)
 				}
 			}
 			console.table()

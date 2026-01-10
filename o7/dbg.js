@@ -3,19 +3,15 @@
 /*jshint esversion: 6*/
 (function () {               // ---------------------------------------------- dbg o5dbgx ---
 	'use strict'
-	let wshp = null
 	const
 		C = window.o7.C,
-		W = Object.seal({
-			cls: Object.freeze({
-				modul: 'dbg',
-				Init: DbgInit,
-				curScript: document.currentScript,
-			}),
-			consts: { needs: 'o5load=CELP' },
-		}),
-		curScript = document.currentScript
-	// timera = '<-}   инициирован ' + W.cls.modul
+		W = {
+			modul: 'dbg',
+			Init: DbgInit,
+			curScript: document.currentScript,
+			incls: ['Pos', 'Ccss', 'Logs', 'Utils', 'Events'],
+		},
+		wshp = (window.o7 ??= {})[W.modul] = { W },
 
 	function DbgInit() {
 		if (wshp.Pos) wshp.Pos()
@@ -24,7 +20,7 @@
 		if (wshp.Utils) wshp.Utils()
 		if (wshp.Events) wshp.Events()
 
-		C.DispatchEvent('o_scriptDone', W.cls.modul)
+		C.DispatchEvent('o_scriptDone', W.modul)
 	}
 
 	if (C.consts.nomnu || C.consts.noact)
@@ -34,11 +30,10 @@
 	else {
 		const nms = W.consts.load ? W.consts.load.toUpperCase() : 'U'
 
-		if (nms.includes('P')) W.cls.incls.names.push('Pos')
-		if (nms.includes('C')) W.cls.incls.names.push('Ccss')
-		if (nms.includes('L')) W.cls.incls.names.push('Logs')
-		if (nms.includes('U')) W.cls.incls.names.push('Utils')
-		if (nms.includes('E')) W.cls.incls.names.push('Events')
+		if (nms.includes('P')) W.incls.names.push('Pos')
+		if (nms.includes('C')) W.incls.names.push('Ccss')
+		if (nms.includes('L')) W.incls.names.push('Logs')
+		if (nms.includes('U')) W.incls.names.push('Utils')
+		if (nms.includes('E')) W.incls.names.push('Events')
 	}
-	wshp = C.AddModule(W)
 })();

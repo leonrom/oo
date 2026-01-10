@@ -11,11 +11,11 @@
         CAvtonom = () => {
             const
                 m = window.location.search.match(/(?:\?|&)debug(?:=([^&?]*))?(?=[&?]|$)/),
-                o_debug = !m ? 0 : (m[1] === undefined || m[1] === "") ? 1 : (isNaN(+m[1]) ? 3 : +m[1])
+                debug = !m ? 0 : (m[1] === undefined || m[1] === "") ? 1 : (isNaN(+m[1]) ? 3 : +m[1])
 
             return { // заменитель библиотечного
                 consts: {
-                    o_debug: o_debug
+                    debug: debug
                 },
                 // repQuotes: /^\s*((\\')|(\\")|(\\`)|'|"|`)?\s*|\s*((\\')|(\\")|(\\`)|'|"|`)?\s*$/g,
                 ConsoleError: (msg, name, errs) => {
@@ -35,7 +35,7 @@
                 avtonom: true,
             }
         },
-        RepQuotes=s=>{
+        RepQuotes = s => {
             return s.replace(/^(['"`])([\s\S]*)\1$/, '$2')
         },
         C = window.olga7?.C || CAvtonom(),
@@ -44,19 +44,17 @@
         oPopup = 'o-popup',
         oContents = 'o-contents',
         DClosePops = () => ClosePops(null),
-        W = Object.seal({
-            cls: Object.freeze({
-                modul: 'pop',
-                Init: Popups,
-                Done: DClosePops,
-                curScript: document.currentScript,
-            }),
+        W = {
+            modul: 'pop',
+            Init: Popups,
+            Done: DClosePops,
             consts: {
                 needs: `o5nocss=0;  // 0 - подключаются CSS'ы;
                             o5timer=0.7 // интервал мигания ;
                             o5params=''  // умалчиваемые для mos, sizs, wins;`
             },
-        }),
+        },
+        wshp = (window.o7 ??= {})[W.modul] = { W },
         attrs = document.currentScript.attributes,
         timerms = 1000 * ((attrs && attrs.o5timer) ? parseFloat(attrs.o5timer.value) : 2.1),
 
@@ -128,7 +126,7 @@ img.${oPopup} {
 }
         `,
         ClosePop = wopen => {
-            if (o_debug > 1) console.log(`${W.cls.modul}: ClosePop`.padEnd(22) +
+            if (debug > 1) console.log(`${W.modul}: ClosePop`.padEnd(22) +
                 `${wopen.name}`.padEnd(22))
             if (wopen.time + 444 > (new Date()).getTime()) return
 
@@ -168,7 +166,7 @@ img.${oPopup} {
                         if (doc) { // окно наконец-то загрузилось
                             const title = doc.title.trim()
                             if (!wopen.titlD && title) {
-                                if (o_debug > 1) console.log(`${W.cls.modul}: DoBlinks загрузилось`)
+                                if (debug > 1) console.log(`${W.modul}: DoBlinks загрузилось`)
                                 wopen.titlD = title
                                 wopen.titlB = wopen.head ? wopen.head : title.replaceAll(/./g, '*') + '*'
                             }
@@ -194,15 +192,15 @@ img.${oPopup} {
         IncludeCSS = () => { // подключение CSS'ов, встроенных в скрипт  (копия из com!.js)                
             let css = GetCSS()
             if (!css) {
-                if (o_debug > 0)
-                    console.log(`>>  СОЗДАНИЕ CSS   ${oPopup} (для модуля ${W.cls.modul})`)
+                if (debug > 0)
+                    console.log(`>>  СОЗДАНИЕ CSS   ${oPopup} (для модуля ${W.modul})`)
                 const styl = document.createElement('style')
                 styl.setAttribute('type', 'text/css')
                 styl.id = namo5css
                 css = document.head.appendChild(styl)
             } else
-                if (o_debug > 0)
-                    console.log(`>>  ИНЗМЕНЕНИЕ CSS   ${oPopup} (для модуля ${W.cls.modul}) `)
+                if (debug > 0)
+                    console.log(`>>  ИНЗМЕНЕНИЕ CSS   ${oPopup} (для модуля ${W.modul}) `)
             css.innerHTML = o5css.replace(/(\/\/.*($|\n))|(\s*($|\n))/g, '\n')
         },
         ClosePops = grp => { // закрыть все с такой группой и анонимные ('группа' типа 0)
@@ -219,8 +217,8 @@ img.${oPopup} {
                     n++
                 }
             }
-            if (o_debug > 0)
-                console.log(`${W.cls.modul}: закрыты ${n} окон группы '${grp === null ? 'всё' : grp}'`)
+            if (debug > 0)
+                console.log(`${W.modul}: закрыты ${n} окон группы '${grp === null ? 'всё' : grp}'`)
         },
         CalcSizes = (sizs, errs, tagname) => {
             // 'use strict'
@@ -303,8 +301,8 @@ img.${oPopup} {
                 for (const wopen of wopens)
                     wopen.win.focus()
             }, 1)
-            if (o_debug > 1)
-                console.log(`${W.cls.modul}: Focus для ${wopens.length} тегов (${e.eventPhase}, ${e.isTrusted ? 'T' : 'f'}, ${e.timeStamp.toFixed(1).padEnd(6)}, ${e.type})`)
+            if (debug > 1)
+                console.log(`${W.modul}: Focus для ${wopens.length} тегов (${e.eventPhase}, ${e.isTrusted ? 'T' : 'f'}, ${e.timeStamp.toFixed(1).padEnd(6)}, ${e.type})`)
         },
         AskRefTag = (tag0, params) => {
             const mcc = params[0].match(/^\s*id=\s*\w+\b/i)
@@ -453,14 +451,14 @@ img.${oPopup} {
             else // иначе - никак, т.к. не известно, кто раньше загрузится
                 C.ParamsFill(W, o5css) // CSS пересоздаётся (для Blogger'а)
 
-        if (o_debug > 0)
+        if (debug > 0)
             console.log('%c%s', "background: aqua; color: black;border: none;",
                 ` инициализация `,
-                `${W.cls.modul}.js`,
+                `${W.modul}.js`,
                 ` ${C.avtonom ? ('автономно по ' + e.type) : 'из библиотеки'} `)
         const
             o5nocss = attrs && attrs.o5nocss && attrs.o5nocss.value,
-            doneattr = W.cls.modul + '-done',
+            doneattr = W.modul + '-done',
             tags = C.GetTagsByQueryes(`[${oPopup}]`)
 
         focusTime = 0
@@ -510,7 +508,7 @@ img.${oPopup} {
             C.ConsoleError(`Ошибки формирования параметров окна (из url'а):`, errs.length, errs)
 
         if (C.E)  // если не автономно
-            C.DispatchEvent('o_scriptDone', W.cls.modul)
+            C.DispatchEvent('o_scriptDone', W.modul)
     }
 
     function GetPops(e, args) {
@@ -711,7 +709,7 @@ img.${oPopup} {
 
     function ShowWin(pops) {
         // 'use strict'
-        if (o_debug > 1) console.log(`${W.cls.modul}: ShowWin`.padEnd(22) +
+        if (debug > 1) console.log(`${W.modul}: ShowWin`.padEnd(22) +
             `${C.MakeObjName(pops.tag)}`.padEnd(22) +
             `${C.MakeObjName(pops.act)}, '${pops.eve}') `)
 
@@ -799,9 +797,9 @@ img.${oPopup} {
         }
     }
 
-    if (C)
-        C.AddModule(W)
-    else {
+    // if (C)
+    //     C.AddModule(W)
+    // else {
         const Find = (scripts, nam) => {
             const mnam = new RegExp('\\b' + nam + '\\b')
             for (const script of scripts) {
@@ -812,17 +810,17 @@ img.${oPopup} {
             }
         }
         if (Find(document.scripts, 'inc.js'))
-            window.addEventListener('o_incReady', W.cls.Init)
+            window.addEventListener('o_incReady', W.Init)
         else
-            document.addEventListener('DOMContentLoaded', W.cls.Init)
+            document.addEventListener('DOMContentLoaded', W.Init)
 
         // if (!window.olga7) window.olga7 = []
 
         if (!window.olga7) window.olga7 = { C: {}, pop: {} }
 
-        if (o_debug)
-            console.log(`}---< ${document.currentScript.src.indexOf(`/${W.cls.modul}.`) > 0 ? 'загружен  ' : 'включён   '}:  ${W.cls.modul}.js`)
-    }
+        if (C.consts.debug)
+            console.log(`}---< ${document.currentScript.src.indexOf(`/${W.modul}.`) > 0 ? 'загружен  ' : 'включён   '}:  ${W.modul}.js`)
+    // }
 
     // ??????????????????????????????????????????????????????????????????????????
     // Object.assign(window.olga7, {

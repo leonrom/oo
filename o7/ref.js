@@ -8,15 +8,13 @@
 	const
 		C = window.o7.C,
 		debug = C.consts.debug,
-		currentScript = document.currentScript,
-		W = Object.seal({
-			cls: Object.freeze({
-				modul: 'ref',
-				Init: RefInit,
-				curScript: document.currentScript,
-			}),
+		currentScript = document.currentScript, // ??????????????????????
+		W = {
+			modul: 'ref',
+			Init: RefInit,
 			consts: { needs: 'o_attrs=;', },
-		}),
+		},
+		wshp = (window.o7 ??= {})[W.modul] = { W },
 		ParseTagAttrs = params => {
 			const errs = [],
 				otags = {}
@@ -61,7 +59,7 @@
 			for (const nam in otags)
 				tagnams += (tagnams ? ',' : '') + nam
 
-			const tags = C.GetTagsByTagNames(tagnams, W.cls.modul),
+			const tags = C.GetTagsByTagNames(tagnams, W.modul),
 				undefs = [],
 				rez = []
 
@@ -95,13 +93,13 @@
 					}
 			}
 
-			if (rez.length < 1) C.ConsoleError(`${W.cls.modul}: не выполнено ни одной подстановки?`)
+			if (rez.length < 1) C.ConsoleError(`${W.modul}: не выполнено ни одной подстановки?`)
 			else
-				if (debug > 0) C.ConsoleInfo(`${W.cls.modul}: выполнено подстановок для тегов:`, rez.length, rez)
+				if (debug > 0) C.ConsoleInfo(`${W.modul}: выполнено подстановок для тегов:`, rez.length, rez)
 
 			if (undefs.length > 0)
-				C.ConsoleError(`${W.cls.modul}: неопределённые адреса: `, undefs.length, undefs)
-			// if (unreal.length > 0) C.ConsoleAlert(`${W.cls.modul}: непонятные адреса: `, unreal.length, unreal)
+				C.ConsoleError(`${W.modul}: неопределённые адреса: `, undefs.length, undefs)
+			// if (unreal.length > 0) C.ConsoleAlert(`${W.modul}: непонятные адреса: `, unreal.length, unreal)
 		},
 		PrepTubes = () => {
 			let YT = null
@@ -221,17 +219,17 @@
 		if (s) {
 			const params = C.SplitParams(s, o_attrs, ';\n'),
 				otags = ParseTagAttrs(params)
-			if (debug > 0) C.ConsoleInfo(`${W.cls.modul}: обрабатываемые атрибуты тегов`, o_attrs, otags)
+			if (debug > 0) C.ConsoleInfo(`${W.modul}: обрабатываемые атрибуты тегов`, o_attrs, otags)
 			ConvertUrls(otags)
 		}
 
 		PrepTubes()
 		// PrepTables()
 
-		C.DispatchEvent('o_scriptDone', W.cls.modul)
+		C.DispatchEvent('o_scriptDone', W.modul)
 
 		// InitRPos()
 	}
 
-	C.AddModule(W)
+	// C.AddModule(W)
 })();

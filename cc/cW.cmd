@@ -51,6 +51,9 @@ $ADD_FILES = @(
   "pop.js",
   "mnu.js"
 )
+###   Get-Content ($Modules -replace '$','.js')
+###   $ComFiles = $Modules | ForEach-Object { Join-Path $Dir "$_.js" }
+###   Get-Content ($Modules -replace '$','.js')
 
 # --- подготовка ---
 New-Item -ItemType Directory -Force -Path $BIN_DIR | Out-Null

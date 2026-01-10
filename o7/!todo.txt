@@ -1,3 +1,5 @@
+при инициализации модулей проверять что DOM уже загружен
+
 wshp =>omod
 
 ParamsFill использовать только для загрузки классов - переименовать с FillCSS
@@ -54,9 +56,9 @@ olga5freeimg -> o-freeImg
 
 проверять отключалки:
   для snd послк
-		const mtags = C.SelectByClassName(W.class, W.cls.modul)
+		const mtags = C.SelectByClassName(W.class, W.modul)
   для shp   (aO5...cls)
-    window.o7[W.cls.modul].DoInit()  
+    window.o7[W.modul].DoInit()  
 
 понаходить запросы об onYouTubeIframeAPIReady (и т.п.) и поотвечать на них, давая ссылку на мою библиотеку
 

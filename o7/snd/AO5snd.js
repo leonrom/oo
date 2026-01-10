@@ -12,7 +12,7 @@
         wshp = C.AddModuleSub(olga5_modul, modulname, snd => {
             const
                 ss = wshp.setClass,
-                o-sndError = 'o-sndError',
+                oSndError = 'o-sndError',
                 W = window.o7.find(w => w.modul == olga5_modul), // так делать во всех подмодулях 
                 debug = C.consts.debug,
                 lognam = `${olga5_modul}/${modulname} `,
@@ -58,8 +58,8 @@
                             C.ConsoleError(`"${errTypes[mrk]}" (код=${mrk})` + (txt ? ` ${txt}` : '') + ` для '${aO5.name}'`)
 
                             aO5.sound.errIs.errs = true
-                            if (!aO5.snd.classList.contains(o-sndError))
-                                aO5.snd.classList.add(o-sndError)
+                            if (!aO5.snd.classList.contains(oSndError))
+                                aO5.snd.classList.add(oSndError)
                         }
                     },
                     RemError: (aO5, mrk) => {
@@ -73,8 +73,8 @@
                                     return
 
                             aO5.sound.errIs.errs = false
-                            if (aO5.snd.classList.contains(o-sndError))
-                                aO5.snd.classList.remove(o-sndError)
+                            if (aO5.snd.classList.contains(oSndError))
+                                aO5.snd.classList.remove(oSndError)
                         }
                     }
                 },

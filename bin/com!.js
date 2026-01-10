@@ -1,42 +1,3 @@
-/* global document, window, console, CustomEvent */
-/* exported olga5_menuPopDn_Click*/
-/*jshint asi:true  */
-/*jshint esversion: 6*/
-/**
- *  сборщик модулей ядра библиотеки
- * 
-**/
-// 
-(function () {              // ---------------------------------------------- com ---
-	'use strict';
-	// let C;
-	const
-		C = window.o7.C,
-		debug = C.consts.debug,
-		W = {
-			modul: 'com',
-			Init: InitCom,
-			incls: ['CApi', 'CConsole', 'CEncode', 'CParams', 'CPops', 'IniScripts', 'TagsRef'],
-		},
-		wshp = (window.o7 ??= {})[W.modul] = { W },
-		LoadModuleScripts = () => {
-			for (const modul in C.scrpts) {
-				const scrpt = C.scrpts[modul]
-				// тут проверить нужно ли оно еще
-				const names = (scrpt.W?.incls || '').split(/\s*[;,]\s*/)
-				for (const nam of names){
-					AddSubScripts ( modul, names, scrpt.cls.script, iniFun = {}, args = [] ) 
-					}
-				// а если не нужно, то проверять очередность и Init()				
-			}
-		}
-function InitCom(){
-	if (debug)
-		console.log(`Загружен 'com'. Начинается проверка загрузки и исполнение остальных модулей`)
-	addEventListener('o_modulLoad', LoadModuleScripts)
-	// wshp = C.AddModule(W)	
-}
-})();
 /* global document, window, console*/
 /* exported olga5_menuPopDn_Click*/
 /*jshint asi:true  */
@@ -630,17 +591,17 @@ function InitCom(){
 			if (typeof cmodul === 'undefined') {
 				for (const ch of chs)
 					if (ch.nodeName == "STYLE" && ch.id == id) {
-						err = `Стиль id='${id}' (модуль: '${W.modul}', класс: '${W.class}) уже определён в документе`
+						err = `Стиль id='${id}' (модуль: '${W.cls.modul}', класс: '${W.class}) уже определён в документе`
 						break
 					}
 			} else
-				if (cmodul != W.modul) err = `Класс '${W.class}' повторяется в модулях '${cmodul}' и '${W.modul}. '`
+				if (cmodul != W.cls.modul) err = `Класс '${W.class}' повторяется в модулях '${cmodul}' и '${W.cls.modul}. '`
 
 			if (err) C.ConsoleError('>>  создание CSS  ' + err, 'InitCSS')
 			else {
 				if (debug > 1)
-					console.log(`>>  СОЗДАНИЕ CSS   ${W.class} (для модуля ${W.modul}) с id='${id}'`)
-				csslist[W.class] = W.modul
+					console.log(`>>  СОЗДАНИЕ CSS   ${W.class} (для модуля ${W.cls.modul}) с id='${id}'`)
+				csslist[W.class] = W.cls.modul
 
 				const styl = document.createElement('style')
 				styl.setAttribute('type', 'text/css')
@@ -669,10 +630,10 @@ function InitCom(){
 			if (W.isReady)
 				return
 
-			const scrpt = C.scrpts.find(scrpt => scrpt.modul == W.modul)
+			const scrpt = C.scrpts.find(scrpt => scrpt.modul == W.cls.modul)
 
 			if (!scrpt) {
-				C.ConsoleError(`В 'C.scrpts' не наден модуль `, W.modul)
+				C.ConsoleError(`В 'C.scrpts' не наден модуль `, W.cls.modul)
 				return
 			}
 
@@ -707,7 +668,7 @@ function InitCom(){
 					if (p == 'urlrfs') {
 						const urls = {}
 						for (const nam in xs) urls[nam] = xs[nam].val
-						DeCodeUrlRfs(urls, `${W.modul}: `)
+						DeCodeUrlRfs(urls, `${W.cls.modul}: `)
 						for (const nam in xs)
 							xs[nam].url = urls[nam]
 					}
@@ -719,10 +680,10 @@ function InitCom(){
 					for (const nam in xs)
 						W[p][nam] = xs[nam].val
 
-					if (debug > 0) PrintParams(W.modul, xs, p, n1)
+					if (debug > 0) PrintParams(W.cls.modul, xs, p, n1)
 				}
 				else
-					if (debug > 0) C.ConsoleInfo(`${W.modul}: параметры и ссылки берутся только из скрипта ядра библиотеки`)
+					if (debug > 0) C.ConsoleInfo(`${W.cls.modul}: параметры и ссылки берутся только из скрипта ядра библиотеки`)
 			}
 		}
 
@@ -1118,14 +1079,14 @@ Object.assign(C, {
 				if (!scrpt.timera)
 					scrpt.timera = new MyTimer(` инициирован `)
 				if (start != scrpt.start && scrpt.W && !scrpt.W.incls)
-					if (scrpt.need && scrpt.W.Init) {
+					if (scrpt.need && scrpt.W.cls.Init) {
 						const depend = scrpt.depends.find(depend => (depend.act.need && depend.act.done != start))
 						if (!depend) {
 							if (debug > 1)
-								console.log(`${head} начало нинициализации  ${scrpt.W.modul} `)
+								console.log(`${head} начало нинициализации  ${scrpt.W.cls.modul} `)
 							scrpt.start = start
-							scrpt.timera.Start(act.W.modul)
-							scrpt.W.Init()
+							scrpt.timera.Start(act.W.cls.modul)
+							scrpt.W.cls.Init()
 						}
 					} else
 						Object.assign(act, { start: start, done: start })
@@ -1188,7 +1149,7 @@ Object.assign(C, {
 						C.IncludeScripts({
 							modul: w.modul,
 							names: w.incls.names,
-							curScript: W.curScript,
+							curScript: w.cls.curScript,
 							iniFun: Included,
 							args: [w.modul]
 						})
@@ -1791,4 +1752,43 @@ Object.assign(C, {
 		ConvertScripts,
 		ConvertLinks
 	])
+})();
+/* global document, window, console, CustomEvent */
+/* exported olga5_menuPopDn_Click*/
+/*jshint asi:true  */
+/*jshint esversion: 6*/
+/**
+ *  сборщик модулей ядра библиотеки
+ * 
+**/
+// 
+(function () {              // ---------------------------------------------- com ---
+	'use strict';
+	// let C;
+	const
+		C = window.o7.C,
+		debug = C.consts.debug,
+		W = {
+			modul: 'com',
+			Init: InitCom,
+			incls: ['CApi', 'CConsole', 'CEncode', 'CParams', 'CPops', 'IniScripts', 'TagsRef'],
+		},
+		wshp = (window.o7 ??= {})[W.modul] = { W },
+		LoadModuleScripts = () => {
+			for (const modul in C.scrpts) {
+				const scrpt = C.scrpts[modul]
+				// тут проверить нужно ли оно еще
+				const names = (scrpt.W?.incls || '').split(/\s*[;,]\s*/)
+				for (const nam of names){
+					AddSubScripts ( modul, names, scrpt.cls.script, iniFun = {}, args = [] ) 
+					}
+				// а если не нужно, то проверять очередность и Init()				
+			}
+		}
+function InitCom(){
+	if (debug)
+		console.log(`Загружен 'com'. Начинается проверка загрузки и исполнение остальных модулей`)
+	addEventListener('o_modulLoad', LoadModuleScripts)
+	// wshp = C.AddModule(W)	
+}
 })();

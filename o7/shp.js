@@ -9,14 +9,12 @@
 	const
 		C = window.o7.C,
 		olgaShp = 'olga-shp',
-		W = Object.seal({
-			cls: Object.freeze({
+		W = {
 				modul: 'shp',
 				Init: ShpInit,
-				curScript: document.currentScript,
 				incls: ['DoInit', 'PBases', 'AO5shp', 'PO5shp', 'Frames', 'DoChgs'],
-			}),
-		}),
+		},
+		wshp = (window.o7 ??= {})[W.modul] = { W },
 		o5css = `
 			.o-shpCart {
                 margin: 0;
@@ -29,8 +27,7 @@
 			.o-shpClon {
 				display:none;
 			}
-	    `,
-		wshp = C.AddModule(W)
+	    `
 
 	function ShpInit() {
 
@@ -45,7 +42,7 @@
 
 		wshp.DoInit.Init()
 
-		C.DispatchEvent('o_scriptDone', W.cls.modul)
+		C.DispatchEvent('o_scriptDone', W.modul)
 
 		wshp.activated = false 	// признак, что было одно из activateEvents 
 		const activateEvents = ['click', 'keyup', 'resize'],

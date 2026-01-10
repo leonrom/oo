@@ -15,21 +15,19 @@
 		},
 		debug = C.consts.debug,
 		_div = document.createElement('div'),
-		W = Object.seal({
-			cls: Object.freeze({
-				modul: 'inc',
-				Init: InclStart,
-				curScript: document.currentScript,
-			}),
+		W = {
+			modul: 'inc',
+			Init: InclStart,
 			consts: { needs: 'getall=true; isfinal=1' },
-		}),
+		},
+		wshp = (window.o7 ??= {})[W.modul] = { W },
 		o5include = 'o5include',
 		msg = {
 			clrs: {	//	копия из CConsole
 				'E': "background: yellow; color: black;border: solid 1px gold;",
 				'I': "background: beige;  color: black;border: solid 1px bisque;",
 			},
-			Head: src => `${W.cls.modul}:  '${src}'`,
+			Head: src => `${W.modul}:  '${src}'`,
 			Msg: (fmt, head, txt, rezs) => {
 				if (rezs) {
 					console.groupCollapsed("%c%s", fmt, head, txt)
@@ -72,15 +70,15 @@
 		}
 
 		if (C.avtonom) {
-			const e = new CustomEvent('o_incReady', { modul: W.cls.modul })
+			const e = new CustomEvent('o_incReady', { modul: W.modul })
 			window.dispatchEvent(e)
 		}
 		else
 			// передавать имя "источника"			
-			C.DispatchEvent('o_incReady', W.cls.modul + "-источник")
+			C.DispatchEvent('o_incReady', W.modul + "-источник")
 
 		if (C.E && W.consts.o5isfinal)	// гененрировать ли сообщение 'o_scriptDone'
-			C.DispatchEvent('o_scriptDone', W.cls.modul)
+			C.DispatchEvent('o_scriptDone', W.modul)
 	},
 		AddIncls = tags => {
 			// console.log(`INC_1 `)
@@ -275,7 +273,7 @@
 			if (debug > 1)
 				msg.Info('PageLoad', `загружена страница  (с рез.=${xhr.status})  ${incl.xhr.responseURL}`, xhr.responseText)
 			// 	{
-			// 	console.groupCollapsed(`${W.cls.modul} : прочитан ((рез.=${xhr.status})) url='${xhr.responseURL}'`)
+			// 	console.groupCollapsed(`${W.modul} : прочитан ((рез.=${xhr.status})) url='${xhr.responseURL}'`)
 			// 	console.log(xhr.responseText)
 			// 	console.groupEnd()
 			// }
@@ -302,7 +300,7 @@
 		if (debug > 0) {
 			console.log('%c%s', "background: aqua; color: black;border: none;",
 				` инициализация `,
-				`${W.cls.modul}.js`,
+				`${W.modul}.js`,
 				` ${C.avtonom ? ('автономно по ' + e.type) : 'из библиотеки'} `)
 
 			_div.style.display = 'none'
@@ -334,9 +332,9 @@
 	if (C.avtonom) {
 		document.addEventListener('DOMContentLoaded', InclStart)
 
-		if (o_debug)
-			console.log(`}---< ${document.currentScript.src.indexOf(`/${W.cls.modul}.`) > 0 ? 'загружен  ' : 'включён   '}:  ${W.cls.modul}.js`)
+		if (C.consts.debug)
+			console.log(`}---< ${document.currentScript.src.indexOf(`/${W.modul}.`) > 0 ? 'загружен  ' : 'включён   '}:  ${W.modul}.js`)
 	}
-	else
-		C.AddModule(W)
+	// else
+	// 	C.AddModule(W)
 })();

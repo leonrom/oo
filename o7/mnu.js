@@ -8,14 +8,12 @@
 		C = window.o7.C,
 		debug = C.consts.debug,
 		oMenu = 'o-menu',
-		W = Object.seal({
-			cls: Object.freeze({
-				modul: 'mnu',
-				Init: Init,
-				curScript: document.currentScript,
-			}),
+		W = {
+			modul: 'mnu',
+			Init: Init,
 			consts: { needs: 'menudef=; scrollY=-18', },
-		}),
+		},
+		wshp = (window.o7 ??= {})[W.modul] = { W },
 		class_empty = oMenu + '_empty',
 		class_small = oMenu + '_small',
 		o5css = `
@@ -384,14 +382,14 @@
 			if (W.consts.menudef)	// если есть такой атрибут}
 				InitByText(W.consts.menudef)
 
-			const tags = C.GetTagsByClassNames('o-menuHidden', W.cls.modul)
+			const tags = C.GetTagsByClassNames('o-menuHidden', W.modul)
 			if (tags)
 				tags.forEach(tag => {
 					InitByText(tag.innerText.trim())	//, tag)
 				})
 		}
-		C.DispatchEvent('o_scriptDone', W.cls.modul)
+		C.DispatchEvent('o_scriptDone', W.modul)
 	}
 
-	C.AddModule(W)
+	// C.AddModule(W)
 })();

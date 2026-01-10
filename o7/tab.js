@@ -7,11 +7,11 @@
 
 	const
 		m = window.location.search.match(/(?:\?|&)debug(?:=([^&?]*))?(?=[&?]|$)/),
-		o_debug = !m ? 0 : (m[1] === undefined || m[1] === "") ? 1 : (isNaN(+m[1]) ? 3 : +m[1]),
+		debug = !m ? 0 : (m[1] === undefined || m[1] === "") ? 1 : (isNaN(+m[1]) ? 3 : +m[1]),
 		o5tagTable = "§¶▸▹↢⇔↣ₔᐞ⇅¿",
 		C = window.o7 ? window.o7.C : { // заменитель библиотечного
 			consts: {
-				o_debug: o_debug,
+				debug: debug,
 				o5tag_table: o5tagTable
 			},
 			avtonom: true,
@@ -19,14 +19,12 @@
 			GetTagsByQueryes: query => document.querySelectorAll(query), // второй аргумент - игнорится			
 		},
 		// currentScript = document.currentScript,
-		W = Object.seal({
-			cls: Object.freeze({
-				modul: 'tab',
-				Init: TabInit,
-				curScript: document.currentScript,
-			}),
+		W = {
+			modul: 'tab',
+			Init: TabInit,
 			consts: { needs: `o5tag_table= ${o5tagTable}`, },
-		}),
+		},
+		wshp = (window.o7 ??= {})[W.modul] = { W },
 		cc_span = 'o-tabSpan',
 		cc_odd = 'o-tabOdd',
 		SortTab = e => {
@@ -358,16 +356,16 @@
 		if (!C.avtonom)
 			C.ParamsFill(W)
 
-		if (o_debug > 0)
+		if (debug > 0)
 			console.log('%c%s', "background: aqua; color: black;border: none;",
 				` инициализация `,
-				`${W.cls.modul}.js`,
+				`${W.modul}.js`,
 				` ${C.avtonom ? ('автономно по ' + e.type) : 'из библиотеки'} `)
 
 		PrepTables()
 
 		if (!C.avtonom)
-			C.DispatchEvent('o_scriptDone', W.cls.modul)
+			C.DispatchEvent('o_scriptDone', W.modul)
 	}
 
 	if (C.avtonom) {
@@ -381,20 +379,20 @@
 			}
 		}
 		if (Find(document.scripts, 'inc.js'))
-			window.addEventListener('o_incReady', W.cls.Init)
+			window.addEventListener('o_incReady', W.Init)
 		else
-			document.addEventListener('DOMContentLoaded', W.cls.Init)
+			document.addEventListener('DOMContentLoaded', W.Init)
 
 		// if (!window.o7) window.o7 = []
 		if (!window.o7) window.o7 = { C: {}, tab: {} }
 		W.consts = C.consts
 
 		PrepTables()
-		if (o_debug)
-			console.log(`}---< ${document.currentScript.src.indexOf(`/${W.cls.modul}.`) > 0 ? 'загружен  ' : 'включён   '}:  ${W.cls.modul}.js`)
+		if (debug)
+			console.log(`}---< ${document.currentScript.src.indexOf(`/${W.modul}.`) > 0 ? 'загружен  ' : 'включён   '}:  ${W.modul}.js`)
 	}
-	else
-		C.AddModule(W)
+	// else
+	// 	C.AddModule(W)
 
 	Object.assign(window.o7, { PrepTables: PrepTables, })
 

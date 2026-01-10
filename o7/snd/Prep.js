@@ -145,7 +145,7 @@
             /*
                         PrepareAudios
             */
-            const audios = C.GetTagsByTagNames('audio', wshp.W.cls.modul),
+            const audios = C.GetTagsByTagNames('audio', wshp.W.modul),
                 efirsts = ['mouseenter', 'focusin'],
                 OnPlay = (audio) => {                    
 					window.dispatchEvent(new CustomEvent('o5snd_stopSound', { detail: { tag: audio, type: 'audio(тег)', } }))
@@ -194,7 +194,7 @@
                 if (C.consts.debug > 0) C.ConsoleInfo(`Всего выполнено подстановок snd/audio`, urlattrs.length, urlattrs)
 
             if (errs.length > 0)
-                C.ConsoleError(`${wshp.W.cls.modul}: ошибки перекодировки тегов с ${wshp.W.class}`, errs.length, errs)
+                C.ConsoleError(`${wshp.W.modul}: ошибки перекодировки тегов с ${wshp.W.class}`, errs.length, errs)
         })
 
 

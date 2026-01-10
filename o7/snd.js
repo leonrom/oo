@@ -7,20 +7,18 @@
 	const
 		C = window.o7.C,
 		olgaSnd = 'olga_snd',
-		W = Object.seal({
-			cls: Object.freeze({
+		W = {
 				modul: 'snd',
 				Init: SndInit,
-				curScript: document.currentScript,
 				incls: ['AO5snd', 'Imgs', 'Prep'],
-			}),
 			consts: {
 				needs: `		
 						o5shift_speed=0.5 # при Shift - замедлять вдвое;
 						o5return_time=0.3 # при возобновлении "отмотать" 0.3 сек ;
 				`},
 			urlrfs: { needs: 'btn_play=""; btn_stop=', },
-		}),
+		},
+		wshp = (window.o7 ??= {})[W.modul] = { W },
 		o5css = `
 		.${olgaSnd}:not(.o-sndNone) {
 			cursor: pointer;
@@ -67,8 +65,7 @@
 			25% {transform: rotateZ(33deg);}
 			75% {transform: rotateZ(-33deg);}
 		}
-	`,
-		wshp = C.AddModule(W)
+	`
 
 	// eslint-disable-next-line no-mixed-spaces-and-tabs
 
@@ -85,10 +82,10 @@
 				ex.classList.add('o-sndNone')
 		}
 
-		const mtags = C.SelectByClassName(olgaSnd, W.cls.modul)
+		const mtags = C.SelectByClassName(olgaSnd, W.modul)
 		wshp.Prep(mtags)
 
-		C.DispatchEvent('o_scriptDone', W.cls.modul)
+		C.DispatchEvent('o_scriptDone', W.modul)
 	}
 
 })();

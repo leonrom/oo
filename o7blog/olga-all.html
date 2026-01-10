@@ -16,6 +16,7 @@
 	-->
 
 	<script data-src='+com.js'></script>
+
 	<!-- <script data-src='+shp.js'></script>
 	<script data-src='+pop.js'></script>
 	<script data-src='+mnu.js' data-scrollY='-32'></script>
@@ -30,7 +31,8 @@
 	<script data-src='+snd!.js' btn_play='images + /play.png' btn_stop='images + /play_Freepik.png'></script>
 	<script data-src='+add/pusto.js' data-moe-attr='мой атрибут'></script> -->
 
-	<script src='../o7/o7.js' data-consts=" nomnu='0'; noact='0';" data-urlrfs="
+	<script src='../o7/o7.js' data-consts=" nomnu='0'; noact='0';"  data-debug="2"
+		data-urlrfs="
 			тесты='+ ../olga-tests';
 			блог_o5='https://olga-5.blogspot.com/2020/02';
 			images=_olga + ../media/image;       
@@ -428,16 +430,16 @@
 				</p>
 				<p>Результирующий файл <code>o7.js</code> в <b>Linux</b> создаётся командным файлом:
 					<code class="o-popup"
-						onmouseup="window.olga7.PopShow( 555, 422, '_root+/cc/Lo7.cmd')">Lo7.cmd</code>.
+						onmouseup="window.olga7.PopShow( 555, 422, '_root+/cc/cL.cmd')">cL.cmd</code>.
 					Расширение <i>cmd</i> у него не обязательно,
 					однако: первой строкой д.б. '<i>#!/bin/bash</i>'; после символов продолжения строки '<b>\</b>'
 					не должно ничего быть; файл
 					должен быть сделан исполняемым (командой "<i>chmod +x ...</i>" или редактированием его свойств).
 					Очерёдность включаемых скриптов лучше не менять.
 				</p>
-				<p>В <b>Windows</b> файл <code>o7.js</code> создаётся командным файлом
+				<p>В <b>Windows</b> файл <code>o7.js</code> создаётся аналогично командным файлом
 					<code class="o-popup"
-						onmouseup="window.olga7.PopShow( 555, 422, '_root+/cc/Wo7.cmd')">Wo7.cmd</code>
+						onmouseup="window.olga7.PopShow( 555, 422, '_root+/cc/cW.cmd')">cW.cmd</code>
 				</p>
 				<p class="o-comment">
 					Очерёдность включения скриптов <u>существенна</u> и указана согласно их взаимной зависимости
@@ -485,6 +487,7 @@
 							</td>
 							<td>
 								<pre>
+<h1>?</h1>									
 <span class="o-tableName">объединённый файл №1</span>
 &lt;script src='../bin/o7.js' 
     o_debug=1 
@@ -585,9 +588,9 @@
 					В модулях библиотеки предусмотрена выдача на
 					<span title="в отладочный протокол 'console.log'">консоль</span>
 					сообщений диагностики и об ошибках.
-					Подробность диагностики определяется параметром <b>o_debug</b> (смотри
+					Подробность диагностики определяется параметром <b>debug</b> (смотри
 					<span o5popup='#head_52; width: 666, height: 444'> п. 5.2</span>).
-					Сообщения же об ошибках выдаются всегда, независимо от значения <b>o_debug</b>.
+					Сообщения же об ошибках выдаются всегда, независимо от значения <b>debug</b>.
 				</p>
 				<p>
 					Тексты сообщений об ошибках выводятся на жёлтом фоне, а критические ошибки еще и обрамляются рамкой.
