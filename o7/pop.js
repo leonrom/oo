@@ -695,7 +695,7 @@ img.${oPopup} {
         const url = pops.url
         if (url && url.length > 1) {
             // let isref = false
-            if (url[0] == '#') {
+            if (url.startsWith('#')) {
                 const id = url.substring(1),
                     tag = document.getElementById(id)
                 if (!tag) {

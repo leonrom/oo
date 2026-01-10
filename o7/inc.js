@@ -112,7 +112,7 @@
 					}
 
 					const url = wref.url,
-						sel = ss.length > 1 ? ss[ss.length - 1] : ''
+						sel = ss.length > 1 ? ss.at(-1) : ''
 					let incl = incls[url]
 					if (!incl) {
 						incl = {

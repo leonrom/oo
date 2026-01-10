@@ -136,16 +136,16 @@
 					// if (s.indexOf('33	▸10      ▸2.5    ▸0.1   ▸12.1  ▸9.3')>=0)
 					// 	console.log()
 
-					if (s[s.length - 1] == d_line) s[s.length - 1] = ' '
+					if (s.endsWith(d_line)) s.at(-1) = ' '
 
 					const tds = []
 					tds.clsR = ''
-					tds.isth = s[0] == d_head
+					tds.isth = s.startsWith(d_head)
 
 					if (!tds.isth) {		// проверка первым символом разделитель ячеек - берём класс рядка
 						const mR = s.match(m_clsR)
 						if (mR) {
-							const len = mR[0] ? mR[0].length - 1 : 0
+							const len = mR[0] ? (mR[0].length - 1) : 0
 							if (len > 0) {
 								// tds.clsR = ` class="tab-tr_${parseInt(mR[0].substring(0, len))}" `
 								tds.clsR = ` class="tab-tr_${mR[0].substring(0, len)}" `
@@ -176,7 +176,7 @@
 
 						txt += u
 
-						if (mc && mc[0] == cellC) cspan++
+						if (mc.startsWith(cellC)) cspan++
 						else {
 							let align = '',
 								isspan = false,
@@ -188,7 +188,7 @@
 								if (mS) {
 									txt = txt.replace(m_sort, '')
 									const s = mS[0].trim()
-									if (s.length > 1) issort = parseInt(s.substring(0, s.length - 1))
+									if (s.length > 1) issort = parseInt(s.slice(0, -1))
 									else issort = i + 1
 									const j = s.indexOf(csort)
 									if (j >= 0)
@@ -225,7 +225,7 @@
 								vspan: '',
 								cspan: cspan,
 								align: align ? ` style="text-align:${align};"` : '',
-								class: mC ? ` tab-td_${mC[0].substring(0, mC[0].length - 1).trim()}` : '',
+								class: mC ? ` tab-td_${mC[0].slice(0,-1).trim()}` : '',
 								// class: (len > 0 && mC.indexOf(cellD)>0) ? ` tab-td_${mC.substring(0, len)}` : '',
 							})
 							txt = ''

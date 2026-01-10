@@ -303,7 +303,7 @@
 						else if (C.IsFullUrl(ref)) li.o5menus.ref = ref // (ref.match(/^\s*(https?:)\/\//)) li.o5menus.ref = ref
 						else if (ref.match(/\.html?($|\?|&|#)/)) li.o5menus.ref = base + ref
 						else {
-							li.o5menus.ref = ref[0] == '#' ? ref.substr(1) : ref
+							li.o5menus.ref = ref.startsWith('#') ? ref.substr(1) : ref
 							li.o5menus.isext = false
 						}
 					}

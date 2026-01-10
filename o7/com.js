@@ -16,7 +16,7 @@
 		W = {
 			modul: 'com',
 			Init: InitCom,
-			incls: ['CApi', 'CConsole', 'CEncode', 'CParams', 'CPops', 'IniScripts', 'TagsRef'],
+			incls: ['CApi', 'CConsole', 'CEncode', 'CParams', 'IniScripts', 'TagsRef'],
 		}
 
 	function InitCom() {

@@ -48,7 +48,7 @@ pre span{
 				oldLog.apply(console, arguments) // так точнее совпадение временных меток
 				const s = Array.prototype.join.call(arguments, ' '),
 					dt = new Date(),
-					ds = s.trim() == '' || s[0] == '\n' ? '' : (
+					ds = s.trim() == '' || s.startsWith('\n') ? '' : (
 						(dt.getHours() + ':').padStart(3, '0') +
 						(dt.getMinutes() + ':').padStart(3, '0') +
 						(dt.getSeconds() + '.').padStart(3, '0') +

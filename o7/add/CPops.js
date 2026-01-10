@@ -218,12 +218,8 @@
 
 			return div
 		}
-		
-Object.assign(C, {
-			PopO6Create: PopO6Create,
-			PopO6Close: PopO6Close,
-		})
 
+	
 	C.AddModuleSub(olga5_modul, modulname, () => {
 
 		SetVP()
@@ -237,9 +233,13 @@ Object.assign(C, {
 			}
 		})
 
+Object.assign(C, {
+		PopO6Create: PopO6Create,
+		PopO6Close: PopO6Close,
+	})
+
 		window.addEventListener('resize', Resize)
 
-		
 		return true
 	})
 })();

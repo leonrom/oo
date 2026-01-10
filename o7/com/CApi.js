@@ -46,9 +46,9 @@
 
 	C.AddModuleSub(olga5_modul, modulname, () => {
 		Object.assign(C, {
-			owners: [],
-			scrpts: [],
-			Match: Match,
+			// owners: [],
+			// scrpts: [],
+			// Match: Match,
 			// MyRound: s => { return Math.round(parseFloat(s)) },
 			MakeObjName: function (obj, len) { // моё формирование имени объекта
 				if (obj) {
@@ -68,11 +68,11 @@
 			GetTagsByQueryes: (queryes, modul) => {
 				return GetTagsBy(modul, 'querySelectorAll', queryes)
 			},
-			GetTagsByIds: (ids, modul) => {
-				const nams = ids.split(/\s*,\s*/)
-				nams.forEach((nam, i, nams) => { nams[i] = '#' + nam });
-				return GetTagsBy(modul, 'querySelectorAll', nams.join(','))
-			},
+			// GetTagsByIds: (ids, modul) => {
+			// 	const nams = ids.split(/\s*,\s*/)
+			// 	nams.forEach((nam, i, nams) => { nams[i] = '#' + nam });
+			// 	return GetTagsBy(modul, 'querySelectorAll', nams.join(','))
+			// },
 			GetTagsByClassNames: (classnams, modul) => {
 				const tags = GetTagsBy(modul, 'getElementsByClassName', classnams),
 					rez = []
@@ -105,46 +105,46 @@
 					}
 				}
 				return rez
-			},
-			QuerySelectorInit: (starts, scls) => {
-				C.owners.splice(0, C.owners.length)
-
-				const match = Match(scls),
-					errs = []
-				if (!starts || starts.length == 0)
-					C.owners.push({ start: document.body, modules: [], origcls: 'document' }) // специально чуть по-иному
-				else
-					for (const tag of starts) {
-						const quals = [],
-							ms = tag.className.match(match)
-						if (ms) {
-							const
-								m = ms[0].trim(),
-								ss = m.split(mquals)
-
-							tag.className = tag.className.replace(m, scls)// ВСЕГДА убираю квалификаторы (остальные в ms - не трогать!)
-
-							// for (let j = 1; j < ss.length; j++) {
-							// 	const modul = ss[j]
-
-							// 	if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
-							// 	else errs.push(modul)
-							// }
-
-							if (ss[1]) {
-								const us = ss[1].split(/\s*[,]\s*/)
-								for (const modul of us)
-									if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
-									else errs.push(modul)
-							}
-							C.owners.push({ start: tag, modules: quals, origcls: m }) // специально чуть по-иному
-							if (C.consts.debug > 1)
-								console.log(`${olga5_modul}/${modulname} QuerySelectorInit: id='${tag.id}',  '${m}', \n\t${quals}`)
-						}
-					}
-				if (errs.length > 0)
-					C.ConsoleError(`Неопределены квалификаторы для '${scls}': `, errs.join(', '))
 			}
+			// QuerySelectorInit: (starts, scls) => {
+			// 	C.owners.splice(0, C.owners.length)
+
+			// 	const match = Match(scls),
+			// 		errs = []
+			// 	if (!starts || starts.length == 0)
+			// 		C.owners.push({ start: document.body, modules: [], origcls: 'document' }) // специально чуть по-иному
+			// 	else
+			// 		for (const tag of starts) {
+			// 			const quals = [],
+			// 				ms = tag.className.match(match)
+			// 			if (ms) {
+			// 				const
+			// 					m = ms[0].trim(),
+			// 					ss = m.split(mquals)
+
+			// 				tag.className = tag.className.replace(m, scls)// ВСЕГДА убираю квалификаторы (остальные в ms - не трогать!)
+
+			// 				// for (let j = 1; j < ss.length; j++) {
+			// 				// 	const modul = ss[j]
+
+			// 				// 	if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
+			// 				// 	else errs.push(modul)
+			// 				// }
+
+			// 				if (ss[1]) {
+			// 					const us = ss[1].split(/\s*[,]\s*/)
+			// 					for (const modul of us)
+			// 						if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
+			// 						else errs.push(modul)
+			// 				}
+			// 				C.owners.push({ start: tag, modules: quals, origcls: m }) // специально чуть по-иному
+			// 				if (C.consts.debug > 1)
+			// 					console.log(`${olga5_modul}/${modulname} QuerySelectorInit: id='${tag.id}',  '${m}', \n\t${quals}`)
+			// 			}
+			// 		}
+			// 	if (errs.length > 0)
+			// 		C.ConsoleError(`Неопределены квалификаторы для '${scls}': `, errs.join(', '))
+			// }
 		})
 	})
 })();

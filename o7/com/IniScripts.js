@@ -14,7 +14,46 @@
 		olga5_modul = 'com',
 		modulname = 'IniScripts',
 		clrPage = "background: green;color:white;",
-		clrMy = "background: blue; color: white;border: none;"
+		clrMy = "background: blue; color: white;border: none;",
+		QuerySelectorInit= (starts, scls) => {
+				C.owners.splice(0, C.owners.length)
+
+				const match = Match(scls),
+					errs = []
+				if (!starts || starts.length == 0)
+					C.owners.push({ start: document.body, modules: [], origcls: 'document' }) // специально чуть по-иному
+				else
+					for (const tag of starts) {
+						const quals = [],
+							ms = tag.className.match(match)
+						if (ms) {
+							const
+								m = ms[0].trim(),
+								ss = m.split(mquals)
+
+							tag.className = tag.className.replace(m, scls)// ВСЕГДА убираю квалификаторы (остальные в ms - не трогать!)
+
+							// for (let j = 1; j < ss.length; j++) {
+							// 	const modul = ss[j]
+
+							// 	if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
+							// 	else errs.push(modul)
+							// }
+
+							if (ss[1]) {
+								const us = ss[1].split(/\s*[,]\s*/)
+								for (const modul of us)
+									if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
+									else errs.push(modul)
+							}
+							C.owners.push({ start: tag, modules: quals, origcls: m }) // специально чуть по-иному
+							if (C.consts.debug > 1)
+								console.log(`${olga5_modul}/${modulname} QuerySelectorInit: id='${tag.id}',  '${m}', \n\t${quals}`)
+						}
+					}
+				if (errs.length > 0)
+					C.ConsoleError(`Неопределены квалификаторы для '${scls}': `, errs.join(', '))
+			}
 
 	class MyEvents {
 		static doceves = ['DOMContentLoaded', 'readystatechange', 'visibilitychange', 'blur']
@@ -437,7 +476,7 @@
 
 				this.errs.splice(0, this.errs.length)
 
-				C.QuerySelectorInit(this.starts, this.oStart) //  чтобы пересчитало область определения
+				QuerySelectorInit(this.starts, this.oStart) //  чтобы пересчитало область определения
 
 				// сброс событий
 				window.o7.C.o5Inited = false

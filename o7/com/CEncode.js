@@ -112,12 +112,12 @@
 
 				let urld = ''
 				for (const part of parts)
-					if (urld && part && urld[urld.length - 1] != '/' && part[0] != '/') urld = urld + '/' + part
+					if (urld && part && !urld.endsWith('/') && !part.startsWith('/')) urld = urld + '/' + part
 					else urld = ((urld ? urld : '') + (part ? part : ''))
 				// console.log(orig, urld)
 				if (urld) {
 					if (!IsFullUrl(urld)) {
-						if (parts[0] == '') urld = C.urlrfs._olga + urld
+						if (!parts[0]) urld = C.urlrfs._olga + urld
 						else 
 							urld = C.urlrfs._html + urld
 

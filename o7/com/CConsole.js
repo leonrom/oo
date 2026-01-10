@@ -17,8 +17,8 @@
 			'S': "background: blue;   color: white;border: solid 1px bisque;",
 			'I': "background: beige;  color: black;border: solid 1px bisque;",
 		},
-		ConsoleMsg = (styp, txts, add, tab) => {
-			const txt = (txts && txts[txts.length - 1] != '') ? txts + ' ' : txts,
+		ConsoleMsg = (styp, txt, add, tab) => {
+// ?			const txt = (txts && txts[txts.length - 1] != '') ? txts + ' ' : txts,
 				type = styp.substr(0, 1).toUpperCase(),
 				clr1 = clrtypes[type],
 				clr2 = "margin-left:0.4rem; background: white; color: black; border: solid " +

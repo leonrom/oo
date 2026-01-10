@@ -8,7 +8,6 @@
 		W = {
 			modul: 'dbg',
 			Init: DbgInit,
-			curScript: document.currentScript,
 			incls: ['Pos', 'Ccss', 'Logs', 'Utils', 'Events'],
 		},
 		wshp = (window.o7 ??= {})[W.modul] = { W },
