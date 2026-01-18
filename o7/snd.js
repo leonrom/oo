@@ -12,11 +12,11 @@
 				Init: SndInit,
 				incls: ['AO5snd', 'Imgs', 'Prep'],
 			consts: {
-				needs: `		
+				_needs: `		
 						o5shift_speed=0.5 # при Shift - замедлять вдвое;
 						o5return_time=0.3 # при возобновлении "отмотать" 0.3 сек ;
 				`},
-			urlrfs: { needs: 'btn_play=""; btn_stop=', },
+			urlrfs: { _needs: 'btn_play=""; btn_stop=', },
 		},
 		wshp = (window.o7 ??= {})[W.modul] = { W },
 		o5css = `

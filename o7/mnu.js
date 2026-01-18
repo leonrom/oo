@@ -11,7 +11,7 @@
 		W = {
 			modul: 'mnu',
 			Init: Init,
-			consts: { needs: 'menudef=; scrollY=-18', },
+			consts: { _needs: 'menudef=; scrollY=-18', },
 		},
 		wshp = (window.o7 ??= {})[W.modul] = { W },
 		class_empty = oMenu + '_empty',

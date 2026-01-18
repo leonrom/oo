@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>arseNeeds</title>
+    <script>
+        const o5tagTable='o5 tag Table'
+        function ParseNeeds(z) {
+            const ss = z._needs
+                // .replace(/[#|\/\/|\/\*].*$/g, ',')
+                .replaceAll(/\n|;|[#|\/\/].*$/gm, ',')
+                // .replace(/$|;/g, ',')
+                .replace(/,\s*,|\s+,\s+/g, ',')
+                .split(',')
+
+            const s1 = z._needs
+                .replaceAll(/[#|\/\/].*$/gm, ',')
+
+            const s2 = z._needs
+                .replaceAll(/[#|\/\/].*$/gm, ',')
+                .replace(/$|;|,\s*,|\s+,\s+/g, ',')
+            console.log('   ', z._needs, 
+            `\ns1= ${s1}`,
+            `\ns2= ${s2}`,
+            `\nss= ${ss.join(', ')}`
+        )
+        }
+        for (const z of [
+            // { _needs: 'getall=true; isfinal=1' },
+            // { _needs: 'menudef=; scrollY=-18', },
+            {
+                _needs: `o5nocss=0;  // 0 - подключаются CSS'ы;
+                            o5timer=0.7 // интервал мигания ;
+                            o5params=''  // умалчиваемые для mos, sizs, wins;`
+            },
+            // { _needs: 'o_attrs=;', },
+            // { _needs: 'btn_play=""; btn_stop=', },
+            // { _needs: `o5tag_table= ${o5tagTable}`, },
+            // {
+            //     _needs: 'xyz=3.14; moe-attr=?',
+            // }
+        ])
+            ParseNeeds(z)
+    </script>
+</head>
+
+<body id="body" style="height: 1500px;">
+    готово
+</body>
+
+</html>
+
+имею 3 строки, содержащие комментарии , начинающиеся '//'.
+
+                _needs: `o5nocss=0;  // 0 - подключаются CSS'ы;
+                            o5timer=0.7 // интервал мигания ;
+                            o5params=''  // умалчиваемые для mos, sizs, wins;`
+           

@@ -49,7 +49,7 @@
             Init: Popups,
             Done: DClosePops,
             consts: {
-                needs: `o5nocss=0;  // 0 - подключаются CSS'ы;
+                _needs: `o5nocss=0;  // 0 - подключаются CSS'ы;
                             o5timer=0.7 // интервал мигания ;
                             o5params=''  // умалчиваемые для mos, sizs, wins;`
             },

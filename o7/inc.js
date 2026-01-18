@@ -18,7 +18,7 @@
 		W = {
 			modul: 'inc',
 			Init: InclStart,
-			consts: { needs: 'getall=true; isfinal=1' },
+			consts: { _needs: 'getall=true; isfinal=1' },
 		},
 		wshp = (window.o7 ??= {})[W.modul] = { W },
 		o5include = 'o5include',

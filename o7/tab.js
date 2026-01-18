@@ -22,7 +22,7 @@
 		W = {
 			modul: 'tab',
 			Init: TabInit,
-			consts: { needs: `o5tag_table= ${o5tagTable}`, },
+			consts: { _needs: `o5tag_table= ${o5tagTable}`, },
 		},
 		wshp = (window.o7 ??= {})[W.modul] = { W },
 		cc_span = 'o-tabSpan',

@@ -12,7 +12,7 @@
 		W = {
 			modul: 'ref',
 			Init: RefInit,
-			consts: { needs: 'o_attrs=;', },
+			consts: { _needs: 'o_attrs=;', },
 		},
 		wshp = (window.o7 ??= {})[W.modul] = { W },
 		ParseTagAttrs = params => {

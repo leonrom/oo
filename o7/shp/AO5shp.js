@@ -154,7 +154,7 @@
                     el.removeAttribute(ev)
 
                 if (el.id) {
-                    el.dataset.origId = el.id       ??
+                    el.dataset.origId = el.id       
                     el.id = ''
                 }
             }
