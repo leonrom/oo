@@ -1,5 +1,5 @@
 /* global document, window, console*/
-/* exported olga5_menuPopDn_Click*/
+/* exported olga_menuPopDn_Click*/
 /*jshint asi:true  */
 /*jshint esversion: 6*/
 /**
@@ -17,132 +17,14 @@ import { C } from '../index.js'
  * 				или документ уже загружен/обновлён, или вызов был по обновлению документа
  * @param {nam} наименование скрипта (для протокола)
  */
-export function IniScripts(nam) {
+export function IniScripts() {
 const
 	debug = C.consts.debug,
-	olga5_modul = 'com',
+	olga_modul = 'com',
 	modulname = 'IniScripts',
 	clrPage = "background: green;color:white;",
 	clrMy = "background: blue; color: white;border: none;",
-	QuerySelectorInit = (starts, scls) => {
-		C.owners.splice(0, C.owners.length)
 
-		const match = Match(scls),
-			errs = []
-		if (!starts || starts.length == 0)
-			C.owners.push({ start: document.body, modules: [], origcls: 'document' }) // специально чуть по-иному
-		else
-			for (const tag of starts) {
-				const quals = [],
-					ms = tag.className.match(match)
-				if (ms) {
-					const
-						m = ms[0].trim(),
-						ss = m.split(mquals)
-
-					tag.className = tag.className.replace(m, scls)// ВСЕГДА убираю квалификаторы (остальные в ms - не трогать!)
-
-					// for (let j = 1; j < ss.length; j++) {
-					// 	const modul = ss[j]
-
-					// 	if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
-					// 	else errs.push(modul)
-					// }
-
-					if (ss[1]) {
-						const us = ss[1].split(/\s*[,]\s*/)
-						for (const modul of us)
-							if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
-							else errs.push(modul)
-					}
-					C.owners.push({ start: tag, modules: quals, origcls: m }) // специально чуть по-иному
-					if (C.consts.debug > 1)
-						console.log(`${olga5_modul}/${modulname} QuerySelectorInit: id='${tag.id}',  '${m}', \n\t${quals}`)
-				}
-			}
-		if (errs.length > 0)
-			C.ConsoleError(`Неопределены квалификаторы для '${scls}': `, errs.join(', '))
-	}
-
-class MyEvents {
-	static doceves = ['DOMContentLoaded', 'readystatechange', 'visibilitychange', 'blur']
-
-	constructor(list) {
-		const
-			eves = list.trim().split(/\s*[,;]\s*/) || [],
-			errs = []
-
-		this.meves = []
-		for (const eve of eves) {
-			const ss = eve.trim().split(/\s*[:]\s*/)
-			if (ss[0].length > 0) {
-				const eve = ss[0],
-					ers = []
-				let isd = MyEvents.doceves.includes(eve),
-					isu = false
-
-				for (let i = 1; i < ss.length; i++)
-					if (ss[i])
-						switch (ss[i][0].toUpperCase()) {
-							case 'W': isd = 'W'
-								break
-							case 'D': isd = 'D'
-								break
-							case 'U': isu = true
-								break
-							default: "'" + ers.push(ss[i]) + "'"
-						}
-				this.meves.push({ eve: eve, isd: isd, isu: isu })
-				if (ers.length > 0)
-					errs.push(`${eve}: ${ers.join(', ')}`)
-			}
-			if (errs.length > 0)
-				C.ConsoleError(`Недопустимые ('W','D','U') квалификаторы событий`, errs.length, errs)
-		}
-		Object.freeze(this)
-	}
-	AddEvents(Fun) {
-		for (const meve of this.meves)
-			(meve.isd ? document : window).addEventListener(meve.eve, Fun, true)
-	}
-	RemEvents(Fun) {
-		for (const meve of this.meves)
-			(meve.isd ? document : window).removeEventListener(meve.eve, Fun, true)
-	}
-}
-
-class MyTimer {
-	constructor(text) {
-		this.text = text
-		this.act = { time: 0, name: '' }
-		Object.seal(this.act)
-		Object.freeze(this)
-	}
-	Stop(add) {
-		// console.log('...=', this.act.time,  this.act.name)
-		if (this.act.time) {
-			const dt = (' ' + (Number(new Date()) - this.act.time)).padStart(8) + ' ms',
-				name = dt + ' ' + this.act.name.padStart(12)
-			if (add)
-				console.error('%c%s', "background: yellow; color: black;border: none;",
-					this.text + name + ' [' + add + ']')
-			else {
-				console.log('%c%s', clrMy, this.text, name)
-				this.act.time = 0
-			}
-		}
-	}
-	Start(name, iso5inc) {
-		if (this.act.time && !iso5inc)
-			this.Stop('не закончено')
-
-		this.act.time = Number(new Date())
-		this.act.name = name
-		// console.log('...+', this.act.time,  this.act.name)
-	}
-}
-
-const
 	// DocURL = () => document.URL.match(/[^?&#]*/)[0].trim(),
 
 	ScriptDone = e => {	//  завершение инициализации очередного скрипта
@@ -309,7 +191,140 @@ const
 			C.ConsoleError(`Скрипты ${bytimer ? 'НЕ' : ''} завершились (есть ошибки)`, errs.length, errs)
 			errs.splice(0, errs.length) //  могут еще завершиться и без ошибок
 		}
+	},
+	QuerySelectorInit = (starts, scls) => {
+		C.owners.splice(0, C.owners.length)
+
+		const match = Match(scls),
+			errs = []
+		if (!starts || starts.length == 0)
+			C.owners.push({ start: document.body, modules: [], origcls: 'document' }) // специально чуть по-иному
+		else
+			for (const tag of starts) {
+				const quals = [],
+					ms = tag.className.match(match)
+				if (ms) {
+					const
+						m = ms[0].trim(),
+						ss = m.split(mquals)
+
+					tag.className = tag.className.replace(m, scls)// ВСЕГДА убираю квалификаторы (остальные в ms - не трогать!)
+
+					// for (let j = 1; j < ss.length; j++) {
+					// 	const modul = ss[j]
+
+					// 	if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
+					// 	else errs.push(modul)
+					// }
+
+					if (ss[1]) {
+						const us = ss[1].split(/\s*[,]\s*/)
+						for (const modul of us)
+							if (C.scrpts.find(scrpt => scrpt.modul == modul)) quals.push(modul)
+							else errs.push(modul)
+					}
+					C.owners.push({ start: tag, modules: quals, origcls: m }) // специально чуть по-иному
+					if (C.consts.debug > 1)
+						console.log(`${olga_modul}/${modulname} QuerySelectorInit: id='${tag.id}',  '${m}', \n\t${quals}`)
+				}
+			}
+		if (errs.length > 0)
+			C.ConsoleError(`Неопределены квалификаторы для '${scls}': `, errs.join(', '))
+	},
+	initA=()=>{
+console.log('IniScripts.initA')
 	}
+console.log('IniScripts')
+
+if (document.currentScript?.dataset.standalone !== undefined) {  // запущен автономно
+    if (document.readyState === 'loading') 
+        document.addEventListener('DOMContentLoaded', initA, { once: true })
+     else 
+        initA()    
+}
+}
+
+const
+        pageDones     ='beforeunload, o_unloadPage',
+        pageLoads= 'readystatechange:d, message:u, inc_ready'
+class MyEvents {
+	static doceves = ['DOMContentLoaded','readystatechange', 'visibilitychange', 'blur']
+
+	constructor(list) {
+		const
+			eves = list.trim().split(/\s*[,;]\s*/) || [],
+			errs = []
+
+		this.meves = []
+		for (const eve of eves) {
+			const ss = eve.trim().split(/\s*[:]\s*/)
+			if (ss[0].length > 0) {
+				const eve = ss[0],
+					ers = []
+				let isd = MyEvents.doceves.includes(eve),
+					isu = false
+
+				for (let i = 1; i < ss.length; i++)
+					if (ss[i])
+						switch (ss[i][0].toUpperCase()) {
+							case 'W': isd = 'W'
+								break
+							case 'D': isd = 'D'
+								break
+							case 'U': isu = true
+								break
+							default: "'" + ers.push(ss[i]) + "'"
+						}
+				this.meves.push({ eve: eve, isd: isd, isu: isu })
+				if (ers.length > 0)
+					errs.push(`${eve}: ${ers.join(', ')}`)
+			}
+			if (errs.length > 0)
+				C.ConsoleError(`Недопустимые ('W','D','U') квалификаторы событий`, errs.length, errs)
+		}
+		Object.freeze(this)
+	}
+	AddEvents(Fun) {
+		for (const meve of this.meves)
+			(meve.isd ? document : window).addEventListener(meve.eve, Fun, true)
+	}
+	RemEvents(Fun) {
+		for (const meve of this.meves)
+			(meve.isd ? document : window).removeEventListener(meve.eve, Fun, true)
+	}
+}
+
+class MyTimer {
+	constructor(text) {
+		this.text = text
+		this.act = { time: 0, name: '' }
+		Object.seal(this.act)
+		Object.freeze(this)
+	}
+	Stop(add) {
+		// console.log('...=', this.act.time,  this.act.name)
+		if (this.act.time) {
+			const dt = (' ' + (Number(new Date()) - this.act.time)).padStart(8) + ' ms',
+				name = dt + ' ' + this.act.name.padStart(12)
+			if (add)
+				console.error('%c%s', "background: yellow; color: black;border: none;",
+					this.text + name + ' [' + add + ']')
+			else {
+				console.log('%c%s', clrMy, this.text, name)
+				this.act.time = 0
+			}
+		}
+	}
+	Start(name, iso5inc) {
+		if (this.act.time && !iso5inc)
+			this.Stop('не закончено')
+
+		this.act.time = Number(new Date())
+		this.act.name = name
+		// console.log('...+', this.act.time,  this.act.name)
+	}
+}
+
 
 class Page {
 	pact = { url: '', ready: false, start: 0, timerp: new MyTimer(" КОНЕЦ  обработки  страницы"), timer: 0, mos: [] }
@@ -468,10 +483,9 @@ class Page {
 		this.childs.push(child)
 	}
 
-	static pageLoads = new MyEvents(C.consts.pageLoads)
-	static pageDones = new MyEvents(C.consts.pageDones)
+	static pageLoads = new MyEvents(pageLoads)
+	static pageDones = new MyEvents(pageDones)
 	static scriptLoad = new MyEvents('o_modulReady')
-	static scriptDone = new MyEvents('o_scriptDone')
 
 	static {
 		Page.prototype.pageLoads = Page.pageLoads
@@ -482,7 +496,7 @@ class Page {
 
 	constructor() {
 		this.oStart = 'olga-start'
-		this.isLoading = 'o-isLoading' // 'olga5_isLoading'
+		this.isLoading = 'o-isLoading' // 'olga_isLoading'
 		this.childs = []
 		this.starts = []
 
@@ -500,50 +514,49 @@ class Page {
 	}
 }
 
-const wshp = C.AddModuleSub(olga5_modul, modulname, () => {
-	console.log('%c%s', "background: aqua; color: black;border: none;",
-		` инициализация `,
-		`${olga5_modul}/${modulname}.js`)
-	/*			
-			if (C.consts.nomnu > 0)
-				document.body.classList.add('o_nomnu')
+// const wshp = C.AddModuleSub(olga_modul, modulname, () => {
+// 	console.log('%c%s', "background: aqua; color: black;border: none;",
+// 		` инициализация `,
+// 		`${olga_modul}/${modulname}.js`)
+// 	/*			
+// 			if (C.consts.nomnu > 0)
+// 				document.body.classList.add('o_nomnu')
 	
-			if (C.consts.noact > 0) {
-				((C && debug > 0) ? C.ConsoleError : console.log)("}---> загружено `ядро библиотеки`, но инициализация ОТКЛЮЧЕНА по o_noact= '" + C.consts.noact + "'")
-				return
-			}
+// 			if (C.consts.noact > 0) {
+// 				((C && debug > 0) ? C.ConsoleError : console.log)("}---> загружено `ядро библиотеки`, но инициализация ОТКЛЮЧЕНА по o_noact= '" + C.consts.noact + "'")
+// 				return
+// 			}
 	
-			if (C.scrpts.length > 0)
-				C.page = new Page()
-			else {
-				// C.ConsoleInfo(`IniScripts.js: вообще нет скриптов для обработки`)
-				// C.DispatchEvent('o_isInited')
-			}
-			*/
-})
+// 			if (C.scrpts.length > 0)
+// 				C.page = new Page()
+// 			else {
+// 				// C.ConsoleInfo(`IniScripts.js: вообще нет скриптов для обработки`)
+// 				// C.DispatchEvent('o_isInited')
+// 			}
+// 			*/
+// })
 
-	const ready = C.page && C.page.pact && C.page.pact.ready,
-		start = C.page.pact.start,
-		head = ' ______ InitScripts _____   '
+// 	const ready = C.page && C.page.pact && C.page.pact.ready,
+// 		start = C.page.pact.start,
+// 		head = ' ______ InitScripts _____   '
 
-	if (debug > 1)
-		console.log(`${head} ${nam} ${ready ? '' : ' не готово - выход'}`)
+// 	if (debug > 1)
+// 		console.log(`${head} ${nam} ${ready ? '' : ' не готово - выход'}`)
 
-	if (ready)
-		for (const scrpt of C.scrpts) {
-			if (!scrpt.timera)
-				scrpt.timera = new MyTimer(` инициирован `)
-			if (start != scrpt.start && scrpt.W && !scrpt.W.incls)
-				if (scrpt.need && scrpt.W.Init) {
-					const depend = scrpt.depends.find(depend => (depend.act.need && depend.act.done != start))
-					if (!depend) {
-						if (debug > 1)
-							console.log(`${head} начало нинициализации  ${scrpt.W.modul} `)
-						scrpt.start = start
-						scrpt.timera.Start(act.W.modul)
-						scrpt.W.Init()
-					}
-				} else
-					Object.assign(act, { start: start, done: start })
-		}
-}
+// 	if (ready)
+// 		for (const scrpt of C.scrpts) {
+// 			if (!scrpt.timera)
+// 				scrpt.timera = new MyTimer(` инициирован `)
+// 			if (start != scrpt.start && scrpt.W && !scrpt.W.incls)
+// 				if (scrpt.need && scrpt.W.Init) {
+// 					const depend = scrpt.depends.find(depend => (depend.act.need && depend.act.done != start))
+// 					if (!depend) {
+// 						if (debug > 1)
+// 							console.log(`${head} начало нинициализации  ${scrpt.W.modul} `)
+// 						scrpt.start = start
+// 						scrpt.timera.Start(act.W.modul)
+// 						scrpt.W.Init()
+// 					}
+// 				} else
+// 					Object.assign(act, { start: start, done: start })
+// 		}

@@ -1,5 +1,5 @@
 /* global document, window, console*/
-/* exported olga5_menuPopDn_Click*/
+/* exported olga_menuPopDn_Click*/
 /*jshint asi:true  */
 /*jshint esversion: 6*/
 
@@ -91,75 +91,15 @@ export function extendC(C) {
             for (const c in _consts)
                 Z['consts'][c] = _consts[c]
         },
-        CurScr = (script, _olga) => {
-            const orig = _olga ? script.dataset?.src?.replace(/\s+/g, '') : ''
-            if (_olga && !orig.startsWith('+')) // это файл не модуль для o7  
-                return
-
-            const
-                src = _olga ? _olga + orig.substring(1) : script.src,
-                name = src.match(/([^/]+)\.[^.]+$/)?.[1] ?? '',
-                isComp = name.endsWith('!')
-
-            return Object.freeze({
-                dataset: script ? { ...script.dataset } : {},
-                path: src.replace(/[^/]+$/, ''),
-                src: src,
-                name: name,
-                orig: orig,
-                isComp: isComp,
-                modul: isComp ? name.slice(0, -1) : name,
-            })
-        },
-        Freeze = obj => {
-            for (const field of Object.getOwnPropertyNames(obj)) {
-                if (!field.startsWith('_')) continue
-
-                const desc = Object.getOwnPropertyDescriptor(obj, field)
-                desc.configurable = false
-                if ('value' in desc)
-                    desc.writable = false
-
-                Object.defineProperty(obj, field, desc)
-            }
-            return obj
-        },
-        cc = {
-            urlcns: {},     // константы из адресной строки
-            curScr: CurScr(document.currentScript, ''),
-            timer: 0, // будет задан и установлен в constructor после FillFromScript
-        },
-        location = window.location,
-        url = new window.URL(location),
-        params = Object.fromEntries(new URLSearchParams(location.search))
-
-    C.consts = {
-        debug: 0, nomnu: 0, noact: 0, timLoad: 3, fmtOK: fmtOK, fmtErr: fmtErr,
-        doscr: 'olga5_sdone',
-        pageDones: 'beforeunload, o_unloadPage',
-        pageLoads: 'readystatechange:d, message:u, inc_ready',
-        depends: "inc; pop:ref,snd; ref= inc; snd:ref; shp=snd, ref; mnu; tab",
-    }
-    C.urlrfs = {
-        _root: url.origin + '/',
-        _olga: cc.curScr.src.match(/\S*\//)?.[0],
-        _html: url.origin + url.pathname.substring(0, url.pathname.lastIndexOf('/') + 1),
-    }
-    C.scrpts = {}
+        params = Object.fromEntries(new URLSearchParams(window.location.search))
 
     // сохраняю константы из адресной строки
     for (const nam in params)
-        cc.urlcns[nam] = TryToDigit(params[nam])
-    Object.freeze(cc.urlcns)
+        C.urlcns[nam] = TryToDigit(params[nam])
 
-    FillFromScript(C, cc.curScr.dataset, cc.urlcns)
+    FillFromScript(C, C.dataset, C.urlcns)
 
     Object.freeze(C.consts)
     Object.freeze(C.urlrfs)
-
-    C.ListModuls()
-
-    cc.timer = setTimeout(() => C.Finish('таймер'), C.consts.timLoad * 1000)
-    debug = C.consts.debug
-    console.log('C created', C)
+    Object.freeze(C.urlcns)
 }

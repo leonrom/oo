@@ -1,5 +1,5 @@
 /* global  window, console, Map, NamedNodeMap*/
-/* exported olga5_menuPopDn_Click*/
+/* exported olga_menuPopDn_Click*/
 /*jshint asi:true  */
 /*jshint esversion: 6*/
 /**

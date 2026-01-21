@@ -14,49 +14,66 @@
  * <script type="module" src="/o5/index.js" data-modules="inc,shp,snd"></script>
  */
 
-import { initCom } from './com/index.js'
+// import { initCom } from './com/com.js'
 export const C = {}
 
 const
-    dataset = (() => {
-        const
-            url = new URL(import.meta.url, document.baseURI).href,
-            script = [...document.scripts].find(s =>
-                s.src && new URL(s.src, document.baseURI).href === url
-            )
+    buri = document.baseURI,
+    urlJS = new URL(import.meta.url, buri).href,
+    script = [...document.scripts].find(s =>
+        s.src && new URL(s.src, document.baseURI).href === urlJS
+    ),
+    dataset = script?.dataset ?? {},
+    names = dataset.modules?.trim().split(/\s*,\s*/g),
+    loadScripts = async function load() {
+        for (const name of names) {
+            const
+                src = `./${name}/${name}.js`,
+                module = C.modules.find(m => m.name === name)
+            try {
+                const mod = await import(src)
 
-        return script?.dataset ?? {}
-    })(),
-    modules = dataset?.modules?.trim().split(/\s*,\s*/g)
+                // await 
+                mod.init?.(C, name)
+                module.ready = 1
+                if (C.debug)
+                    console.log(`загрузилось '${name}'`)
 
-C.fmtOK = "background: cornsilk; color: black;"
-C.fmtErr = "background: yellow; color: black;"
-C.loadScripts = async function load(tyoe, inames) {
-    for (const iname of inames) {
-        try {
-            const mod = await import(iname)
-            await mod.init?.()
-        } catch (e) {
-            console.error("%c%s", C.fmtErr, `${type} '${iname}': `, `ошибка загрузки`, e)
+            } catch (e) {
+                module.ready = -1
+                console.error('%c%s', C.fmtErr, `'${src}': `, `ошибка загрузки`, e)
+            }
         }
     }
-}
-C.freezeObjs = (obj, pref) => {
-    for (const field of Object.getOwnPropertyNames(obj)) {
-        if (pref && !field.startsWith(pref)) continue
 
-        const desc = Object.getOwnPropertyDescriptor(obj, field)
-        desc.configurable = false
-        if ('value' in desc)
-            desc.writable = false
-
-        Object.defineProperty(obj, field, desc)
+if (names && names.length) {
+    const
+        fmtOK = "background: cornsilk; color: black;",
+        fmtErr = "background: yellow; color: black;"
+    C.scrpts = {}
+    C.owners = []
+    C.urlrfs = {
+        _root: new window.URL(location).origin + '/',
+        _html: buri.substring(0, buri.lastIndexOf('/') + 1),
+        _olga: urlJS.substring(0, urlJS.lastIndexOf('/') + 1),
     }
-    return obj
+    C.urlcns = {}
+    C.dataset = { ...script.dataset }
+
+    C.consts = {
+        debug: 0, nomnu: 0, noact: 0, timLoad: 3, fmtOK: fmtOK, fmtErr: fmtErr,
+        doscr: 'olga_sdone',
+        depends: "inc; pop:ref,snd; ref= inc; snd:ref; shp=snd, ref; mnu; tab",
+    }
+
+    C.modules = names.map(name => (Object.seal({ name, ready: 0, inited: false })))
+
+    for (const name of names)      // добавляю которые уже в скомпилированном (делать отдельно от "for (const script of document.scripts) ")                
+        C.scrpts[name] = Object.seal({
+            done: false
+        })
+
+    loadScripts()   //names.map(name => `./${name}/${name}.js`))
 }
-
-C.freezeObjs(C)
-initCom(C)
-
-if (modules && modules.length)
-    C.loadScripts('ядро', modules.map(m => `./${m}/index.js`))
+else
+    console.error(`Нет модулей для обработки 'o7'`)

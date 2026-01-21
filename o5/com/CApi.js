@@ -1,5 +1,5 @@
 /* global document, window, console*/
-/* exported olga5_menuPopDn_Click*/
+/* exported olga_menuPopDn_Click*/
 /*jshint asi:true  */
 /*jshint esversion: 6*/
 
@@ -21,7 +21,7 @@ const
 						const matches = Fun.call(owner.start, nam)
 						let tags = []
 
-						// проверяю сам тег 'olga5_start'
+						// проверяю сам тег 'olga_start'
 						if (nam && owner.start.matches(nam))
 							tags.push(owner.start)
 
@@ -43,7 +43,7 @@ const
 	}
 
 export function extendC(C) {
-	Object.assign(C, C.freezeObjs({
+	Object.assign(C, {
 		MakeObjName: function (obj, len) { // моё формирование имени объекта
 			if (obj) {
 				const nam = Object.is(obj, window) ? '#window' : (
@@ -74,7 +74,8 @@ export function extendC(C) {
 			return GetTagsBy(modul, 'getElementsByTagName', tagnams)
 		},
 		SelectByClassName: (classnam, modul, do_not_replace_class) => {
-			const tags = GetTagsBy(modul, 'querySelectorAll', '[class *=' + classnam + ']'),
+			const 
+			tags = GetTagsBy(modul, 'querySelectorAll', '[class *=' + classnam + ']'),
 				match = Match(classnam),
 				rez = []
 			for (const tag of tags) {
@@ -94,6 +95,15 @@ export function extendC(C) {
 				}
 			}
 			return rez
-		}
-	}))
+		},
+        DispatchEvent : (eve, modul) => {
+            if (C.consts.o5debug > 1) {
+                console.groupCollapsed(`DispatchEvent: '${eve}' ${modulx ? (' из  ' + modulx) : ''} `)
+                console.trace()
+                console.groupEnd()
+            }
+            const e = new CustomEvent(eve,  { modul: modul })
+            window.dispatchEvent(e)
+        }
+	})
 }

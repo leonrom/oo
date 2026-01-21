@@ -8,17 +8,14 @@
  * @exports C
  */
 
-import { C } from '../index.js'
-import { AO5snd } from './AO5snd.js'
-import { prepAudio } from './Prep.js'
-import { prepareImgs } from './Imgs.js'
-export const C = {}
+// import { C } from '../index.js'
+// import { AO5snd } from './AO5snd.js'
+import { Prep } from './Prep.js'
 
-export function init() {
-  C.log('snd:init')
+export function init(C) {
 
-  prepareImgs()
-  prepAudio()
+  Prep.init(C)
 
-  return AO5snd.init?.()
+		if (C.consts.debug)
+console.log(`Загружен 'snd'`)
 }

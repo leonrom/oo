@@ -1,5 +1,5 @@
 /* global  window*/
-/* exported olga5_menuPopDn_Click*/
+/* exported olga_menuPopDn_Click*/
 /*jshint asi:true  */
 /*jshint esversion: 6*/
 /* eslint-disable no-prototype-builtins */

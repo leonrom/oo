@@ -1,5 +1,5 @@
 /* global document, window, console,*/
-/* exported olga5_menuPopDn_Click*/
+/* exported olga_menuPopDn_Click*/
 /*jshint asi:true  */
 /*jshint esversion: 6*/
 /**
@@ -277,35 +277,5 @@ ReplaceTag = (tagName, change, adrName, url, errs) => {
 		}	
 
 // (window.o7 ??= {})[W.modul] = { W }
-		C.AddModuleSub(o_modul, oincl, [ConvertLinks, ConvertScripts])
+		// C.AddModuleSub(o_modul, oincl, [ConvertLinks, ConvertScripts])
 })();
-
-
-// пояснение по структуре (в терминах modules-implementations-functions):
-// для "модулей" в window создается объект o7
-// window.o7 = {}
-// содержащий модули com (общий), snd (обрабтка аудио) и другие. 
-
-// Модуль, например snd содержит "имплементации":
-// window.o7.snd={Imgs, AO5snd} для обработки иконок к аудио-ссылкам и класс обработки аудио
-
-// Имплементация, например Imgs, модержжит функции 
-// ImgsGetImgForRef(), PrepImage() и др. Т.е. window.o7.snd.Imgs={ImgsGetImgForRef, PrepImage}
-
-// В кодах задаю short'ы=window.o7.snd и внутри "модуля", например в AO5snd, использую как
-// short.Imgs.ImgsGetImgForRef
-
-// Ну и где-то делаю муруборы по этим вложениям. А при переборах не ххочитася использовать длинные  (или двойные - как submodul) термины.
-
-// или обсудить, стоит ли тебе вообще держать всё в window (там есть нюансы)
-
-// o7 — library namespace
-
-// "feature module" - module
-// "internal namespace" - part либо unit
-// да? 
-
-// Imgs — internal namespace или internal componen
-// ES-modules
-// а можно для защиты от разеых "o7.snd.Imgs = null" использовать нечто вроде
-// Object.defineProperty? Я всё подгружаю динамично и лепить (function (o7) {... - сложновато
