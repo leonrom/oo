@@ -1,14 +1,8 @@
 /* global window, console */
 /*jshint asi:true  */
 /*jshint esversion: 6*/
-(function () {              // ---------------------------------------------- dbg/Logs ---
-	'use strict'
-	const
-		olga5_modul = "dbg",
-		modulname = 'Logs',
-		C = window.o7.C
 
-	C.AddModuleSub(olga5_modul, modulname, () => {
+export function Logs(C) {
 		const oldLog = console.log,
 			oldwin = window
 		let rez = '-НАШЁЛ',
@@ -19,12 +13,12 @@
 				console.error(`ошибка создания всплывающенго окна (возможно дан 'http' а не  'httpS') ?- см. настроки безопасности браузера`)
 				return
 			}
-			const o5log = debug.document.body
+			const o_log = debug.document.body
 
 			if (debug.document.title == '') {
 				debug.document.title = modulname
-				// o5log.innerText = ''
-				o5log.innerHTML = `
+				// o_log.innerText = ''
+				o_log.innerHTML = `
 <style>
 body{
 	background-color: oldlace;
@@ -44,7 +38,7 @@ pre span{
 `
 				rez = 'Создал'
 			}
-			if (o5log) console.log = function () {
+			if (o_log) console.log = function () {
 				oldLog.apply(console, arguments) // так точнее совпадение временных меток
 				const s = Array.prototype.join.call(arguments, ' '),
 					dt = new Date(),
@@ -53,17 +47,15 @@ pre span{
 						(dt.getMinutes() + ':').padStart(3, '0') +
 						(dt.getSeconds() + '.').padStart(3, '0') +
 						(dt.getMilliseconds() + '').padEnd(3, '0'))
-				// o5log.innerText += '\n' + ds + ' ' + s
-				o5log.insertAdjacentHTML('beforeEnd', '<pre>' + ds + ' ' + s + '</pre>')
+				// o_log.innerText += '\n' + ds + ' ' + s
+				o_log.insertAdjacentHTML('beforeEnd', '<pre>' + ds + ' ' + s + '</pre>')
 			}
 			else err = 'Не удалось инициировать ' + modulname + ' ?'
 		} catch (e) {
-			err = 'Ошибка инициализации ' + modulname + ' по причине: "' + e.message + '"'
+			err = `Ошибка инициализации 'Logs' по причине: "${e.message}"`
 		}
 		if (err) console.error(err)
 		else console.log('\n<span>' + rez + ' ' + modulname + '</span>')
 
 		oldwin.focus()
-	})
-
-})();
+	}

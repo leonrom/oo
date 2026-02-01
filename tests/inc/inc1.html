@@ -1,0 +1,53 @@
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>inc1</title>
+	<link rel="shortcut icon" href="./favicon.svg" type="image/x-icon">
+
+	<script type="module" src="../../o7/index.js" data-modules="inc, dbg">    </script>
+
+	<style>
+		div {
+			height: 66px;
+			width: 22%;
+			border: 1px solid gray;
+			margin-top: 6px;
+			background-color: aliceblue;
+			overflow-y: scroll;
+			overflow-x: hidden;
+		}
+
+		div div {
+			width: 50%;
+			background-color: azure;
+			border: 1px solid aqua;
+		}
+	</style>
+</head>
+
+<body>
+	Примеры подключения	
+	<br />
+	'./incA.html'     
+	<div id='1' o_include='./inc1.html'      title="./incA.html"    ></div>  
+	<!-- './incA.html?#i2' 
+	<div id='2' o_include='./incA.html?#i2'  title="./incA.html?#i2"></div>  
+	'./incA.html?#i2!' 
+	<div id='3' o_include='./incA.html?#i2!'  title="./incA.html?#i3"></div>  
+	'./incA.html?.s1' 
+	<div id='4' o_include='./incA.html?.s1'  title="./incA.html?.s1"></div>  
+	'./incA.html?span'
+	<div id='5' o_include='./incA.html?span' title="./incA.html?span"></div>   -->
+
+	<!-- <br />   ============================================ <br />       
+    './incB.html' 
+	<div id='11' o_include='./incB.html' title="./incA.html"></div>
+	'../incB.html'
+	<div id='12' o_include='../incB.html' title="./incA.html  нет такого"></div>
+	'https://romba...
+	<div id='13' o_include='https://rombase.neocities.org/o7/tests/incl/incA.html' title=".../incA.html иной ресурс"></div> -->
+
+</body>
+
+</html>

@@ -73,18 +73,18 @@
             const p2 = text.getBoundingClientRect()
             console.log(`p1.top=${p1.top}, p2.top=${p2.top}, `)
 
-            window.olga7.shp.DoChgs.MakeScroll(0.1, 0, body.pO5, true)
+            window.o7.shp.DoChgs.MakeScroll(0.1, 0, body.pO5, true)
         }
         function DoScroll(scV) {
             if (Math.abs(scV) < 1) {
-                const wshp = window.olga7.shp
+                const wshp = window.o7.shp
                 wshp.DoChgs.MakeScroll(scV, 0, body.pO5, true)
                 // window.dispatchEvent(new CustomEvent('o_makeScroll',
                 //     { detail: { scV: scV, scH: 0, pO5: body, revers: false } }
                 // ))
             }
             else{
-                window.olga7.canDoScroll = true
+                window.o7.canDoScroll = true
                 window.scrollBy(0, scV)}
         }
     </script>

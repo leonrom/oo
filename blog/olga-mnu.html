@@ -69,12 +69,12 @@
 			<p>
 				В одном документе может содержаться несколько <i>менюшек</i>. 
 				В комплексном
-				<b class="o-popup" onmouseup="window.olga7.PopShow( 555, 333, 'тесты+/mnu1.html')">примере</b>
+				<b class="o-popup" onmouseup="window.o7.PopShow( 555, 333, 'тесты+/mnu1.html')">примере</b>
 				показаны различные способы подключения меню.
 				Предусмотрено 3 способу задания меню:
 			</p>
 			<ul>
-				<li>вызовами функции <i>window.olga7.<b>Menu(items)</b></i>,
+				<li>вызовами функции <i>window.o7.<b>Menu(items)</b></i>,
 					где <b><i>items</i></b> - массив объектов структуры меню (перечень пунктов меню), например:
 					<table class="o-tableCode"> 
 						<tbody>
@@ -87,8 +87,8 @@
 <span class="o-tableName">вызов <b>Menu(items)</b></span>
 &lt;script&gt;
     window.addEventListener('o_isInited', function () {
-        if (window.olga7 && window.olga7.<b>Menu</b>)
-            window.olga7.<b>Menu</b>([
+        if (window.o7 && window.o7.<b>Menu</b>)
+            window.o7.<b>Menu</b>([
 	{ span: 'меню &lt;script&gt; 2', right: '166px', top: '88px', add: '233px', 
 		target:'_olga6',
 		id:'menu-Menu', 
