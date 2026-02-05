@@ -57,7 +57,9 @@ if (j >= 0) names.splice(j, 1)
 
 if (names && names.length) {
     C.dataset = { ...script.dataset }
-    C.myInclude = 'data-o7-inc'
+    C.o_IamReady = 'o_IamReady',
+    C.myInclude = 'data-o7-inc' // регистрирует ВСЕ мои вставки
+    C.o_include = 'o_include'   // атрибут для вставляемых модулем 'inc'    
     C.modLevels = {}
     C.modules = {}
     C.cleanup = []   //   подборка функций очистки вставок

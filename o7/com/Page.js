@@ -5,12 +5,45 @@ const
 	clrPage = "background: green;color:white;",
 	clrMy = "background: blue; color: white;border: none;",
 	checkForInclude = () => {
-		const incs = document.querySelector('[o_include]')
+		const incs = document.querySelector(`[${C.o_include}]`)
 		if (C.modules.inc) {
-			if (!incs) C.ConsoleInfo(`¿ Задан модуль 'inc' но отсутствует тег с атрибутом 'o_include' ?`)
+			if (!incs) C.ConsoleInfo(`¿ Задан модуль 'inc' но отсутствует тег с атрибутом '${C.o_include}' ?`)
 		}
 		else
-			if (incs) C.ConsoleError(`Имеется тег с атрибутом 'o_include' но отсутствует модуль 'inc'`)
+			if (incs) C.ConsoleError(`Имеется тег с атрибутом '${C.o_include}' но отсутствует модуль 'inc'`)
+	},
+	showIncError = n => {
+		if (document.querySelector('[data-inc-error]')) return
+
+		const el = document.createElement('div')
+		el.textContent = `⚠ были ошибки,- см. log'и`
+		el.title = `Есть ${n} ошибок инициализации страницы. Откройте (по F12) консоль.`
+		el.setAttribute(C.myInclude, '')
+		el.dataset.incError = ''
+		el.style.cssText = `ы
+        position:fixed;
+        bottom:8px;
+        left:8px;
+        z-index:2147483647;
+        padding:6px 10px;
+        background:#222;
+        color:#f5c542;
+        font:12px/1.4 sans-serif;
+        border-radius:4px;
+
+		    opacity: 0.75;
+    height: fit-content;
+    overflow: hidden;
+    border-radius: 8px;
+    font-size: smaller;
+    width: fit-content;
+    cursor: pointer;
+	position: fixed;
+    `
+		el.onclick = function() { 
+			this.remove() 
+		}
+		document.body.append(el)
 	}
 
 class Page {
@@ -29,13 +62,13 @@ class Page {
 
 			C.E.clearAll()
 
-			    for (const fn of C.cleanup) {
-        try { fn() } 
-		catch (e) { 
-			console.error(e) 
-		}
-    }
-    C.cleanup.length = 0
+			for (const fn of C.cleanup) {
+				try { fn() }
+				catch (e) {
+					console.error(e)
+				}
+			}
+			C.cleanup.length = 0
 
 			// 			Даже если DOM очищен — утечки могут быть из-за:
 			// addEventListener на window/document
@@ -79,21 +112,37 @@ class Page {
 
 								module.executed = true
 								W.execute()
+
+								// // начало тестовый прогон	
+								// debugger;
+								// let count = 10
+								// const id = setInterval(
+								// 	() => {
+								// 		W.erase()
+								// 		W.execute()
+								// 		if (count-- < 0) clearInterval(id)
+								// 	},
+								// 	900
+								// )
+								// W.erase()
+								// // конец тестовый прогон	
 							}
 						}
 					}
 				if (!levelDone) break	//	еще не все выполнились на этом уровне
 			}
-			if (levelDone)
-				this.finishPage(true)
+			// if (levelDone)
+			// 	this.finishPage(true)
 		}
 		this.finishPage = function (ok) {
 			if (ok)
 				console.log('%c%s', clrPage, ` Обработана страница`, this.url)
 			else
-				console.error('%c%s', C.consts.fmtErr, ` Обработка страницы прервана по таймеру`, this.url)
+				C.ConsoleAlert(` Обработка страницы прервана по таймеру`, this.url)
 			clearInterval(this.timer)
 
+			if (C.consoleErrs.count)
+				showIncError(C.consoleErrs.count)
 		}
 		this.setNewPage = function () {
 			const url = document.URL.match(/[^?&#]*/)[0].trim()
@@ -111,8 +160,8 @@ class Page {
 				for (const name in C.modules)
 					C.modules[name].executed = false
 				checkForInclude()
-				// this.timer = window.setTimeout(finishPage, 1000 * C.consts.timLoad, this, true)
-				this.timer = window.setTimeout(() => this.finishPage(), 1000 * C.consts.timLoad)
+
+				this.timer = window.setTimeout(() => this.finishPage(false), 1000 * C.consts.timLoad)
 				C.cleanup.push(() => clearInterval(this.timer))
 
 				return true
@@ -141,6 +190,7 @@ class Page {
 		this.initPage = function () {
 			if (this.setNewPage())
 				this.executeModules()
+			C.consoleErrs.count = 0
 			return this
 		}
 	}

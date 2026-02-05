@@ -110,6 +110,18 @@ export function CApi() {
 			for (const attribute of attributes)
 				attrs[C.Repname(attribute.name)] = C.tryToDigit(attribute.value)
 			return attrs
+		},
+		ASSERT: (cond, msg, ctx) => {
+			if (!cond) {
+				console.error(
+					'%cASSERT FAILED:%c ' + msg,
+					'color:red;font-weight:bold',
+					'color:inherit',
+					ctx ?? ''
+				)
+				debugger   // ← очень полезно
+				throw new Error(msg)
+			}
 		}
 	})
 }

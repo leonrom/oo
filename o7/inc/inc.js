@@ -3,277 +3,107 @@
 /*jshint esversion: 6*/
 
 import { C } from '../index.js'
+import { T } from './T.js'
+import { I } from './I.js'
+import { F } from './F.js'
 
-class I {
-    constructor(ori, url) {
-        this.frags = new Map()
-        this.ready = -1
-        this.ori = ori
-        this.url = url
-        this.htm = ''
-        this.err = ''
-        this.xhr = 0
+let _runId = 0
 
-        Object.seal(this)
-    }
-    static incls = new Map()
-    static parser = null
+export const W = {
+    needs: { getall: true },
+    act: { runId: 0, },
 
-    destroy() {
-        // 1. abort xhr
-        if (this.xhr && this.xhr.readyState !== 4)
-            this.xhr.abort()
+    execute: function () {
+        if (_runId++)
+            this._erase()
 
-        this.xhr = null
+        this.act.runId = _runId
+        this.prepareIncls(document, null)
+    },
+    finish: function () {
+        const errs = I.getErrs()
+        if (errs)
+            C.ConsoleError(`'inc' - загрузка окончена с ошибками:`, errs)
+        else
+            if (C.consts.debug)
+                console.log('%c%s', C.consts.fmtOK, `'inc' - загрузки окончены. Прочитаны: `, I.listIncls())
 
-        // 2. очистка frags
-        for (const frag of this.frags.values()) {
-            frag.mtags.clear()
-            frag.tpl = null
-        }
-        this.frags.clear()
+        this._clear()
 
-        // 3. прочее
-        this.htm = null
-        this.err = ''
-        this.ready = -1
-    }
-}
+        window.dispatchEvent(new CustomEvent(C.o_IamReady, { detail: { modul: W.modul, } }))
+    },
+    // ----------------------------
+    _erase: () => {
+        I.abortLoads()
+        W._clear()
 
-const
-    o_include = 'o_include',
-    prepareIncls = doc => {
+        if (C.consts.debug)
+            console.log('%c%s', C.consts.fmtOK, `'inc' - загрузка прервана новым запуском`)
+
+        T.removeInserts()
+    },
+    _clear: function () {  // немножко освободить память
+        I.clear()
+        F.clear()
+        T.clear()
+    },
+    prepareIncls: (doc, incl) => {
         const
-            debugList = C.consts.debug ? [] : null,
-            tags = doc.querySelectorAll(`div[${o_include}]`),
+            doubles = [],
+            debugList = (C.consts.debug > 1) ? [] : null,
+            tags = doc.querySelectorAll(`div[${C.o_include}]`),
             isHidden = tag => tag.getClientRects().length === 0
 
         for (const tag of tags) {    // группировка по url'ам, чтобы не грузить лишнее
-            if (!W.consts.getall && isHidden(tag))     // загружать со стиль "displa = 'none'"
+            if (!W.consts.getall && isHidden(tag)) {  // загружать со стиль "displa = 'none'"
+                if (C.consts.debug) console.log(`Тег id='${tag.id}' проигнорирован, т.к. невидимый`)
                 continue
-
-            let err = ''
-            const id = '' + tag.id
-            if (!id) err = `не указан id тега с 'o_include'`
-            else {
-                const nodes = document.querySelectorAll(`[id="${id}"]`) // `#${id}`)
-                if (nodes.length > 1)
-                    err = `не униикальный id='${id}' тега с 'o_include'`
             }
-            if (err) {
-                console.log("%c%s", C.consts.fmtErr, err)
+
+            const ref = tag.getAttribute(C.o_include).trim()
+            if (!ref) {
+                console.log("%c%s", C.consts.fmtErr, `пустой атрибут '${C.o_include}'`, ` для тега id='${tag.id}'`)
                 continue
             }
 
             const
-                ref = tag.getAttribute(o_include),
-                ss = ref.split(/[?]/),
+                ss = ref?.split(/[?]/),
                 ori = ss[0].trim(),
-                url = C.decodeUrl(ori) || ori,
-                sel = ss.length > 1 ? ss.at(-1) : ''
+                sel = ss[1]?.trim() || '',
+                i = I.get(ori, W.act.runId),
+                f = F.add(sel, i.obj),
+                err = !T.add(tag, f.obj)
 
-            // const incl = I.get(ori, url)
+            if (err)
+                doubles.push(tag.id)
 
-            let incl = I.incls.get(url)
-            if (!incl) {
-                incl = new I(ori, url)
-                I.incls.set(url, incl)
-                if (debugList) debugList.push(`incl     ${ori}`)
+            if (debugList) {
+                debugList.push(`incl ${i.isn?'↵':' '}      ${ori}`)
+                debugList.push(`   frag ${f.isn?'↵':' '}    ${sel.padEnd(10)} ${i.obj.ori}`)
+                debugList.push(`       tag ${tag.id.padEnd(8)} ${err ? '?' : ' '}   ${i.obj.ori}  ${f.obj.sel}`)
             }
-
-            let frag = incl.frags.get(sel)
-            if (!frag) {
-                frag = { sel, mtags: new Map(), tpl: null, stxt: '' }
-                incl.frags.set(sel, frag)
-                if (debugList) debugList.push(`   frag   ${sel.padEnd(10)} ${incl.ori}`)
-            }
-
-            if (frag.mtags.has(id))
-                throw new Error(`o_include: повтор id='${id}' при sel='${sel}', url='${incl.url}'`)
-
-            frag.mtags.set(id, tag)
-            if (debugList) debugList.push(`      tag ${id.padEnd(8)}   ${incl.ori}  ${frag.sel}`)
         }
 
-        if (debugList?.length) {        // добавлено для загрузок
-            console.groupCollapsed(`добавлено для загрузок`)
-            console.log(debugList.join('\n'))
-            console.groupEnd()
+        if (doubles.length)
+            console.log("%c%s", C.consts.fmtErr, `"${incl ? incl.ori : 'document'}" повторы id: `,
+                `[ ${doubles.join(', ')} ] - игнорируются !`)
+
+        if (debugList?.length)
+            console.log(`добавлено для загрузок: ` +
+                (incl ? `вставка '${incl.ori}'` : 'исходный document') + ` ('↵' - считываемый)` +
+                `:\n` + debugList.join('\n'))
+        //     {        // добавлено для загрузок
+        //     console.groupCollapsed(`добавлено для загрузок: ` + (incl ? `вставка '${incl.ori}'` : 'исходный document'))
+        //     console.log(debugList.join('\n'))
+        //     console.groupEnd()
+        // }
+
+        if (incl) {
+            F.fillFrags(incl)
+            T.fillTags()
+
+            if (I.isDone())
+                W.finish()
         }
-    },
-    fillFrags = incl => {
-        const
-            errs = [],
-            body = incl.htm.body || incl.htm,
-            getText = (key) => {
-                if (!key)
-                    return [body]
-
-                const name = key.replace(/\s*(#|\.|!)\s*/g, '')
-                switch (key[0]) {
-                    case '#': return body.querySelectorAll(`[id='${name}']`);
-                    case '.': return body.getElementsByClassName(name);
-                }
-                return body.getElementsByTagName(name)
-            }
-        let isFragFilled;
-
-        for (const frag of incl.frags.values()) {
-            if (frag.tpl) continue
-
-            const
-                [key, outer] = frag.sel.split('!'),
-                insTags = getText(key)    // вставляемые теги
-
-            if (insTags?.length > 0) {
-                const
-                    tpl = frag.tpl = document.createElement('template'),
-                    debugList = C.consts.debug ? [] : null
-
-                for (const insTag of insTags) {
-                    let s = C.isDefined(outer) ? insTag.outerHTML : insTag.innerHTML
-                    tpl.innerHTML = s.trimEnd() + '\n'
-
-                    const ids = []
-                    for (const [id, tag] of frag.mtags) {
-                        if (!(tag instanceof Element))
-                            throw new TypeError(`mtags[${id}] не DOM-элемент`)
-
-                        tag.appendChild(
-                            tpl.content.cloneNode(true)
-                        )
-                        ids.push(id)
-                    }
-
-                    for (const node of tpl.content.children)   // чтобы очищать в page
-                        node.setAttribute(C.myInclude, '')
-
-                    if (debugList)
-                        debugList.push(`${ids.join(', ')} ::${s} `)
-                }
-                isFragFilled = true
-
-                prepareIncls(tpl)
-
-                if (debugList) {
-                    console.groupCollapsed(`вставка фрагментов селектора '${frag.sel}' из скачанного ${incl.ori}`)
-                    console.log(debugList.join(''))
-                    console.groupEnd()
-                }
-            }
-            else
-                errs.push(sel)
-        }
-
-        if (errs.length > 0)
-            incl.err = `не опр. '${errs.join(', ')}'`
-
-        if (isFragFilled) fillIncls()
-        else
-            askFinish()
-    },
-    fillIncls = () => {
-        for (const incl of I.incls.values())
-            if (incl.ready < 0)
-                loadIncl(incl)
-            else
-                if (incl.ready > 0)
-                    fillFrags(incl)
-    },
-    // loadTextXHR = (incl, timeout = 10000) => {
-    loadTextXHR = async (incl, timeout = 10000) => {
-        return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest()
-            incl.xhr = xhr   // ← ВАЖНО
-
-            xhr.open('GET', incl.url, true)
-            xhr.timeout = timeout
-            xhr.responseType = 'text'
-            // xhr.withCredentials = false
-
-            xhr.onload = () => {
-                if (xhr.status === 200)
-                    resolve(xhr.responseText)
-                else
-                    reject({ type: 'http', status: xhr.status })
-            }
-
-            xhr.onerror = () => reject({ type: 'network' })
-            xhr.ontimeout = () => reject({ type: 'timeout' })
-
-            xhr.send()
-        })
-    },
-    loadIncl = async incl => {
-        incl.ready = 0
-
-        try {
-            const text = await loadTextXHR(incl)
-
-            incl.ready = 1
-            incl.htm = (I.parser ??= new DOMParser())
-                .parseFromString(text, 'text/html')
-
-            fillFrags(incl)
-            askFinish(incl)
-        }
-        catch (err) {
-            if (err.message === 'timeout')
-                incl.err = 'timeout'
-            else if (err.message === 'network')
-                incl.err = 'network error'
-            else if (err.message.startsWith('HTTP'))
-                incl.err = err.message
-            else
-                incl.err = err.message || 'unknown error'
-
-            askFinish(incl)
-            throw err   // ← ОЧЕНЬ РЕКОМЕНДУЮ
-        }
-        finally {
-            incl.ready = 2
-        }
-    },
-    askFinish = () => {
-        for (const incl of I.incls.values())
-            if (incl.ready <= 0)
-                return
-
-        const errs = []
-        for (const incl of I.incls.values())
-            if (incl.err)
-                errs.push(incl.err)
-
-        if (errs.length > 0)
-            console.log('%c%s', C.consts.fmtErr, `'inc' - загрузка окончена с ошибками`, errs.length, errs)
-        else
-            if (C.consts.debug) {
-                const rezs = []
-                for (const incl of I.incls.values())
-                    rezs.push({ ori: incl.ori, url: incl.url, done: incl.ready, err: incl.err, })
-
-                console.log('%c%s', C.consts.fmtOK, `'inc' - загружено`, rezs)
-            }
-
-        W.clear()
-        const e = new CustomEvent('o_incReady', { detail: { modul: W.modul, avtonom: C.avtonom } })
-        window.dispatchEvent(e)
     }
-
-export const W = {
-    needs: { getall: true, isfinal: 1 },
-    execute: function () {
-        this.clear()
-
-        prepareIncls(document)
-        fillIncls()
-    },
-    clear: function () {
-        I.parser = null
-
-        for (const incl of I.incls.values())
-            incl.destroy()
-
-        I.incls.clear()
-    },
 }

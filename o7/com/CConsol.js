@@ -7,102 +7,79 @@
  */
 import { C } from '../index.js'
 
-const 
+const
 	padd = "padding-left:0.5rem;",
+	MSG = { ALERT: 'A', ERROR: 'E', SIGN: 'S', INFO: 'I' },
 	clrtypes = {
-		'A': "background: yellow; color: black;border: solid 3px red;",
-		'E': "background: yellow; color: black;border: solid 1px gold;",
-		'S': "background: blue;   color: white;border: solid 1px bisque;",
-		'I': "background: beige;  color: black;border: solid 1px bisque;",
+		A: "background: yellow; color: black;border: solid 3px red;",
+		E: "background: yellow; color: black;border: solid 1px gold;",
+		S: "background: blue;   color: white;border: solid 1px bisque;",
+		I: "background: beige;  color: black;border: solid 1px bisque;",
 	},
-	ConsoleMsg = (styp, txt, add, tab) => {
-		// ?			const txt = (txts && txts[txts.length - 1] != '') ? txts + ' ' : txts,
-		const
-		type = styp[0].toUpperCase(),
-			clr1 = clrtypes[type],
-			clr2 = "margin-left:0.4rem; background: white; color: black; border: solid " +
-			(tab ? "1px gray;" : "1px bisque;")
+	normalizeTab = tab => {
+		const rows = []
 
-		if (add === null || !C.isDefined( add) || add === '') console.groupCollapsed('%c%s', (padd + clr1), txt)
-		else
-			if (Number.isInteger(add)) console.groupCollapsed('%c%s%c%s', (padd + clr1), txt, (padd), '', add + ' ')
-			else console.groupCollapsed('%c%s%c%s', (padd + clr1), txt, (padd + clr2), '', add + ' ')
+		const toStr = o => {
+			if (o instanceof NamedNodeMap)
+				return [...o].map(a => `${a.name}=${a.value}`).join(',')
+			if (o instanceof Map)
+				return [...o].map(([k, v]) => `${k}:${v}`).join(', ')
+			if (Array.isArray(o))
+				return o.join(', ')
+			if (o && typeof o === 'object')
+				return Object.keys(o).map(k => `${k}=${o[k]}`).join(', ')
+			if (o == null) return '`null`'
+			if (typeof o === 'undefined') return '`undef`'
+			return o.toString()
+		}
 
-		const tt = []
-		if (tab) {
-			if (tab instanceof Array)
-				tab.forEach((v, nam) => {
-					let t = {}
-					const // ss = [],
-						O = (o) => {
-							const uu = []
-							if (o instanceof NamedNodeMap) {
-								for (const atr of o) uu.push(atr.name + '=' + atr.value)
-								return uu.join(',')
-							} else if (o instanceof Object) {
-								for (const x in o) uu.push(x + '=' + o[x])
-								return uu.join(',')
-							}
-							else return (typeof o === 'undefined') ? ' `undef`' : (o == null ? '`null`' : o.toString())
-						}
-					let s = ''
-					if (v instanceof Map) {
-						v.forEach((x, nam) => s += (s == '' ? '' : ', ') + nam + ':' + x.toString())
-						t[nam].val = '{' + s + '}'
-					} else if (v instanceof Array) {
-						v.forEach(x => s += (s == '' ? '' : ', ') + x)
-						t[nam].val = '{' + s + '}'
-					} else if (v instanceof Object) {
-						for (const x in v)
-							t[x] = O(v[x])
-					} else
-						t = v //t[nam] = v
-					tt.push(t)
-				})
-			else if (tab instanceof Map)
-				tab.forEach((v, nam) => {
-					const t = { nam: nam }
-					let s = ''
-					if (v instanceof Map) {
-						v.forEach((x, nam) => s += (s == '' ? '' : ', ') + nam + ':' + x.toString())
-						t.val = '{' + s + '}'
-					} else if (v instanceof Array) {
-						v.forEach(x => s += (s == '' ? '' : ', ') + x)
-						t.val = '{' + s + '}'
-					} else if (v instanceof Object) {
-						for (const x in v) s += (s == '' ? '' : ', ') + x + ':' + v[x]
-						t.val = '{' + s + '}'
-					} else
-						t.val = v
-					tt.push(t)
-				})
-			else for (const t in tab) {
-				const v = tab[t]
-				if (!t.match(/^\d*$/) && typeof v !== 'function')
-					if (typeof v !== 'object') tt.push({ nam: t, val: v })
-					else {
-						const r = { nam: t }
-						if (Array.isArray(v))
-							for (let i = 0; i < v.length; i++)
-								r['№-' + i] = v[i]
-						else
-							for (const x in v)
-								r[x] = v[x]
+		if (tab instanceof Map) {
+			tab.forEach((v, k) => {
+				rows.push({ nam: k, val: toStr(v) })
+			})
+			return rows
+		}
 
-						tt.push(r)
-					}
-			}
-			if (tt.length > 0) {
-				console.table(tt)
+		if (Array.isArray(tab)) {
+			tab.forEach((v, i) => {
+				rows.push({ nam: i, val: toStr(v) })
+			})
+			return rows
+		}
+
+		if (tab && typeof tab === 'object') {
+			for (const k in tab) {
+				if (typeof tab[k] !== 'function')
+					rows.push({ nam: k, val: toStr(tab[k]) })
 			}
 		}
-		console.table()
-		{
-			console.groupCollapsed(`трассировка вызова`)
+
+		return rows
+	},
+	ConsoleMsg = (type, txt, add, tab) => {
+		const clr1 = clrtypes[type]
+		// const clr2 = "margin-left:0.4rem; background: white; color: black; border: solid 1px bisque;"
+
+		if (add == null || add === '')
+			console.groupCollapsed('%c%s', padd + clr1, txt)
+		else
+			console.groupCollapsed('%c%s', padd + clr1, txt, String(add))
+		// console.groupCollapsed('%c%s%c%s', padd + clr1, txt, padd + clr2, String(add))
+
+		if (tab) {
+			const rows = normalizeTab(tab)
+			if (rows.length) console.table(rows)
+		}
+
+		{	// вложенная трассировка
+			console.groupCollapsed('трассировка вызова')
 			console.trace()
 			console.groupEnd()
 		}
 		console.groupEnd()
+
+		if (type === MSG.ERROR || type === MSG.ALERT)
+			C.consoleErrs.count++
 	},
 	ConsoleLog = (head, text, err, xy, add) => {
 		const duration = 2222,
@@ -138,18 +115,18 @@ const
 
 			document.body.appendChild(div)
 
-			const timer= setTimeout(() => { div.remove(); }, duration)
+			const timer = setTimeout(() => { div.remove(); }, duration)
 			C.cleanup.push(() => clearInterval(timer))
 		}
 	}
 
 export function CConsol() {
 	Object.assign(C, {
-		ConsoleMsg: ConsoleMsg,
-		ConsoleAlert: (txt, add, tab) => ConsoleMsg('alert', txt, add, tab),
-		ConsoleError: (txt, add, tab) => ConsoleMsg('error', txt, add, tab),
-		ConsoleSign: (txt, add, tab) => ConsoleMsg('sign', txt, add, tab),
-		ConsoleInfo: (txt, add, tab) => ConsoleMsg('info', txt, add, tab),
+		consoleErrs: { count: 0 },
+		ConsoleAlert: (txt, add, tab) => ConsoleMsg(MSG.ALERT, txt, add, tab),
+		ConsoleError: (txt, add, tab) => ConsoleMsg(MSG.ERROR, txt, add, tab),
+		ConsoleSign: (txt, add, tab) => ConsoleMsg(MSG.SIGN, txt, add, tab),
+		ConsoleInfo: (txt, add, tab) => ConsoleMsg(MSG.INFO, txt, add, tab),
 		ConsoleLog: (head, text, err, xy, add) => ConsoleLog(head, text, err, xy, add),
 	})
 	return true

@@ -160,4 +160,7 @@ fillW.execute = function () {
 	// варианты событий обновления странницы
 	for (const eve of ['DOMContentLoaded', 'readystatechange', 'visibilitychange', 'blur'])
 		document.addEventListener(eve, () => page.initPage())
+
+// потом дать обработку всех завершений!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!	
+	window.addEventListener(C.o_IamReady, () => page.finishPage(true))
 }

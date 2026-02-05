@@ -2,7 +2,7 @@
 
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<title>inc1</title>
+	<title>inc3</title>
 	<link rel="shortcut icon" href="./favicon.svg" type="image/x-icon">
 
 	<script type="module" src="../../o7/index.js" 
@@ -28,20 +28,16 @@
 </head>
 
 <body>
-	Варианты подключения	
+	Примеры вызовов с ошибками
 	<br />
-	'./incA.html'     
-	<div id='1' o_include='./iA.html'      title="./incA.html"    ></div>  
-	'./incA.html?#i2' 
-	<div id='2' o_include='./iA.html?#i2'  title="./incA.html?#i2"></div>  
-	'./incA.html?#i2!' 
-	<div id='3' o_include='./iA.html?#i2!'  title="./incA.html?#i3"></div>  
-	'./incA.html?.s1' 
-	<div id='4' o_include='./iA.html?.s1'  title="./incA.html?.s1"></div>  
-	'./incA.html?span'
-	<div id='5' o_include='./iA.html?span' title="./incA.html?span"></div>  
+	'./inc1.html'     
+	<div id='1' o_include='./inc3.html' title="вствка самого себя ./inc3.html"    ></div>  
+	'../incB.html'
+	<div id='12' o_include='../iB.html' title="неправильный каталог для ../iB.html"></div>
+	'https://romba...
+	<div id='13' o_include='https://rombase.neocities.org/o7/tests/incl/incA.html' title=""другой" домен""></div>
 	<br/>
-	конец 'inc1.html'
+	конец 'inc13html'
 
 </body>
 
