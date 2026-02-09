@@ -13,8 +13,8 @@ export const W = {
 	prepare: () => {
 		if (C.consts.nomnu || C.consts.noact)
 			console.error(`DbgInit не выполняется, т.к. задано:` +
-				C.consts.nomnu ? `  o_nomnu=${C.consts.nomnu}` : '' +
-					C.consts.noact ? `  o_noact=${C.consts.noact}` : '')
+				C.consts.nomnu ? `  nomnu=${C.consts.nomnu}` : '' +
+					C.consts.noact ? `  noact=${C.consts.noact}` : '')
 		else {
 			if (typeof Pos !== "undefined") Pos(C)
 			if (typeof Ccss !== "undefined") Ccss(C)

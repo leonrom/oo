@@ -1,5 +1,7 @@
 import { C } from '../index.js'
 import { W } from './inc.js'
+import { F } from './F.js'
+import { T } from './T.js'
 
 const Err = Object.freeze({
     TIMEOUT: 'TIMEOUT',
@@ -39,7 +41,7 @@ export class I {
 
         // Вызов load прямо здесь — запускаем асинхронно, не ожидая
         this._startLoad()
-        console.log('готово ' + ori)
+        // console.log('создал ' + ori)
     }
     #loadTextXHR(timeout = 10000) {
         return new Promise((resolve, reject) => {
@@ -87,15 +89,23 @@ export class I {
             // if (C.consts.debug > 1)
             //     console.log(`I: прочитан файл '${this.ori}' из "${this.url}"`)
 
-            if (C.consts.debug > 1) {
-                console.groupCollapsed(`I: прочитан файл '${this.ori}' из "${this.url}"`)
+            if (C.consts.debug) {
+                console.groupCollapsed(`I: обработан файл '${this.ori}' из "${this.url}"`)
                 console.log(this.htm.body.innerHTML.trimEnd())
                 console.groupEnd()
             }
 
             this.ready = true
-            if (!this.aborted && W.act.runId === this.runId)
-                W.prepareIncls(this.htm, this)  // вставка и обработка фрагментов
+            if (!this.aborted && W.act.runId === this.runId) {
+// if(this.ori==='./inc1.html')                
+//     debugger
+                F.fillFrags(this)
+                T.fillTags()
+            }
+            if (C.consts.debug>1)
+                console.log(`I: готово ${this.ori}`)
+
+            W.selectIncls(this)  //prepareIncls(this.htm, this)  // вставка и обработка фрагментов
         }
     }
     abort() {
@@ -117,7 +127,7 @@ export class I {
     static get(ori, runId) {
         const url = Url(ori)
         let incl = I.#incls.get(url)
-        let isn = false
+        let old = true
 
         if (incl && incl.runId != runId) {
             incl.destroy()
@@ -126,9 +136,9 @@ export class I {
         if (!incl) {
             incl = new I(ori, runId)
             I.#incls.set(url, incl)
-            isn = true
+            old = false
         }
-        return { obj: incl, isn }
+        return { incl, old }
     }
 
     static clear() {

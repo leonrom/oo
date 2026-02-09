@@ -11,11 +11,10 @@ const clsEmpty = '_empty'
 
 const
 	// const phases = ['NONE', 'CAPTURING_PHASE', 'AT_TARGET', 'BUBBLING_PHASE',]
-	win = { target: '_self', resize: true, scrollX: 0, scrollY: -18, }, // blockclick: false, timclick: 0 },
-	Target = function (e) {
-		let target = e.toElement || e.target
-		while (target && !target.o_menus) target = target.parentElement
-		return target
+	state = { target: '_self', resize: true, scrollX: 0, scrollY: -18, }, // blockclick: false, timclick: 0 },
+	Target = e => {
+		const t = e.target.closest('li')
+		return t && t.o_menus ? t : null
 	},
 	OnMnu = function (e) {
 		const target = Target(e)
@@ -38,31 +37,31 @@ const
 			o_menus.ready = false
 
 			let ok = true
-			if (o_menus.isext) window.open(o_menus.ref, win.target)
+			if (o_menus.isext) window.open(o_menus.ref, state.target)
 			else
 				ok = GoTo(o_menus)
 
-			if (ok && win.resize) {
+			if (ok && state.resize) {
 				if (window.o7.shp)
 					window.o7.shp.Bords.InitAllBords(0)
 			}
-			win.blockclick = true
+			state.blockclick = true
 			e.cancelBubble = true
 		}
 	},
 	Clear = e => {
-		if (debug)
+		if (C.consts.debug)
 			console.log('Clear: ' + e.type + ' ' + e.eventPhase + ' ' + e.timeStamp.toFixed(1).padEnd(6) +
-				' ' + (win.blockclick ? 'очищаю' : ''))
-		if (win.blockclick) {
-			win.blockclick = false
+				' ' + (state.blockclick ? 'очищаю' : ''))
+		if (state.blockclick) {
+			state.blockclick = false
 			e.cancelBubble = true
 		}
-		// // win.timclick = e.timeStamp
+		// // state.timclick = e.timeStamp
 		// e.cancelBubble = true
 	},
 	MnuInit = function (items) {
-		if (C.consts.nomnu > 0) return
+		if (C.consts.nomnu) return
 
 		const proc = 'MnuInit',
 			errs = []
@@ -76,11 +75,11 @@ const
 			if (id && document.getElementById(id)) errs.push(`${proc}: повтор создания меню с id='${id}'`)
 
 			if (item0.target) {
-				win.target = item0.target
-				win.resize = false
+				state.target = item0.target
+				state.resize = false
 			}
-			const scrollY = W.consts.scrollY
-			if (scrollY) win.scrollY = parseInt(scrollY)
+			const scrollY = C.consts.scrollY
+			if (scrollY) state.scrollY = parseInt(scrollY)
 
 			let ul = document.createElement("ul")
 
@@ -117,12 +116,12 @@ const
 			}
 
 			ul.setAttribute(C.myInclude, '1')
-			if (item0.noremov) ownerinsertBefore.(ul, owner.firstChild)  // НЕ удаляется по закрытии страницы (owner.appendChild(ul))				
+			if (item0.noremov) owner.insertBefore(ul, owner.firstChild)  // НЕ удаляется по закрытии страницы (owner.appendChild(ul))				
 			else
 				owner.insertBefore(ul, owner.firstChild)
 			// C.page.InsertBefore(owner, ul, owner.firstChild)
 
-			C.E.AddEventListener(ul, 'mousedown', DoMnu, true)
+			// C.E.AddEventListener(ul, 'mousedown', DoMnu, true)
 			C.E.AddEventListener(ul, 'click', DoMnu, true)
 			C.E.AddEventListener(window, 'click', Clear)
 
@@ -183,7 +182,10 @@ const
 		if (errs.length > 0)
 			C.ConsoleError("${proc}: ошибки создания меню: ", errs.length, errs)
 	},
-	InitByText = menu => {// если есть такой атрибут}
+	InitByText = (menu, txt) => {// если есть такой атрибут}
+		if (C.consts.debug)
+			console.log('mnu\n', menu)
+		// const items1 = JSON.parse(`[${menu}]`)
 		const regval = /^["'`;{\s]*|["'`},\s]*$/g,
 			lis = menu.match(/{[^}]*}/g) || [],
 			items = [],
@@ -204,11 +206,14 @@ const
 			}
 			items.push(item)
 		}
+		// console.log('items\n',items)
+		// console.log('items1\n',items1)
 		if (errs.length > 0)
 			C.ConsoleError("Init: ошибки в строках атрибута 'menudef': ", errs.length, errs)
 
 		MnuInit(items)
 	}
+
 export const W = {
 	needs: {},
 	makeCss: () => `
@@ -356,21 +361,48 @@ export const W = {
 		}
 	`,
 	prepare: () => {
-		if (C.consts.nomnu > 0) {
-			C.ConsoleInfo(`Меню отключено по o_nomnu=${C.consts.nomnu}`)
-			return
-		}
-
-		(window.o7 ??= {}).Menu = MnuInit
+		C.ConsoleInfo(`Mnu prepare: ${C.consts.nomnu ? 'отключено (по nomnu)' : 'включено'} `)
 	},
 	execute: () => {
-		if (C.dataset.menudef)	// если есть такой атрибут}
-			InitByText(C.dataset.menudef)
+		// C.ConsoleInfo(`Mnu execute: ${C.consts.nomnu?'отключено (по nomnu)':'включено'} `)
 
-		const tags = C.GetTagsByClassNames('o-menuHidden', W.modul)
-		if (tags)
-			tags.forEach(tag => {
-				InitByText(tag.innerText.trim())	//, tag)
-			})
+		if (C.dataset.menudef)	// если есть такой атрибут}
+			InitByText(C.dataset.menudef, `атрибут 'data-menudef'`)
+		else
+			C.makeByClassName('o-menudef',
+				tag => {
+					InitByText(tag.innerText.trim(), `тег с классом 'o-menudef'`)
+				},
+				'1 раз'
+			)
+		// через MakeByClassName (function eachByClass(className, cb)) !!!
+
+		// const tags = C.getTagsByClassName('o-menudef', W.modul)
+		// if (tags)
+		// 	tags.forEach(tag => {
+		// 		InitByText(tag.innerText.trim())	//, tag)
+		// 	})
+	},
+	finish: function () {
+		const errs = I.getErrs()
+		if (errs)
+			C.ConsoleError(`'inc' - загрузка окончена с ошибками:`, errs)
+		else
+			if (C.consts.debug)
+				console.log('%c%s', C.consts.fmtOK, `'inc' - загрузки окончены: `, I.listIncls())
+
+		_clear()
+
+		window.dispatchEvent(new CustomEvent(C.E.o_done, { detail: { modul: W.modul, act: 'done' } }))
+	},
+	// ----------------------------
+	erase: () => {
+		I.abortLoads()
+		_clear()
+
+		if (C.consts.debug)
+			console.log('%c%s', C.consts.fmtOK, `'inc' - загрузка прервана новым запуском`)
+
+		T.removeInserts()
 	},
 }

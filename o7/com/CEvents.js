@@ -28,6 +28,9 @@ export function CEvents() {
         }
 
     C.E = {
+
+        o_done: 'o_done',
+        // o_load: 'o_load',
         AddEventListener(tag, eve, Fun, opts) {
             const tagMap = getTagMap(tag)
             const eveMap = getEventMap(tagMap, eve)
@@ -39,6 +42,22 @@ export function CEvents() {
 
             eveMap.set(Fun, opts)
             tag.addEventListener(eve, Fun, opts)
+        },
+
+        clearTag(tag) {
+            const tagMap = store.get(tag)
+            if (!tagMap) return
+
+            for (const [eve, eveMap] of tagMap)
+                for (const [Fun, opts] of eveMap)
+                    tag.removeEventListener(eve, Fun, opts)
+
+            store.delete(tag)
+        },
+
+        clearAll() {
+            for (const [tag, tagMap] of store)
+                this.clearTag(tag)
         },
 
         RemoveEventListener: function (tag, eve, Fun, opts) {
@@ -56,22 +75,6 @@ export function CEvents() {
 
             if (!eveMap.size) tagMap.delete(eve)
             if (!tagMap.size) store.delete(tag)
-        },
-
-        clearTag(tag) {
-            const tagMap = store.get(tag)
-            if (!tagMap) return
-
-            for (const [eve, eveMap] of tagMap)
-                for (const [Fun, opts] of eveMap)
-                    tag.removeEventListener(eve, Fun, opts)
-
-            store.delete(tag)
-        },
-
-        clearAll() {
-            for (const [tag, tagMap] of store)
-                this.clearTag(tag)
         }
     }
 } 

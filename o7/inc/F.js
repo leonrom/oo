@@ -1,14 +1,22 @@
 import { C } from '../index.js'
+import { trimFragment } from './T.js'
+
 const
     getText = (frag, body) => {
         if (!frag.key)
             return [body]
 
         switch (frag.key) {
-            case '#': return body.querySelectorAll(`[id='${frag.name}']`);
-            case '.': return body.getElementsByClassName(frag.name);
+            case 'id': return body.querySelectorAll(`[id='${frag.name}']`);
+            case 'class': return body.getElementsByClassName(frag.name);
+            case 'node': return body.getElementsByTagName(frag.name)
         }
-        return body.getElementsByTagName(frag.name)
+
+        C.ASSERT(false,
+            `F.getText() непонятный key `,
+            frag.key
+        )
+        return '?'
     },
     removeComments = node => {
         const walker = document.createTreeWalker(
@@ -23,37 +31,14 @@ const
 
         for (const c of toRemove)
             c.remove()
-    },
-    trimFragmentEnd = fragment => {
-        // trim начала
-        while (fragment.firstChild) {
-            const n = fragment.firstChild
-            if (
-                n.nodeType === Node.TEXT_NODE &&
-                !n.nodeValue.trim()
-            )
-                n.remove()
-            else
-                break
-        }
-        // trim конца
-        while (fragment.lastChild) {
-            const n = fragment.lastChild
-            if (
-                n.nodeType === Node.TEXT_NODE &&
-                !n.nodeValue.trim()
-            )
-                n.remove()
-            else
-                break
-        }
     }
 
 export class F {
     static #frags = new Map()
 
     constructor(sel, incl) {
-        this.key = sel[0] === '#' ? '#' : (sel[0] === '.' ? '.' : '')
+        // this.key = sel?(sel[0] === '#' ? 'id' : (sel[0] === '.' ? 'class' : 'node')):''
+        this.key = sel?(sel.includes('#') ? 'id' : (sel.includes('.') ? 'class' : 'node')):''
         this.name = sel.replace(/\s*(#|\.|!)\s*/g, '')
         this.outer = sel.includes('!')
         this.done = false
@@ -72,7 +57,11 @@ export class F {
             `frag.fill() called twice for '${this.sel}'`,
             this.incl?.ori
         )
+        // if (this.sel==='#i2')
+        //     debugger
+
         const insTags = getText(this, body)    // вставляемые теги
+
         if (insTags?.length) {
             this.tpl = document.createElement('template')
 
@@ -90,13 +79,13 @@ export class F {
                 }
 
                 removeComments(fragment)
-                trimFragmentEnd(fragment)
+                trimFragment(fragment)
 
                 this.tpl.content.appendChild(fragment.cloneNode(true))
             }
 
             if (C.consts.debug > 1)
-                console.log(`F: заполнен фрагмент '${this.sel}' из "${this.incl.ori}"`, this.tpl.innerHTML)
+                console.log(`F: заполнен фрагмент '${this.sel}' из "${this.incl.ori}":\n`, this.tpl.innerHTML)
 
             // не нужно - сам убираю в inc
             // for (const node of this.tpl.content.children)   // чтобы очищать в page
@@ -106,13 +95,12 @@ export class F {
     }
     static add(sel, incl) {
         let frag = F.#frags.get(sel),
-            isn = false
-        if (!frag) {
+            old = frag && frag/incl === incl
+        if (!old) {
             frag = new F(sel, incl)
             F.#frags.set(sel, frag)
-            isn = true
         }
-        return { obj: frag, isn }
+        return { frag, old }
     }
     static clear() {
         for (const frag of F.#frags.values())
@@ -120,9 +108,11 @@ export class F {
         F.#frags.clear()
     }
     static fillFrags(incl) {
+        if (!incl)
+            debugger
         C.ASSERT(F.#frags.size > 0,
             'fillFrags() called after F.clear()',
-            incl.ori
+            incl?.ori || 'null'
         )
         const body = incl.htm.body || incl.htm
 
@@ -152,7 +142,7 @@ export class F {
             }
 
         if (errs.length > 0)
-            C.ConsoleAlert(`Для incl=${incl.ori} `, `не определены  селекторы: [ ${errs.join(', ')} ]`)
+            C.ConsoleAlert(`F: для incl=${incl.ori} `, `не определены  селекторы: [ ${errs.join(', ')} ]`)
 
         // if (debugList && debugList.length)
         //     console.log("%c%s", C.consts.fmtOK, `F: заполнено из ${incl.ori}: `, ` [ ${debugList.join('\n')} ]`)

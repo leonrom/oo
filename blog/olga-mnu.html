@@ -8,7 +8,7 @@
 	<link data-href='../o7css/ini.css' media='screen' rel='stylesheet' />
 	<script data-src='+pop.js'></script>
 	<!-- <script data-src='+shp.js'></script> -->
-	<script data-src='+mnu.js' data-menudef="
+	<script data-src='+mnu.js' data-menuDef="
 	    { span: 'Блог', id: id, left: '5px', top: '5px', add: '233px', base: 'https://olga-5.blogspot.com/2020/02', scroll: '-30' },
 	    { span: 'Подключение библиотеки', ref: '/olga5-all.html' },
 	    { span: 'Обработка аудио ссылок', ref: '/olga5-snd.html' },
@@ -108,7 +108,7 @@
 						</tbody>
 					</table>
 				</li>
-				<li>блочными тегами (<b>div</b>, <b>pre</b>) с классом <i>class="<b>o-menuHidden</b>"</i>,
+				<li>блочными тегами (<b>div</b>, <b>pre</b>) с классом <i>class="<b>o-menuDef</b>"</i>,
 					содержащими текстовой аналог <b><i>items</i></b>, например:
 					<table class="o-tableCode">
 						<tbody>
@@ -119,7 +119,7 @@
 								<td>
 									<pre>
 <span class="o-tableName">вставка в блочный тег</span>
-&lt;<b>pre</b> id="menu_pre" class="<b>o-menuHidden</b>" style="display:none"&gt;
+&lt;<b>pre</b> id="menu_pre" class="<b>o-menuDef</b>" style="display:none"&gt;
 	{span: 'меню <b>&lt;pre&gt;</b>',right: '11px',top: '33px',add: '233px',
 	    target:'_olga6',
 	    id:'menu-pre', 
@@ -137,7 +137,7 @@
 						</tbody>
 					</table>
 				</li>
-				<li>атрибутом <b>data-menudef</b> вызова скрипта <code>mnu.js</code>, например:
+				<li>атрибутом <b>data-menuDef</b> вызова скрипта <code>mnu.js</code>, например:
 					<table class="o-tableCode">
 						<tbody>
 							<tr>
@@ -146,9 +146,9 @@
 								</td>
 								<td>
 									<pre>
-<span class="o-tableName">однократно через <b>data-menudef</b></span>
+<span class="o-tableName">однократно через <b>data-menuDef</b></span>
 &lt;script src=" ../olga5/mnu.js"
-<b>data-menudef</b> = "
+<b>data-menuDef</b> = "
     {span: 'меню &lt;script&gt; ',right: '311px',top: '33px',add: '233px',
         owner: document.body,
         target:'_olga5',
@@ -288,7 +288,7 @@
 			<ul>
 				<li><b>data-scrollY</b> &mdash; смешение требуемого пункта относительно верха экрана.
 					По умолчанию '-18' (пикселов), для блога рекомендуется '-32';</li>
-				<li><b>data-menudef</b> &mdash; вышеупомянутая структура меню, например меню для всего блога.</li>
+				<li><b>data-menuDef</b> &mdash; вышеупомянутая структура меню, например меню для всего блога.</li>
 			</ul>
 			<p>
 				Для принудительной <span title="после выбора любого пункта меню">перерисовки</span> 

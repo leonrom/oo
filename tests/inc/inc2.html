@@ -5,42 +5,21 @@
 	<title>inc2</title>
 	<link rel="shortcut icon" href="./favicon.svg" type="image/x-icon">
 
-	<script type="module" src="../../o7/index.js" 
-	data-modules="inc">    </script>
-
-	<style>
-		div {
-			height: 66px;
-			width: 22%;
-			border: 1px solid gray;
-			margin-top: 6px;
-			background-color: aliceblue;
-			overflow-y: scroll;
-			overflow-x: hidden;
-		}
-
-		div div {
-			width: 50%;
-			background-color: azure;
-			border: 1px solid aqua;
-		}
-	</style>
+	<script type="module" src="../../o7/index.js" data-modules="inc"> </script>
+	<link href='./incs.css' rel='stylesheet' />
 </head>
 
 <body>
-	Примеры вложенных подключений
+	<h3>Примеры вложенных подключений</h3>
 	<br />
-	<!-- './inc1.html'     
-	<div id='1' o_include='./inc1.html'      title="./incA.html"    ></div>   -->
-
 	<!-- './iA.html?#i2' 
 	<div id='2' o_include='./iA.html?#i2'  title="./incA.html?#i2"></div>  
 	'./iA.html?#i2!' 
-	<div id='iA' o_include='./iA.html?#i2'  title="./incA.html?#i3"></div>  
-    './iB.html' 
-	<div id='iB' o_include='./iB.html' title="./incA.html"></div> -->
-    './iC.html' 
-	<div id='iC' o_include='./iC.html?#c1' title="./incA.html"></div>
+	<div id='iA' o_include='./iA.html?#!i2'  title="./incA.html?#i3"></div>   -->
+    './iB.html - просто как "антураж"' 
+	<div id='iB' o_include='./iB.html' title="./incA.html"></div>
+    'Вложенные ./iC.html + inc1.html' 
+	<div id='iC' o_include='./iC.html?#c1' title="./incA.html" style=" height: 444px;"></div>
 	<br/>
 	конец 'inc2.html'
 

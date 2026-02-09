@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>mnu3</title>
+    <link rel="shortcut icon" href="../add/favicon.svg" type="image/x-icon">
+
+    <script type="module" src="../../o7/index.js" data-modules="mnu, inc">
+    </script>
+</head>
+
+<body class="olga-start">
+    <p>
+        меню берётся из тега с классом 'o-menudef':
+    </p>
+    <pre id='iC' o_include='./mnu3.html?.o-menudef' title="./incA.html" style=" height: 444px;"></pre>
+
+    <pre id="menu-pre" class="o-menudef" style="display:none">
+	{ span: 'Статья', id: "moemenu", right: '5px', top: '5px', add: '266px', },
+		{ span: '1. Общие сведения', ref: 'head_1', add: '266px' },
+			{ span: '1.1. Модули библиотеки', ref: 'head_11' },
+			{ span: '1.2. Инкапсуляция CSS', ref: 'head_12' },
+			{ span: '1.3. Использование именованных ссылок', ref: 'head_13' },
+			{ span: '1.4. Системные требования', ref: 'head_14', ret: 1 },
+		{ span: '2. Подключение тегов &lt;script&gt; и &lt;link&gt; `библиотеки`', ref: 'head_2', add: '266px' },
+			{ span: '2.1. Пример подключения скриптов', ref: 'head_21', },
+			{ span: '2.2. Компиляция скриптов', ref: 'head_22', },
+			{ span: '2.3. Информирование об ошибках', ref: 'head_23', ret: 1 },
+		{ span: '3. Создание новых скриптов', ref: 'head_3', add: '266px' },
+			{ span: '3.1. Пример нового скрипта', ref: 'head_31', },
+			{ span: '3.2. Пример подключения скрипта', ref: 'head_32' },
+			{ span: '3.3. Подключение к тегам документа', ref: 'head_33', ret: 1 },,
+		{ span: '4. API&nbsp;&nbsp;<i>библиотеки</i>', add: '266px' },
+			{ span: '4.1. Функции <i>библиотеки</i>', ref: 'head_41' },
+			{ span: '4.2. События <i>библиотеки</i>', ref: 'head_42', ret: 1 },
+		{ span: '5. Атрибуты скриптов и тегов', ref: 'head_6', add: '266px' },
+			{ span: '5.1. Параметры <i>функциональных</i> модулей', ref: 'head_51' },
+			{ span: '5.2. Атрибуты ядра <i>библиотеки</i>, ref: 'head_52' },
+			{ span: '5.3. Использование  пераметра &nbsp;_olga', ref: 'head_53', ret: 1 },
+		{ span: '6. Организация выполнения скриптов', ref: 'head_4', add: '266px' },
+			{ span: '6.1. Первый этап - загрузка', ref: 'head_61' },
+			{ span: '6.2. Инициализация документа', ref: 'head_62' },
+			{ span: '6.3. Область действия инициализации', ref: 'head_63', ret: 1 }
+		{ span: '7. Применение  <i>библиотеки</i>', ref: 'head_7' },
+	</pre>
+</body>
+
+</html>

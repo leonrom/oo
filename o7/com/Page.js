@@ -40,12 +40,13 @@ const
     cursor: pointer;
 	position: fixed;
     `
-		el.onclick = function() { 
-			this.remove() 
+		el.onclick = function () {
+			this.remove()
 		}
 		document.body.append(el)
 	}
 
+let iPage = 0	
 class Page {
 	hasBeenInitialized = false
 	timer = 0
@@ -90,10 +91,14 @@ class Page {
 			// innerHTML += ...			// удаляет обработчики, ломает состояние, медленно
 		}
 
-		this.executeModules = function () {
+		this.executeModules = function (e) {
 			/** 
 			 * попытка исполнить некоторые модули на загруженной странице
 			 */
+			const modulDone = e.detail.modul
+			if (C.consts.debug) {
+				console.log(`executeModules: '${e.detail.act}' модуля='${e.detail.modul}'`)
+			}
 			let level = C.modLevels.mi - 1, levelDone;
 			while (level++ < C.modLevels.ma) {
 				levelDone = true
@@ -113,30 +118,39 @@ class Page {
 								module.executed = true
 								W.execute()
 
-								// // начало тестовый прогон	
+								// // начало тестовый прогон
+								// // перед snapshot - 2 раза кнопку Memory → Collect garbage 	
 								// debugger;
-								// let count = 10
+								// let count = 133
 								// const id = setInterval(
 								// 	() => {
 								// 		W.erase()
+								// 		performance.clearResourceTimings()
 								// 		W.execute()
-								// 		if (count-- < 0) clearInterval(id)
+								// 		console.log(`------------------------   `, count)
+								// 		if (count-- < 0) {
+								// 			console.log(`перед snapshot - 2 раза кнопку Memory → Collect garbage    `)
+								// 			clearInterval(id)
+								// 			console.clear()
+								// 			performance.clearResourceTimings()											
+								// 			debugger;
+								// 		}
 								// 	},
 								// 	900
 								// )
-								// W.erase()
+								// // W.erase()
 								// // конец тестовый прогон	
 							}
 						}
 					}
 				if (!levelDone) break	//	еще не все выполнились на этом уровне
 			}
-			// if (levelDone)
-			// 	this.finishPage(true)
+			if (levelDone)
+				this._finishPage(encodeURI)
 		}
-		this.finishPage = function (ok) {
-			if (ok)
-				console.log('%c%s', clrPage, ` Обработана страница`, this.url)
+		this._finishPage = function (e) {
+			if (e)
+				console.log('%c%s', clrPage, ` Обработана страница`, this.url, ++iPage)
 			else
 				C.ConsoleAlert(` Обработка страницы прервана по таймеру`, this.url)
 			clearInterval(this.timer)
@@ -159,23 +173,26 @@ class Page {
 				// this.beginExecute()
 				for (const name in C.modules)
 					C.modules[name].executed = false
-				checkForInclude()
 
-				this.timer = window.setTimeout(() => this.finishPage(false), 1000 * C.consts.timLoad)
+				checkForInclude()
+				C.pagedef.olga  = document.getElementsByClassName('olga-start')
+				
+
+				this.timer = window.setTimeout(() => this._finishPage(), 1000 * C.consts.timLoad)
 				C.cleanup.push(() => clearInterval(this.timer))
 
 				return true
 			}
 		}
 
-		this.addLoaded = function (e) {
+		this.addLoaded = function (name) {
 			if (C.consts.debug) {
 				let s = ''
 				for (const [name, module] of Object.entries(C.modules))
-					if (!module.mod && name !== e.detail.name)
+					if (!module.mod && name !== name)
 						s += name + ', '
 
-				console.log('%c%s', C.consts.fmtOK, `Загружен '${e.detail.name}'`,
+				console.log('%c%s', C.consts.fmtOK, `Загружен '${name}'`,
 					s ? `осталось [${s}]` : ' зашружены ВСЕ')
 			}
 
@@ -183,13 +200,14 @@ class Page {
 				if (!this.hasBeenInitialized)
 					this.setNewPage()
 
-				this.executeModules()
+				this.executeModules({ detail: { modul: name, act: 'load' } })
 			}
 		}
 
 		this.initPage = function () {
 			if (this.setNewPage())
-				this.executeModules()
+				this.executeModules({ detail: { act: 'init', modul: 'this.initPage' } })
+
 			C.consoleErrs.count = 0
 			return this
 		}

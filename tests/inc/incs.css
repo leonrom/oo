@@ -1,0 +1,21 @@
+div {
+    height: fit-content;
+    width: -webkit-fill-available;
+    border: 1px solid gray;
+    margin-top: 6px;
+    background-color: aliceblue;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+div div {
+    width: 95%;
+    height: 95%;
+    max-height: max-content;
+    background-color: cornsilk;
+    border: 1px solid aqua;
+}
+div div div {
+    width: 95%;
+    background-color: azure;
+    border: 1px solid aqua;
+}

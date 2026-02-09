@@ -92,8 +92,8 @@ const
 		Object.freeze(W.consts)
 		Object.freeze(W)
 
-		const e = new CustomEvent('o_modulReady', { detail: { modul: name } })
-		window.dispatchEvent(e)
+		// const e = new CustomEvent('o_modulReady', { detail: { modul: name } })
+		// window.dispatchEvent(e)
 		return true
 	},
 	convertLinks = () => {
@@ -147,20 +147,18 @@ export function fillW(name) {
 			console.log('%c%s', C.consts.fmtErr, ` ${name} `, ` для модуля не задан 'W'`)
 }
 
-fillW.executed = false
-fillW.execute = function () {
-	if (fillW.executed)
-		throw new Error("fillW.execute уже выполнялось!");
-	fillW.executed = true
+fillW.prepared = false
+fillW.prepare = function () {
+	if (fillW.prepared)
+		throw new Error("fillW.prepare уже выполнялось!");
+	fillW.prepared = true
 
 	convertLinks()
-
-	window.addEventListener('o_loaded', e => page.addLoaded(e))
 
 	// варианты событий обновления странницы
 	for (const eve of ['DOMContentLoaded', 'readystatechange', 'visibilitychange', 'blur'])
 		document.addEventListener(eve, () => page.initPage())
 
-// потом дать обработку всех завершений!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!	
-	window.addEventListener(C.o_IamReady, () => page.finishPage(true))
+	// window.addEventListener(C.E.o_load, e => page.addLoaded(e))
+	window.addEventListener(C.E.o_done, e => page.executeModules(e))
 }

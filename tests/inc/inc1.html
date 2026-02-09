@@ -5,40 +5,22 @@
 	<title>inc1</title>
 	<link rel="shortcut icon" href="./favicon.svg" type="image/x-icon">
 
-	<script type="module" src="../../o7/index.js" 
-	data-modules="inc">    </script>
-
-	<style>
-		div {
-			height: 66px;
-			width: 22%;
-			border: 1px solid gray;
-			margin-top: 6px;
-			background-color: aliceblue;
-			overflow-y: scroll;
-			overflow-x: hidden;
-		}
-
-		div div {
-			width: 50%;
-			background-color: azure;
-			border: 1px solid aqua;
-		}
-	</style>
+	<script type="module" src="../../o7/index.js"  data-modules="inc">    </script>
+	<link href='./incs.css' rel='stylesheet' />
 </head>
 
 <body>
-	Варианты подключения	
+	<h3>Варианты селекторов подключения</h3>	
 	<br />
-	'./incA.html'     
+	'./incA.html - всё содержимое iA.html'     
 	<div id='1' o_include='./iA.html'      title="./incA.html"    ></div>  
-	'./incA.html?#i2' 
+	'./incA.html?#i2 - содержимое тега id='i2' iA.html' 
 	<div id='2' o_include='./iA.html?#i2'  title="./incA.html?#i2"></div>  
-	'./incA.html?#i2!' 
+	'./incA.html?#i2! - весь тег id='i2' iA.html'
 	<div id='3' o_include='./iA.html?#i2!'  title="./incA.html?#i3"></div>  
-	'./incA.html?.s1' 
-	<div id='4' o_include='./iA.html?.s1'  title="./incA.html?.s1"></div>  
-	'./incA.html?span'
+	'./incA.html?.s1 - все с классом тег id='i2' iA.html' 
+	<div id='4' o_include='./iA.html?!.s1'  title="./incA.html?.s1"></div>  
+	'./incA.html?span - оба span'
 	<div id='5' o_include='./iA.html?span' title="./incA.html?span"></div>  
 	<br/>
 	конец 'inc1.html'

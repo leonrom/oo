@@ -1,6 +1,9 @@
 {
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@nicolo-ribaudo/eslint-scope-5-internals": "^5.1.1-v1",
-    "eslint": "^9.10.0"
+    "eslint": "^9.39.2",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.3.0"
   }
 }

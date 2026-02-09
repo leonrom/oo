@@ -35,7 +35,9 @@ export function CConsts() {
             }
     }
     C.addConst = (key, val, consts) => {
-        const v = val.trim().replace(m1, '')
+        const
+            m1 = /^['"`]|['"`]$/g,
+            v = val.trim().replace(m1, '')
         consts[key] = C.tryToDigit(v)
     }
     C.addToConsts = (str, consts) => {
@@ -49,13 +51,13 @@ export function CConsts() {
         }
     }
 
-	C.isFullUrl = url => {
-	   try {
-                return new URL(url)
-            } catch {
-                return false // C.ConsoleError(` '${str}' `, `получается url: "${url}" ?`)
-            }
-	}
+    C.isFullUrl = url => {
+        try {
+            return new URL(url)
+        } catch {
+            return false // C.ConsoleError(` '${str}' `, `получается url: "${url}" ?`)
+        }
+    }
 
     const
         newUrl = str => {
@@ -68,16 +70,16 @@ export function CConsts() {
                 path = ss[0] ? C.consts[ss[0]] : C.consts._olga,
                 url = (path + '/' + ss[1]).replace(/\/+\//g, '/')
 
-            if (!C.isFullUrl  (url))
+            if (!C.isFullUrl(url))
                 C.ConsoleError(` '${str}' `, `получается url: "${url}" ?`)
-            
+
             return url
         },
         isToDecode = str => str && typeof str === 'string' && str.match(/\+|&#43;/)
 
     C.decodeUrl = str => {
         // если не требуется преобразование, то возвращает пустую строку
-        return isToDecode(str) ? newUrl(str):''
+        return isToDecode(str) ? newUrl(str) : ''
     }
     C.decodeRfs = (consts, modul) => {
         const urls = {}
@@ -109,15 +111,17 @@ export function CConsts() {
         if (errs.length > 0)
             C.ConsoleError(`${modul}: недоопределённые ссылки`, errs.length, errs)
     }
-    const
-        m1 = /^['"`]|['"`]$/g,  // убрать любые внешние кавычки
-        params = Object.fromEntries(new URLSearchParams(window.location.search))
 
     if (C.dataset?.consts)
         C.addToConsts(C.dataset.consts, C.consts)
 
-    for (const key in params)
-        C.addConst(key, params[key], C.consts)
+    const params = window.location.search.split(/\s*\?|,|&\s*/)
+    for (const param of params)
+        if (param) {
+            const ss = param.split(/\s*=\s*/)
+            if (ss[0])
+                C.addConst(ss[0], ss[1] || '1', C.consts)
+        }
 
     C.decodeRfs(C.consts, 'общий модуль')
 
