@@ -5,12 +5,14 @@ const
 	clrPage = "background: green;color:white;",
 	clrMy = "background: blue; color: white;border: none;",
 	checkForInclude = () => {
-		const incs = document.querySelector(`[${C.o_include}]`)
+		const incs =
+			document.querySelector(`[data-o_include]`)
+			|| document.querySelector(`[o_include]`)
 		if (C.modules.inc) {
-			if (!incs) C.ConsoleInfo(`¿ Задан модуль 'inc' но отсутствует тег с атрибутом '${C.o_include}' ?`)
+			if (!incs) C.ConsoleInfo(`¿ Задан модуль 'inc' но отсутствует тег с атрибутом '(data-)${W.consts.o_include}' ?`)
 		}
 		else
-			if (incs) C.ConsoleError(`Имеется тег с атрибутом '${C.o_include}' но отсутствует модуль 'inc'`)
+			if (incs) C.ConsoleError(`Имеется тег с атрибутом '(data-)o_include' но отсутствует модуль 'inc'`)
 	},
 	showIncError = n => {
 		if (document.querySelector('[data-inc-error]')) return
@@ -46,13 +48,13 @@ const
 		document.body.append(el)
 	}
 
-let iPage = 0	
-class Page {
-	hasBeenInitialized = false
-	timer = 0
-	url = ''
-	constructor() {
-		this.clear = function () {
+let iPage = 0
+
+export const  Page ={
+	hasBeenInitialized :false,
+	timer :0,
+	url: '',
+		clear : function () {			
 			clearInterval(this.timer)
 			for (const name in C.modules) {
 				const W = C.modules[name].mod.W
@@ -89,9 +91,8 @@ class Page {
 			// el.after(node)
 			// insertAdjacentElement / HTML / Tex
 			// innerHTML += ...			// удаляет обработчики, ломает состояние, медленно
-		}
-
-		this.executeModules = function (e) {
+		},
+		executeModules: function (e) {
 			/** 
 			 * попытка исполнить некоторые модули на загруженной странице
 			 */
@@ -147,8 +148,8 @@ class Page {
 			}
 			if (levelDone)
 				this._finishPage(encodeURI)
-		}
-		this._finishPage = function (e) {
+		},
+		_finishPage: function (e) {
 			if (e)
 				console.log('%c%s', clrPage, ` Обработана страница`, this.url, ++iPage)
 			else
@@ -157,8 +158,8 @@ class Page {
 
 			if (C.consoleErrs.count)
 				showIncError(C.consoleErrs.count)
-		}
-		this.setNewPage = function () {
+		},
+		setNewPage: function () {
 			const url = document.URL.match(/[^?&#]*/)[0].trim()
 			// if (this.url && this.url !== url) {
 			if (this.url !== url) {
@@ -174,18 +175,18 @@ class Page {
 				for (const name in C.modules)
 					C.modules[name].executed = false
 
+				if (C.consts.debug)
 				checkForInclude()
-				C.pagedef.olga  = document.getElementsByClassName('olga-start')
-				
+				C.pagedef.olga = document.getElementsByClassName('olga-start')
+
 
 				this.timer = window.setTimeout(() => this._finishPage(), 1000 * C.consts.timLoad)
 				C.cleanup.push(() => clearInterval(this.timer))
 
 				return true
 			}
-		}
-
-		this.addLoaded = function (name) {
+		},
+		addLoaded: function (name) {
 			if (C.consts.debug) {
 				let s = ''
 				for (const [name, module] of Object.entries(C.modules))
@@ -202,16 +203,12 @@ class Page {
 
 				this.executeModules({ detail: { modul: name, act: 'load' } })
 			}
-		}
-
-		this.initPage = function () {
+		},
+		initPage: function () {
 			if (this.setNewPage())
 				this.executeModules({ detail: { act: 'init', modul: 'this.initPage' } })
 
 			C.consoleErrs.count = 0
 			return this
 		}
-	}
 }
-
-export const page = new Page()

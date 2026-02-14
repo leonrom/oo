@@ -8,7 +8,7 @@ import { C } from '../index.js'
 const
     DblClick = e => {
         if (e.currentTarget !== e.target && e.target.ondblclick) {
-            console.log("%c%s", C.consts.fmtErr, C.MakeObjName(e.target), ` - тег имеет свой dblclick-обработчик — пропускаем`)
+            console.log("%c%s", C.consts.fmtErr, C.getObjName(e.target), ` - тег имеет свой dblclick-обработчик — пропускаем`)
             return
         }
 
@@ -87,7 +87,7 @@ const
             const
                 err = !t ? `'transform'` : `'zoom'`,
                 add = !t ? `(кроме "translation")` : `(кроме "zoom = 1")`
-            C.ConsoleLog(aO7.name, ` - теги с ` + err + ` НЕ обрабатываются`, 1, 0, add)
+            C.displayLogMsg(aO7.name, ` - теги с ` + err + ` НЕ обрабатываются`, 1, 0, add)
             console.log(`DoFix ${aO7.name}: расфиксировалось (навсегда)`)
             aO7.act.observer.unobserve(shp)
             aO7.act.ready = false
@@ -206,7 +206,7 @@ export class AO7 {
 
     constructor(shp, quals) {
         shp.aO7shp = this
-        this.name = C.MakeObjName(shp)
+        this.name = C.getObjName(shp)
         this.shdw = shp
 
         Object.assign(this, {

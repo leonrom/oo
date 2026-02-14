@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>tst</title>
+	<script type="module" src="../snd.js">
+	</script>
+</head>
+
+<body>
+	<span data-sound="./a.mp3" data-over>звук A</span>
+	<br />
+	<span data-sound="./b.mp3">звук B</span>
+	<br />
+	<pre>
+		поиск
+			function\s+([A-Za-z0-9_]+)\s*\([^)]*\)\s*\{
+		замена
+			$0 console.log('→ $1');
+			$0 window.TRACE && console.log('→ $1');
+
+Find:  \s*console\.log\('\[TRACE\].*?\);\n?
+Replace: (пусто)
+
+	window.TRACE && console.log('→ preload')
+	</pre>
+</body>
+
+</html>

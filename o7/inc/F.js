@@ -88,7 +88,7 @@ export class F {
                 console.log(`F: заполнен фрагмент '${this.sel}' из "${this.incl.ori}":\n`, this.tpl.innerHTML)
 
             // не нужно - сам убираю в inc
-            // for (const node of this.tpl.content.children)   // чтобы очищать в page
+            // for (const node of this.tpl.content.children)   // чтобы очищать в Page
             //     node.setAttribute(C.myInclude, '')
         }
         this.done = true

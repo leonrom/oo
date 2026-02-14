@@ -16,7 +16,7 @@
 
 import { com } from './com/com.js'
 import { fillW } from './com/fillW.js'
-import { page } from './com/Page.js'
+import { Page } from './com/Page.js'
 
 export const C = {}
 
@@ -43,7 +43,7 @@ const
 
                 // const e = new CustomEvent(C.E.o_load, { detail: { name } })
                 // window.dispatchEvent(e)
-                page.addLoaded(name)
+                Page.addLoaded(name)
 
             } catch (e) {
                 module.mod = null
@@ -59,8 +59,7 @@ if (j >= 0) names.splice(j, 1)
 
 if (names && names.length) {
     C.dataset = { ...script.dataset }
-    C.myInclude = 'data-o7-inc' // регистрирует ВСЕ мои вставки
-    C.o_include = 'o_include'   // атрибут для вставляемых модулем 'inc' 
+    C.myInclude = 'data-o_inc' // регистрирует ВСЕ мои вставки
     C.modLevels = {}
     C.modules = {}
     C.cleanup = []   //   подборка функций очистки вставок

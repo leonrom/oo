@@ -55,7 +55,7 @@ const
 			rez = []
 
 		for (const tag of tags) {
-			const nam = C.MakeObjName(tag),
+			const nam = C.getObjName(tag),
 				attrs = otags[(tag.tagName.toLowerCase())]
 
 			for (const attr in attrs)
@@ -63,7 +63,7 @@ const
 					const tagattr = tag.attributes[attr]
 					if (tagattr) {
 						const ori = tagattr.nodeValue,
-							url = C.decodeUrl(ori) || ori,
+							url = C.decodeUrl(ori) 	// || ori,
 							anew = attr.replace(/(data-)|(_)/, '')
 						// anew = (attr[0] == '_') ? attr.substring(1) : attr
 

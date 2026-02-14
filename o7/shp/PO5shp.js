@@ -169,7 +169,7 @@ export class PO5shp {
         if (ibody)
             PO5shp.pBody = this
 
-        this.name = tag.id ? tag.id : C.MakeObjName(tag)
+        this.name = tag.id ? tag.id : C.getObjName(tag)
 
         Object.assign(this, {
             pOuts: new Set(),  // д.б. Set() иначе в AddToBase будут повторы  (скроллируемые pO5) все скроллируемых внешних контейнеров

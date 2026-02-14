@@ -19,7 +19,7 @@ const whaterr = err => {
 
 const Url = ori =>
     new URL(
-        C.decodeUrl(ori) || ori,
+        C.decodeUrl(ori),   // || ori,
         document.baseURI
     ).href
 

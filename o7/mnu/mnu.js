@@ -112,7 +112,7 @@ const
 				const nst = window.getComputedStyle(owner),
 					position = nst.getPropertyValue('position')
 				if (position != 'absolute')
-					C.ConsoleError(`${proc}: контейнер ${C.MakeObjName(owner)} для меню '${C.MakeObjName(ul)}' имеет position='${position}' (не ''absolute)`)
+					C.ConsoleError(`${proc}: контейнер ${C.getObjName(owner)} для меню '${C.getObjName(ul)}' имеет position='${position}' (не ''absolute)`)
 			}
 
 			ul.setAttribute(C.myInclude, '1')
@@ -208,14 +208,13 @@ const
 		}
 		// console.log('items\n',items)
 		// console.log('items1\n',items1)
-		if (errs.length > 0)
-			C.ConsoleError("Init: ошибки в строках атрибута 'menudef': ", errs.length, errs)
 
 		MnuInit(items)
+		return errs
 	}
 
 export const W = {
-	needs: {},
+	needs: { o_menudef: 'o_menudef', },
 	makeCss: () => `
 		.${W.clasn} {
 		    margin: 0 !important;
@@ -364,24 +363,20 @@ export const W = {
 		C.ConsoleInfo(`Mnu prepare: ${C.consts.nomnu ? 'отключено (по nomnu)' : 'включено'} `)
 	},
 	execute: () => {
-		// C.ConsoleInfo(`Mnu execute: ${C.consts.nomnu?'отключено (по nomnu)':'включено'} `)
-
-		if (C.dataset.menudef)	// если есть такой атрибут}
-			InitByText(C.dataset.menudef, `атрибут 'data-menudef'`)
+		const o_menudef = W.consts.o_menudef
+		let errs;
+		if (C.dataset[o_menudef])	// если есть такой атрибут}
+			errs = InitByText(C.dataset[o_menudef], `атрибут 'data-${o_menudef}'`)
 		else
-			C.makeByClassName('o-menudef',
-				tag => {
-					InitByText(tag.innerText.trim(), `тег с классом 'o-menudef'`)
-				},
-				'1 раз'
+			// C.makeByClassName(o_menudef,
+			C.makeForTypName(tag => {
+				errs = InitByText(tag.innerText.trim(), `тег с классом '${o_menudef}'`)
+			},
+				'class', o_menudef, '1 раз'
 			)
-		// через MakeByClassName (function eachByClass(className, cb)) !!!
 
-		// const tags = C.getTagsByClassName('o-menudef', W.modul)
-		// if (tags)
-		// 	tags.forEach(tag => {
-		// 		InitByText(tag.innerText.trim())	//, tag)
-		// 	})
+		if (errs?.length > 0)
+			C.ConsoleError(`Init: ошибки в строках атрибута '${o_menudef}': `, errs.length, errs)
 	},
 	finish: function () {
 		const errs = I.getErrs()

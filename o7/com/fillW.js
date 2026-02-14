@@ -9,7 +9,7 @@
  **/
 
 import { C } from '../index.js'
-import { page } from './Page.js'
+import { Page } from './Page.js'
 
 const
 	csslist = {}, // перечень наименований создаваемых классов
@@ -108,7 +108,7 @@ const
 				const str = attrs[froms[1]] || attrs[froms[2]]
 				if (str) {
 					const url = C.decodeUrl(str)
-					if (url) {
+					if (url!==str) {
 						replaceTag('link', child, 'href', url, errs)
 						if (debug)
 							links.push({ orig: str, src: url })
@@ -157,8 +157,8 @@ fillW.prepare = function () {
 
 	// варианты событий обновления странницы
 	for (const eve of ['DOMContentLoaded', 'readystatechange', 'visibilitychange', 'blur'])
-		document.addEventListener(eve, () => page.initPage())
+		document.addEventListener(eve, () => Page.initPage())
 
-	// window.addEventListener(C.E.o_load, e => page.addLoaded(e))
-	window.addEventListener(C.E.o_done, e => page.executeModules(e))
+	// window.addEventListener(C.E.o_load, e => Page.addLoaded(e))
+	window.addEventListener(C.E.o_done, e => Page.executeModules(e))
 }

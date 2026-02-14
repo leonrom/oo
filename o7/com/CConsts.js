@@ -59,57 +59,91 @@ export function CConsts() {
         }
     }
 
-    const
-        newUrl = str => {
-            const ss = str
-                .replace(/(#|\/\/).*$/gm, '') 	// убрать комментарии        
-                .replaceAll(/(&#43;)/g, '+')
-                .replaceAll(/\s*(%20|&nbsp;)\s*/g, ' ')
+    // const
+    //     newUrl = str => {
+    C.decodeUrl = (str, name) => {
+        if (!str.replace)
+            debugger
+        const
+            rez = [],
+            ss = str
+                .replace(/\s+#.*$/gm, '')
+                .replace(/\s+\/\/.*$/gm, '')
+                .replace(/&#43;/g, '+')
+                .replace(/\s*(%20|&nbsp;)\s*/g, ' ')
                 .trim()
                 .split(/\s*\+\s*/),
-                path = ss[0] ? C.consts[ss[0]] : C.consts._olga,
-                url = (path + '/' + ss[1]).replace(/\/+\//g, '/')
+            L = ss.length
 
-            if (!C.isFullUrl(url))
-                C.ConsoleError(` '${str}' `, `получается url: "${url}" ?`)
-
-            return url
-        },
-        isToDecode = str => str && typeof str === 'string' && str.match(/\+|&#43;/)
-
-    C.decodeUrl = str => {
-        // если не требуется преобразование, то возвращает пустую строку
-        return isToDecode(str) ? newUrl(str) : ''
-    }
-    C.decodeRfs = (consts, modul) => {
-        const urls = {}
-
-        for (const [key, val] of Object.entries(consts))
-            if (isToDecode(val))
-                urls[key] = val
-
-        let k;
-        do {
-            k = 0
-            for (const [key, val] of Object.entries(urls)) {
-                if (val) {         // иначе значит, что уже исправлено
-                    const url = newUrl(val)
-                    if (url) {
-                        C.consts[key] = url
-                        urls[key] = ''
-                        k++
-                    }
-                }
+        for (let i = 0; i < L; i++) {
+            const s = ss[i]
+            if (!s) {
+                if (rez.length === 0)
+                    rez.push(C.consts._olga)
+                continue
             }
-        } while (k)
 
-        const errs = []
-        for (const [key, val] of Object.entries(urls))
-            if (val)
-                errs.push(`${key}=${val}`)
+            if ((i === L - 1 && L > 1) ||
+                s.includes('/') ||
+                s.includes(':')
+            ) {
+                rez.push(s)
+                continue
+            }
 
-        if (errs.length > 0)
-            C.ConsoleError(`${modul}: недоопределённые ссылки`, errs.length, errs)
+            const u = C.consts[s]
+            if (u) rez.push(u)
+            else
+                console.error('%c%s', C.consts.fmtErr, `Неопределённая ссылка '${s}'`,
+            ` в строке "${str}" `+(name?` для тега '${name}'`:''))
+        }
+
+        const
+            urs = rez.join('/').replace(/(?<!:)\/{2,}/g, '/'),
+            addr = new URL(urs, document.baseURI)
+
+        return addr.href
+    }
+
+    // isToDecode = str => str && typeof str === 'string' && str.match(/\+|&#43;/)
+
+    // C.decodeUrl = str => {
+    //     // если не требуется преобразование, то возвращает пустую строку
+    //     return isToDecode(str) ? newUrl(str) : ''
+    // }
+    C.decodeRfs = (consts, modul) => {
+        for (const [key, val] of Object.entries(consts))
+            if (typeof val === 'string' && val.match(/\+|&#43;/))
+                C.consts[key] = C.decodeUrl(val)
+
+        // const urls = {}
+
+        // for (const [key, val] of Object.entries(consts))
+        //     if (isToDecode(val))
+        //         urls[key] = val
+
+        // let k;
+        // do {
+        //     k = 0
+        //     for (const [key, val] of Object.entries(urls)) {
+        //         if (val) {         // иначе значит, что уже исправлено
+        //             const url = C.decodeUrl(val)    // const url = newUrl(val)
+        //             if (url!==val) {
+        //                 C.consts[key] = url
+        //                 urls[key] = ''
+        //                 k++
+        //             }
+        //         }
+        //     }
+        // } while (k)
+
+        // const errs = []
+        // for (const [key, val] of Object.entries(urls))
+        //     if (val)
+        //         errs.push(`${key}=${val}`)
+
+        // if (errs.length > 0)
+        //     C.ConsoleError(`${modul}: недоопределённые ссылки`, errs.length, errs)
     }
 
     if (C.dataset?.consts)

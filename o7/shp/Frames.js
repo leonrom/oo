@@ -102,7 +102,7 @@ export const Frames = {
                             while (own.nodeName !== 'HTML')
 
                             if (tag && tag !== pBase.pO5.cnst.tag)
-                                console.log("%c%s", C.consts.fmtErr, `cut-контейнер '${tag.pO5 ? tag.pO5.name : C.MakeObjName(tag)}' для '${aO7.name}' `, ` найден снаружи базового контейнера '${pBase.pO5.name}'`)
+                                console.log("%c%s", C.consts.fmtErr, `cut-контейнер '${tag.pO5 ? tag.pO5.name : C.getObjName(tag)}' для '${aO7.name}' `, ` найден снаружи базового контейнера '${pBase.pO5.name}'`)
                         }
 
                         if (!tag) {

@@ -31,7 +31,7 @@ const
             if (p && !bO5) bO5 = p
 
             if (C.consts.debug)
-                adds.add(c + C.MakeObjName(tag))
+                adds.add(c + C.getObjName(tag))
 
             tag = tag.parentNode
         } while (tag && tag.nodeName !== 'HTML')

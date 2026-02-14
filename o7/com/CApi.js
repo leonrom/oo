@@ -5,52 +5,53 @@
 
 import { C } from '../index.js'
 
-// const
-// 	Match = scls => new RegExp(`\\b` + scls + `\\b(\\s*[:;+]\\s*[^\\s:\`'"]*|([\`'"\\([])(.*?)\\2)*`),
-// 	mquals = /\s*[:;]\s*/,
-// 	GetTagsBy = (modul, fun, ask) => {
-// 		const list = [],
-// 			errs = [],
-// 			nams = ask.split(ask.match(/;/) ? /\s*;\s*/ : /\s*,\s*/)
-// 		for (const owner of C.owners)
-// 			if (owner.modules.length == 0 || !modul ||
-// 				owner.modules.find(m => { return m == modul })) {
-// 				const Fun = owner.start[fun]
-// 				if (Fun)
-// 					for (const nam of nams) {
-// 						const matches = Fun.call(owner.start, nam)
-// 						let tags = []
-
-// 						// проверяю сам тег 'olga-start'
-// 						if (nam && owner.start.matches(nam))
-// 							tags.push(owner.start)
-
-// 						if (matches) {
-// 							const amatches = Array.from(matches)
-// 							tags = tags.concat(amatches)
-// 						}
-
-// 						for (const tag of tags)
-// 							if (!list.includes(tag))
-// 								list.push(tag)
-// 					}
-// 				else
-// 					errs.push({ tag: C.MakeObjName(owner.start), Fun: fun })
-// 			}
-// 		if (errs.length > 0)
-// 			C.ConsoleError(`Ошибочные запросы функций для тегов`, errs.length, errs)
-// 		return list
-// 	}
+const	
+	Match = scls => new RegExp(`\\b` + scls + `\\b(\\s*[:;+]\\s*[^\\s:\`'"]*|([\`'"\\([])(.*?)\\2)*`),
+	getForName = (parent, typ, name) => {
+		switch (typ) {
+			case 'myclass': return parent.querySelectorAll(`[class*="${name}"]`)
+			case 'class': return parent.getElementsByClassName(name)
+			case 'node': return parent.getElementsByTagName(name)
+		}
+		throw new Error(`Неопределен тип '${typ}' для выборки name='${name}'`)
+		return []
+	}
+// Repname = name => {
+// 	return name.trim().replaceAll('-', '_').toLowerCase()
+// }
 
 export function CApi() {
 	Object.assign(C, {
+		shmPush: (arr, obj, shm) => {
+			arr.push(Object.freeze(
+				Object.assign(shm ? Object.seal({ ...shm }) : {}, obj)
+			))
+		},
+		extractQuals: (tag, className, do_not_replace_class) => {
+			const
+				quals = [],
+				match = Match(className),
+				ms = tag.className.match(match)
+			if (ms) {
+				const
+					m = ms[0].trim(),
+					ss = m.split(/\s*[:;,]\s*/)
 
-		pagedef: { olga: null },        // описание загруженной страницы		,
-		makeByClassName: (className, make, only1) => {
+				if (!do_not_replace_class)  // кроме IniScript-теста ВСЕГДА убираю квалификаторы
+					tag.className = tag.className.replace(m, className + ' ')
+
+				for (let j = 1; j < ss.length; j++)
+					quals.push(ss[j].trim())
+			}
+			return quals
+		},
+		pagedef: { olga: null },        // описание загруженной страницы		,		
+		// makeByClassName: (className, make, only1) => {	
+		makeForTypName: (make, typ, name, only1) => {
 			const olga = C.pagedef.olga ??= document.getElementsByClassName('olga-start')
 			if (olga?.length) {	// если есть — ищем только внутри них
 				for (let r = 0; r < olga.length; r++) {
-					const list = olga[r].getElementsByClassName(className)
+					const list = getForName(olga[r], typ, name)
 					for (let i = 0; i < list.length; i++) {
 						make(list[i])
 						if (only1)
@@ -59,7 +60,7 @@ export function CApi() {
 				}
 			}
 			else {
-				const list = document.getElementsByClassName(className)
+				const list = getForName(document, typ, name)
 				for (let i = 0; i < list.length; i++) {
 					make(list[i])
 					if (only1)
@@ -67,15 +68,7 @@ export function CApi() {
 				}
 			}
 		},
-		// getTagsByClassName: (classnams, modul) => {
-		// 	const tags = GetTagsBy(modul, 'getElementsByClassName', classnams),
-		// 		rez = []
-		// 	for (const tag of tags)
-		// 		rez.push(tag)
-
-		// 	return rez
-		// },
-		MakeObjName: function (obj, len) { // моё формирование имени объекта
+		getObjName: function (obj, len) { // моё формирование имени объекта
 			if (obj) {
 				const nam = Object.is(obj, window) ? '#window' : (
 					Object.is(obj, document) ? '#document' : (
@@ -90,48 +83,20 @@ export function CApi() {
 			else
 				return 'null';
 		},
-		// GetTagsByQueryes: (queryes, modul) => {
-		// 	return GetTagsBy(modul, 'querySelectorAll', queryes)
-		// },
-		// GetTagsByTagNames: (tagnams, modul) => {
-		// 	return GetTagsBy(modul, 'getElementsByTagName', tagnams)
-		// },
-		// SelectByClassName: (classnam, modul, do_not_replace_class) => {
-		// 	const
-		// 		tags = GetTagsBy(modul, 'querySelectorAll', '[class *=' + classnam + ']'),
-		// 		match = Match(classnam),
-		// 		rez = []
-		// 	for (const tag of tags) {
-		// 		// if (!tag.classList.contains(C.olga5ignore)) {
-		// 		const ms = tag.className.match(match)
-		// 		if (ms) {
-		// 			const quals = [],
-		// 				m = ms[0].trim(),
-		// 				ss = m.split(mquals)
-
-		// 			if (!do_not_replace_class)  // кромк IniScript-теста ВСЕГДА убираю квалификаторы
-		// 				tag.className = tag.className.replace(m, classnam + ' ')
-
-		// 			for (let j = 1; j < ss.length; j++)
-		// 				quals.push(ss[j].trim())
-		// 			rez.push({ tag: tag, quals: quals, origcls: ms.input })
-		// 		}
+		// DispatchEvent: (eve, modul) => {
+		// 	if (C.consts.debug > 1) {
+		// 		console.groupCollapsed(`DispatchEvent: '${eve}' ${modulx ? (' из  ' + modulx) : ''} `)
+		// 		console.trace()
+		// 		console.groupEnd()
 		// 	}
-		// 	return rez
+		// 	const e = new CustomEvent(eve, { modul: modul })
+		// 	window.dispatchEvent(e)
 		// },
-		DispatchEvent: (eve, modul) => {
-			if (C.consts.debug > 1) {
-				console.groupCollapsed(`DispatchEvent: '${eve}' ${modulx ? (' из  ' + modulx) : ''} `)
-				console.trace()
-				console.groupEnd()
-			}
-			const e = new CustomEvent(eve, { modul: modul })
-			window.dispatchEvent(e)
-		},
 		getAttrs: attributes => {
 			const attrs = {}
 			for (const attribute of attributes)
-				attrs[C.Repname(attribute.name)] = C.tryToDigit(attribute.value)
+				attrs[attribute.name] = C.tryToDigit(attribute.value)
+			// attrs[C.Repname(attribute.name)] = C.tryToDigit(attribute.value)
 			return attrs
 		},
 		ASSERT: (cond, msg, ctx) => {

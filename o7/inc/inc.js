@@ -16,9 +16,8 @@ const _clear = function () {  // немножко освободить памя�
 }
 
 export const W = {
-    needs: { getall: true },
-    act: { runId: 0, },
-
+    needs: { getall: true, o_include: 'o_include' },
+    act: Object.seal({ runId: 0, }),
     execute: function () {
         if (_runId++)
             this.erase()
@@ -57,19 +56,23 @@ export const W = {
             checkMark = '?',
             doubles = new Set(),
             debugList = C.consts.debug ? [] : null,
-            tags = document.querySelectorAll(`*[${C.o_include}]`),
+            tags =
+                document.querySelectorAll(`[data-${W.consts.o_include}]`)
+                || document.querySelector(`[${W.consts.o_include}]`),
             isHidden = tag => tag.getClientRects().length === 0
 
         let wasOldis = false, n = 0
         for (const tag of tags) {
             const
-                ref = tag.getAttribute(C.o_include)?.trim() || '',
+                ref = tag.dataset[W.consts.o_include]?.trim() ||
+                    tag.getAttribute(W.consts.o_include)?.trim() ||
+                    '',
                 isChecked = ref && ref[0] === checkMark,
                 ioldTag = T.has(tag)
 
             let err = ''
             if (!isChecked) {
-                if (!ref) err += `пустой атрибут '${C.o_include}';`
+                if (!ref) err += `пустой атрибут '${W.consts.o_include}';`
                 if (!W.consts.getall && isHidden(tag) && C.consts.debug)
                     err += `Тег проигнорирован, т.к. невидимый`
 
@@ -79,8 +82,8 @@ export const W = {
                         doubles.add(tag.id)
                 }
                 if (err) {
-                    tag.setAttribute(C.o_include, checkMark + ref)
-                    D.ConsoleInfo(err, ` - тег id='${tag.id}'`)
+                    tag.setAttribute(W.consts.o_include, checkMark + ref)
+                    C.ConsoleError(err, ` - тег id='${tag.id}'`)
                 }
             }
             if (err || isChecked || ioldTag)
