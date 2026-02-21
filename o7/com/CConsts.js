@@ -51,9 +51,9 @@ export function CConsts() {
         }
     }
 
-    C.isFullUrl = url => {
+    C.getFullUrl = url => {
         try {
-            return new URL(url)
+            return new URL(url).href
         } catch {
             return false // C.ConsoleError(` '${str}' `, `получается url: "${url}" ?`)
         }

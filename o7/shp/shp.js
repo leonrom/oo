@@ -6,7 +6,7 @@
 // import { AO7 } from './AO7.js'
 // import { DoChgs } from './DoChgs.js'
 import { C } from '../index.js'
-import { init } from './init.js'
+import { Init } from './Init.js'
 // import { Frames } from './Frames.js'
 // import { PBases } from './PBases.js'
 // import { PO5shp } from './PO5shp.js'
@@ -98,7 +98,7 @@ export const W = {
 			display:none;
 		}
 	`, 
-	execute: () => {
+	init: () => {
 		// const excls = document.getElementsByClassName('o-none')
 		// for (const excl of excls) {
 		// 	const exs = excl.querySelectorAll(`[class *=${W.clasn}]`)
@@ -106,7 +106,7 @@ export const W = {
 		// 		ex.classList.add('o-none')
 		// }
 
-		init.startObserver(W)
+		Init.startObserver(W)
 
 		//  признак что было активироано. А нафига? В snd тоже что-то похожее?
 		let activated = false

@@ -5,8 +5,8 @@
 
 import { C } from '../index.js'
 
-const	
-	Match = scls => new RegExp(`\\b` + scls + `\\b(\\s*[:;+]\\s*[^\\s:\`'"]*|([\`'"\\([])(.*?)\\2)*`),
+const
+	// Match = scls => new RegExp(`\\b` + scls + `\\b(\\s*[:;+]\\s*[^\\s:\`'"]*|([\`'"\\([])(.*?)\\2)*`),
 	getForName = (parent, typ, name) => {
 		switch (typ) {
 			case 'myclass': return parent.querySelectorAll(`[class*="${name}"]`)
@@ -27,23 +27,36 @@ export function CApi() {
 				Object.assign(shm ? Object.seal({ ...shm }) : {}, obj)
 			))
 		},
-		extractQuals: (tag, className, do_not_replace_class) => {
-			const
-				quals = [],
-				match = Match(className),
-				ms = tag.className.match(match)
-			if (ms) {
-				const
-					m = ms[0].trim(),
-					ss = m.split(/\s*[:;,]\s*/)
+		// extractQuals: (tag, className, do_not_replace_class) => {
+		// 	const
+		// 		quals = [],
+		// 		match = Match(className),
+		// 		ms = tag.className.match(match)
+		// 	if (ms) {
+		// 		const
+		// 			m = ms[0].trim(),
+		// 			ss = m.split(/\s*[:;,]\s*/)
 
-				if (!do_not_replace_class)  // кроме IniScript-теста ВСЕГДА убираю квалификаторы
-					tag.className = tag.className.replace(m, className + ' ')
+		// 		if (!do_not_replace_class)  // кроме IniScript-теста ВСЕГДА убираю квалификаторы
+		// 			tag.className = tag.className.replace(m, className + ' ')
 
-				for (let j = 1; j < ss.length; j++)
-					quals.push(ss[j].trim())
-			}
-			return quals
+		// 		for (let j = 1; j < ss.length; j++)
+		// 			quals.push(ss[j].trim())
+		// 	}
+		// 	return quals
+		// },
+
+		getAddrForTag: (tag, ref) => {
+			const attrs = tag.attributes
+			for (const from of [`data-${ref}`, `_${ref}`, `${ref}`])
+				for (const atr of attrs)
+					if (atr.name === from) {
+						const ori = atr.value,
+							url = C.decodeUrl(ori, tag.id)
+						return { ref, ori, url }
+					}
+
+			return null
 		},
 		pagedef: { olga: null },        // описание загруженной страницы		,		
 		// makeByClassName: (className, make, only1) => {	

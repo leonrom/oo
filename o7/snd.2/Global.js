@@ -1,19 +1,19 @@
  
-// audioGlobal.js
+// Global.js
 /**
 1. Глобальный синхронизатор всех audio
 
 Он слушает play у любого <audio> в документе
 и гасит остальные.
 */
-export const AudioGlobal = (() => {
+export const Global = (() => {
 
-    const all = new Set()
+    const audios = new Set()
     let active = null
 
     function register(audio) { window.TRACE && console.log('→ register');
-        if (all.has(audio)) return
-        all.add(audio)
+        // if (audios.has(audio)) return
+        audios.add(audio)
 
         audio.addEventListener('play', () => {
             if (active && active !== audio) {
@@ -25,8 +25,11 @@ export const AudioGlobal = (() => {
     }
 
     function unregister(audio) { window.TRACE && console.log('→ unregister');
-        all.delete(audio)
+        audios.delete(audio)
         if (active === audio) active = null
+    }
+    function has(audio){
+        return audios.has(audio)
     }
 
     // синхронизация с обычными <audio> в документе
@@ -42,6 +45,7 @@ export const AudioGlobal = (() => {
     hookDocument()
 
     return {
+        has,
         register,
         unregister
     }

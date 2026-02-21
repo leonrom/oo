@@ -140,7 +140,7 @@ const
 					const ref = item.ref || '',
 						wl = window.location
 					if (ref.length == 0) li.o_menus.ref = wl.origin + wl.pathname
-					else if (C.isFullUrl(ref)) li.o_menus.ref = ref // (ref.match(/^\s*(https?:)\/\//)) li.o_menus.ref = ref
+					else if (C.getFullUrl(ref)) li.o_menus.ref = ref // (ref.match(/^\s*(https?:)\/\//)) li.o_menus.ref = ref
 					else if (ref.match(/\.html?($|\?|&|#)/)) li.o_menus.ref = base + ref
 					else {
 						li.o_menus.ref = ref.startsWith('#') ? ref.substr(1) : ref
@@ -362,7 +362,7 @@ export const W = {
 	prepare: () => {
 		C.ConsoleInfo(`Mnu prepare: ${C.consts.nomnu ? 'отключено (по nomnu)' : 'включено'} `)
 	},
-	execute: () => {
+	init: () => {
 		const o_menudef = W.consts.o_menudef
 		let errs;
 		if (C.dataset[o_menudef])	// если есть такой атрибут}
@@ -391,7 +391,7 @@ export const W = {
 		window.dispatchEvent(new CustomEvent(C.E.o_done, { detail: { modul: W.modul, act: 'done' } }))
 	},
 	// ----------------------------
-	erase: () => {
+	reset: () => {
 		I.abortLoads()
 		_clear()
 

@@ -141,7 +141,7 @@ export class I {
         return { incl, old }
     }
 
-    static clear() {
+    static reset() {
         I.parser = null
         for (const incl of I.#incls.values())
             incl.destroy()

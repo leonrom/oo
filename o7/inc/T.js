@@ -93,7 +93,7 @@ export class T {
         }
         return n
     }
-    static clear() {
+    static reset() {
         T.#qtags.clear()
     }
     static removeInserts() {

@@ -75,7 +75,7 @@ export const W = {
 	needs: {
 		tabSymbols: '§¶▸▹↢⇔↣ₔᐞ',
 	},
-	execute: () => {
+	init: () => {
 		const sel = 'o_table',
 			tags = C.GetTagsByQueryes('[' + sel + ']'),
 			d = W.consts.tabSymbols,

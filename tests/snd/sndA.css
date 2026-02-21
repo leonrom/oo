@@ -1,0 +1,64 @@
+.teSe {
+    width: max-content;
+    padding: 0.5em;
+    padding-left: 1.0em;
+    padding-right: 1.0em;
+    margin-left: 3em;
+    vertical-align: baseline;
+    text-align: left;
+    text-align: -moz-left;
+    text-align: -webkit-left;
+    font-size: x-small;
+    background-color: aliceblue;
+    border: solid lightpink 1px;
+    border-radius: 2px;
+    font-family: monospace;
+    padding-right: 12px;
+}
+
+span {
+    background-color: beige;
+    border: 1px solid gold;
+}
+
+span[title] {
+    cursor: help;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: black;
+    font-style: italic;
+    background-color: LavenderBlush;
+    border-radius: 6px;
+    padding-bottom: 2px;
+    font-family: sans-serif;
+    font-size: 88%;
+    border: 1px dotted aqua;
+}
+
+audio {
+    height: 16px;
+    width: 244px;
+}
+
+p,
+span {
+    font-size: small;
+    white-space: nowrap;
+}
+
+p {
+    margin: 0;
+}
+div.cp p{
+    margin-bottom: 2px;
+    background-color: antiquewhite;
+    border: 1px dashed blue;
+}
+
+img {
+    min-height: 12px;
+    min-width: 12px;
+    height: 16px;
+    width: 16px;
+    background-color: green;
+}

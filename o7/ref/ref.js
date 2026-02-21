@@ -208,7 +208,7 @@ export const W = {
 	prepare: () => {
 		debug = C.consts.debug
 	},
-	execute: () => {
+	init: () => {
 		PrepTubes()
 	},
 }

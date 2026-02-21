@@ -10,17 +10,17 @@ import { T } from './T.js'
 let _runId = 0
 
 const _clear = function () {  // немножко освободить память
-    I.clear()
-    F.clear()
-    T.clear()
+    I.reset()
+    F.reset()
+    T.reset()
 }
 
 export const W = {
     needs: { getall: true, o_include: 'o_include' },
     act: Object.seal({ runId: 0, }),
-    execute: function () {
+    init: function () {
         if (_runId++)
-            this.erase()
+            this.reset()
 
         this.act.runId = _runId
         this.selectIncls(null)
@@ -38,7 +38,7 @@ export const W = {
         window.dispatchEvent(new CustomEvent(C.E.o_done, { detail: { modul: W.modul, act: 'done' } }))
     },
     // ----------------------------
-    erase: () => {
+    reset: () => {
         I.abortLoads()
         _clear()
 

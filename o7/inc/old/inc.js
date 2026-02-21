@@ -291,7 +291,7 @@ const
                 console.groupEnd()
             }
 
-        W.clear()
+        W.reset()
         const e = new CustomEvent('o_incReady', { detail: { modul: W.modul, avtonom: C.avtonom } })
         window.dispatchEvent(e)
     }
@@ -299,12 +299,12 @@ const
 export const W = {
     needs: { getall: true, isfinal: 1 },
     act: { nrecursions: 99, },
-    execute: function () {
-        this.clear()
+    init: function () {
+        this.reset()
 
         fillIncls(document)
     },
-    clear: function () {
+    reset: function () {
         I.parser = null
 
         for (const incl of I.incls.values())

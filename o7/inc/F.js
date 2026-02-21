@@ -102,7 +102,7 @@ export class F {
         }
         return { frag, old }
     }
-    static clear() {
+    static reset() {
         for (const frag of F.#frags.values())
             frag.destroy()
         F.#frags.clear()
@@ -111,7 +111,7 @@ export class F {
         if (!incl)
             debugger
         C.ASSERT(F.#frags.size > 0,
-            'fillFrags() called after F.clear()',
+            'fillFrags() called after F.reset()',
             incl?.ori || 'null'
         )
         const body = incl.htm.body || incl.htm
