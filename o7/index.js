@@ -47,7 +47,7 @@ const
 
             } catch (e) {
                 module.mod = null
-                console.error('%c%s', C.consts.fmtErr, `'${src}': `, `ошибка загрузки`, e)
+                console.error('%c%s', C.consts.fmtErr, `'${src}'- `, `ошибка загрузки:`, e)
             }
         }
     },

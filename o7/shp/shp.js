@@ -11,7 +11,7 @@ import { Init } from './Init.js'
 // import { PBases } from './PBases.js'
 // import { PO5shp } from './PO5shp.js'
 
-
+взять из snd initByClass = (tag, C) => 
 // const		
 // W = Object.seal({
 // 	name:'',
@@ -20,7 +20,7 @@ import { Init } from './Init.js'
 // 			consts: {
 // 				_needs: `		
 // 						shift_speed=0.5 # при Shift - замедлять вдвое;
-// 						return_time=0.3 # при возобновлении "отмотать" 0.3 сек ;
+// 						back_time=0.3 # при возобновлении "отмотать" 0.3 сек ;
 // 				`},
 // 			urlrfs: { _needs: 'btn_play=""; btn_stop=', },
 // 		}),

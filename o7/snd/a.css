@@ -1,0 +1,114 @@
+.olga-snd:not(.o-none) {
+    cursor: pointer;
+}
+
+.olga-snd.o-playingX {
+    cursor: wait;
+    outline: 2px solid blue;
+    animation: o-viewTextWash 5s infinite linear;
+}
+
+.olga-snd.o-playing {
+    cursor: wait;
+    position: relative;
+}
+
+.olga-snd.o-playing::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+
+    --a: 0turn;
+
+    background:
+        conic-gradient(from var(--a),
+            transparent 0 75%,
+            lime 75% 85%,
+            transparent 85% 100%);
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    animation: spin 1.2s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.olga-snd.o-play {
+    cursor: progress;
+    outline: 2px solid blue;
+    /* animation: o-viewTextWash 5s infinite linear; */
+}
+
+.olga-snd.o-pause {
+    cursor: wait;
+    animation: none;
+}
+
+.olga-snd.o-error {
+    opacity: 0.5;
+    outline: 2px dotted black;
+    cursor: help;
+}
+
+img.olga-snd:not(.o-freeimg) {
+    /* background-color: transparent; */
+    position: inherit;
+    padding: 0 !important;
+    vertical-align: bottom;
+    border-radius: 50%;
+    box-shadow: none !important;
+    animation: none;
+    max-height: 28px;
+    max-width: 28px;
+}
+
+img.olga-snd.o-playing {
+    animation: o-sndImgSwing 2s infinite linear;
+}
+
+@keyframes o-viewTextWash {
+
+    100%,
+    0% {
+        outline-color: white;
+        color: aqua;
+    }
+
+    75%,
+    25% {
+        outline-color: gold;
+    }
+
+    50% {
+        outline-color: coral;
+        color: blue;
+    }
+}
+
+@keyframes o-sndImgSwing {
+
+    100%,
+    50%,
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    25% {
+        transform: rotateZ(33deg);
+    }
+
+    75% {
+        transform: rotateZ(-33deg);
+    }
+}
+
+@keyframes spin {
+    to {
+        --a: 1turn;
+    }
+}

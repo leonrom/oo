@@ -59,11 +59,11 @@ export function CConsts() {
         }
     }
 
-    // const
-    //     newUrl = str => {
     C.decodeUrl = (str, name) => {
-        if (!str.replace)
+        if (!str || !str.replace) {
+            console.error(`str="${str}" не поддерживает replace`)
             debugger
+        }
         const
             rez = [],
             ss = str
@@ -95,7 +95,7 @@ export function CConsts() {
             if (u) rez.push(u)
             else
                 console.error('%c%s', C.consts.fmtErr, `Неопределённая ссылка '${s}'`,
-            ` в строке "${str}" `+(name?` для тега '${name}'`:''))
+                    ` в строке "${str}" ` + (name ? ` для тега '${name}'` : ''))
         }
 
         const
@@ -105,45 +105,10 @@ export function CConsts() {
         return addr.href
     }
 
-    // isToDecode = str => str && typeof str === 'string' && str.match(/\+|&#43;/)
-
-    // C.decodeUrl = str => {
-    //     // если не требуется преобразование, то возвращает пустую строку
-    //     return isToDecode(str) ? newUrl(str) : ''
-    // }
     C.decodeRfs = (consts, modul) => {
         for (const [key, val] of Object.entries(consts))
             if (typeof val === 'string' && val.match(/\+|&#43;/))
                 C.consts[key] = C.decodeUrl(val)
-
-        // const urls = {}
-
-        // for (const [key, val] of Object.entries(consts))
-        //     if (isToDecode(val))
-        //         urls[key] = val
-
-        // let k;
-        // do {
-        //     k = 0
-        //     for (const [key, val] of Object.entries(urls)) {
-        //         if (val) {         // иначе значит, что уже исправлено
-        //             const url = C.decodeUrl(val)    // const url = newUrl(val)
-        //             if (url!==val) {
-        //                 C.consts[key] = url
-        //                 urls[key] = ''
-        //                 k++
-        //             }
-        //         }
-        //     }
-        // } while (k)
-
-        // const errs = []
-        // for (const [key, val] of Object.entries(urls))
-        //     if (val)
-        //         errs.push(`${key}=${val}`)
-
-        // if (errs.length > 0)
-        //     C.ConsoleError(`${modul}: недоопределённые ссылки`, errs.length, errs)
     }
 
     if (C.dataset?.consts)

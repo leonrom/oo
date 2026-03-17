@@ -1,123 +1,104 @@
 /**
- * 3. Класс AO7 (создаётся при первом hover)
+ * AO7.js
+ * 
+ * Класс AO7 
+ * - описание аудио-тегов,- как "моих", так и <audio> 
+ * - для <audio> м.б. задан olga-snd, но квалификаторы игнорируются
+ * - обработка событий мыши на теге
+ *  - для НЕ <audio> вызываются play() и pause()
+ 
  */
-// AO7.js
-import { EveTags } from './EveTags.js'
-import { Curr } from './Curr.js'
 
+import { Play } from './Play.js'
+let C, clasn;
 const
-    fillModis = (quals) => {
-        const m = Object.seal({ alive: false, free: false, loop: false, over: false, none: false, })
-        for (let i = 0; i < quals.length - 1; i++)
-            for (const c of quals[i])
-                switch (c) {
-                    case 'A': m.alive = true; break  //звучание не прекращается после увода курсора с тега 
-                    case 'F': m.free = true; break  //не использовать встроенный класс olga_snd для отображения тега;
-                    case 'L': m.loop = true; break  //звучание зацикливается;
-                    case 'O': m.over = true; break  // звучание начинается по наведению курсора.
-                    case 'N': m.none = true; break  //не обрабатывать звучание
-                    default: console.error(`Непонятныо '${c}'`, `в квалификаторе qual='${quals[i]}'`)
-                }
-        return Object.freeze(m)
-    },
-    getOri = (quals, snd) => {
-        const u = quals.at(-1) || ''
+    logName = 'snd.AO7: ',
+    getOri = (u, snd) => {
         switch (u.toLowerCase()) {
             case 'href': return snd.getAttribute('href')
             case 'src': return snd.getAttribute('src')
             case 'n': return ''
         }
         return u
+    },
+    propagate = (el, aO7, add) => {
+        for (const ch of el.children) {
+            if (add) {
+                ch.aO7snd_ref = aO7
+                propagate(ch, aO7, add)
+            }
+            else
+                if (ch.aO7snd_ref) {
+                    ch.aO7snd_ref = null
+                    propagate(ch, aO7, add)
+                }
+        }
     }
 
-let C;      // , aPlayed;
-
 export class AO7 {
-    static prepare(c) { C = c }
-    static comm = {}
+    static oPROPAGATE = 'o-propagate'
+    titlO = null
+    audio = null
+    modis = null
+    srcTags = null
+    isAUDIO = false
 
-    tt = { title: '', state: 0 }
-    hoverInside = false
-    loading = false
-    ready = false
+    #stt = ''
 
-    constructor(snd, quals) {
-        const isAUDIO = snd.tagName === 'AUDIO'
-        this.isAUDIO = isAUDIO
-        this.snd = snd
-        this.name = C.getObjName(snd)
-        this.modis = fillModis(quals)
-        this.ori = getOri(quals, snd)
-        this.url = this.ori ? C.decodeUrl(this.ori, this.name) : ''
+    get stt() {
+        return this.#stt
+    }
+    setSTT(state) {
+        if (this.#stt !== Play.oERROR && state !== this.#stt) {
+            const classList = this.tag.classList
+            for (const stt of [Play.oWAIT, Play.oSOUND])
+                classList.remove(stt)
 
-        if (isAUDIO)            this.audio = snd
-        else {
-            Object.assign(AO7.comm, { audio: new Audio(), })
-            AO7.comm.audio.id = 'o-comm_audio'
-            this.audio = AO7.comm.audio
+            if (state)
+                classList.add(state)
+            this.#stt = state
+
+            if (C.consts.debug > 1)
+                console.log(`state='${state}', #stt='${this.#stt}', classList="${classList}"`)
         }
-        if (!quals.length)
-            snd.classList.add('o-none')
+    }
+    setERROR(err) {
+        this.tag.classList[err ? 'add' : 'remove'](Play.oERROR)
+        this.#stt = err ? Play.oERROR : ''
+        this.setSTT('')
+    }
 
-        snd.aO7snd = this
+    constructor(tag, ori) {
+        const isOlgaSnd = tag.classList.contains(clasn)
+        this.tag = tag
+        this.srcReady = false
+        this.tag.aO7snd = this
+        this.isOlgaSnd = isOlgaSnd
+        this.ori = getOri(ori, tag)
+        this.name = C.getObjName(tag)
+
+        this.url = new URL
+            (ori ? C.decodeUrl(this.ori, this.name) : '',
+                document.baseURI   // учитывает <base>
+            ).href
+        this.urlB = this.url
+
+        this.act = Object.seal({ time: 0, shift: false })
+
+        propagate(tag, this, true)
         Object.seal(this)
     }
 
-    destroy() {
-        this.comm.audio.destroy()
-        this.snd = null
+    erase() {
+        propagate(this.tag, this, false)
+        this.act = null
+        this.url = null
+        this.tag = null
+        this.audio = null
+        this.tag.aO7snd = null
     }
-
-    canPlayAfterClick() {
-        const t = this.tt
-        if (t.state === 1)
-            return true
-
-        if (EveTags.hasFirstClick()) {
-            if (t.state < 0)
-                this.snd.title = t.title
-
-            t.state = 1
-            return true
-        }
-
-        if (t.state === 0) {
-            t.state = -1
-            t.title = this.snd.title
-            this.snd.title = 'чтобы началось звучание - кликните на странице'
-        }
-    }
-
-    onEnter() {
-        if (this.isAUDIO) {
-            if (!this.ready) {
-                if (C.getFullUrl(this.snd.src) !== this.url)
-                    this.snd.src = this.url
-                this.ready
-            }
-        }
-        else {
-            this.hoverInside = true
-            if (this.hoverInside
-                && this.modis.over
-                && this.audio.paused
-            )
-                Curr.playO7(this)
-        }
-    }
-
-    onLeave() {
-        this.hoverInside = false
-        if (!this.modis.alive)
-            this.audio.pause()
-    }
-
-    onClick() {
-        if (Curr.aO7 === this
-            && !this.audio.paused
-        )
-            this.audio.pause()
-        else
-            Curr.playO7(this)
+    static prepare(c, clsn) {
+        C = c
+        clasn = clsn
     }
 }

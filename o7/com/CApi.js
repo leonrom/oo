@@ -46,18 +46,18 @@ export function CApi() {
 		// 	return quals
 		// },
 
-		getAddrForTag: (tag, ref) => {
-			const attrs = tag.attributes
-			for (const from of [`data-${ref}`, `_${ref}`, `${ref}`])
-				for (const atr of attrs)
-					if (atr.name === from) {
-						const ori = atr.value,
-							url = C.decodeUrl(ori, tag.id)
-						return { ref, ori, url }
-					}
+		// getAddrForTag: (tag, ref) => {
+		// 	const attrs = tag.attributes
+		// 	for (const from of [`data-${ref}`, `_${ref}`, `${ref}`])
+		// 		for (const atr of attrs)
+		// 			if (atr.name === from) {
+		// 				const ori = atr.value,
+		// 					url = C.decodeUrl(ori, tag.id)
+		// 				return { ref, ori, url }
+		// 			}
 
-			return null
-		},
+		// 	return null
+		// },
 		pagedef: { olga: null },        // описание загруженной страницы		,		
 		// makeByClassName: (className, make, only1) => {	
 		makeForTypName: (make, typ, name, only1) => {

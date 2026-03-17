@@ -30,7 +30,7 @@ export function com() {
                 const mod = await import(src)
                 mod.showC(C)
             } catch (e) {
-                console.error('%c%s', C.consts.fmtErr, `'${src}': `, `ошибка загрузки`, e)
+                console.error('%c%s', C.consts.fmtErr, `'${src}': `, `ошибка загрузки`, e.message)
             }
         })()
     }

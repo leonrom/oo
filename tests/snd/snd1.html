@@ -6,15 +6,15 @@
 	<title>snd1</title>
 	<link rel="shortcut icon" href="./add/favicon.svg" type="image/x-icon">
 
-	<script type="module" src="http://localhost/oo/o7/index.js" data-modules="snd" data-consts="
+	<script type="module" src="http://localhost/oo/o7/index.js" data-modules="snd" 
+		data-consts="
         	moe-p='12s 3',
-        	return_time= 0.6с, 
+        	back_time= 0.6с, 
 			media =  + ../media;
 			моя_папка = media + /audio;
 			ау_длинный =моя_папка + /Clouds.mp3;
 			ау_средний=моя_папка+/Ceza1-25.mp3;
 			ау_короткий=моя_папка+/yapma.mp3;
-			моя_папка+gitme.mp3;
         ">
 		</script>
 	<link href='./sndA.css' rel='stylesheet' />
@@ -24,37 +24,86 @@
 	<div class='example olga5_Start'>
 
 	<h4>Примеры подключения тегов с классом <b>olga-snd</b></h4>
-		<div class="teSe olga-snd::ау_длинный cp"  id="i1">  
-			<p id="i1a">a - звучание по клику....... "olga-snd:ау_длинный" </p>
-			<p id="i1b">b - звучание по клику....... "olga-snd:ау_длинный" </p>
+	<p>
+		На теге или рядом с ним в квадратных скобках написаны (курсивом) включенные у него опции звучания. 
+		<br/>В двойных кавычках показано написание класса для тега. 
+		<br/>Названия файлов заданы условными именами подчеркивающими их продолжительность.
+		<br/>Для примера показано использование дополнительных разделителей '<b>:</b>'.
+	</p>
+		<div class="teSe olga-snd:ау_длинный cp"  id="i1">  
+			<b>i1</b>: Это "olga-snd:ау_длинный" (можно с одним двоеточием) с вложенными тегами &lt;<b>p</b>&gt; и  &lt;<b>span</b>&gt;. 
+			Звучание этого и обоих вложенных в него тегов активируется  кликом. 
+			У вложенных тегов звучание <i>сохраняется</i> после увода курсора.
+			<p class="teSe olga-snd:A:ау_короткий cp" id="i2"><b>i2</b>: [<i>зациклено</i>] "olga-snd:A:ау_короткий" </p>
+			<span>кликни: 
+			<span class="teSe olga-snd:AL:ау_короткий cp" id="i3"><b>i3</b>: [<i>сохраняется</i>, <i>зациклено</i>]  "olga-snd:<b>AL</b>:ау_короткий" </span>
+			</span>
 		</div>
-		<p class="teSe olga-snd:F:ау_средний"  id="i2">  не использовать встроен "olga-snd:<b>F</b>:ау_средний" </p>
-		<p class="teSe olga-snd:L:ау_короткий"  id="i3">  звучание зацикливается "olga-snd:<b>L</b>:ау_короткий" </p>
-		<p class="teSe olga-snd:A:L:ау_средний"  id="i4">  " и не прекращается.. "olga-snd:<b>A:L</b>:ау_короткий" </p>
-		<p class="teSe olga-snd:O:ау_средний"  id="i5">  по наведению курсора... "olga-snd:O:ау_средний" </p>
-		<p class="teSe olga-snd:AO:ау_средний"  id="i6">   " не прекращается.... "olga-snd:<b>AO</b>:ау_средний" </p>
-		<p class="teSe olga-snd:N:ау_средний"  id="i7">  не обрабатывать звучани "olga-snd:<b>N</b>:ау_средний" </p>
+		<p>
+			Иконка [<i>покачивание</i>, <i>сохраняется</i>]  <b>i4</b>:  <img class="olga-snd:SA:ау_длинный" title="img01" id="i4" loop src="../../media/image/snd.icons/myMusikIT.png" />
+			- "olga-snd:<b>SA</b>:ау_длинный" 
+			<br/>(уведите курсор, чтобы это увидеть)
+		</p>
+		<p>
+			Следующие 3 начнут звучать после наведения курсора (если прежде был '<i>клик</i>')
+		</p>
+		<p class="teSe olga-snd:O:ау_длинный"  id="i5"><b>i5</b>:  [<i>по наведению</i>,]  "olga-snd:<b>O</b>:ау_длинный" </p>
+		<p class="teSe olga-snd:O:A:ау_средний"  id="i6"><b>i6</b>: [<i>по наведению</i>, <i>сохраняется</i>] "olga-snd:<b>O</b>:<b>A</b>:ау_средний" </p>
+		<p class="teSe olga-snd:OA:L:ау_короткий"  id="i7"><b>i7</b>: [<i>по наведению</i>, <i>сохраняется</i>,  <i>зациклено</i>] "olga-snd:<b>OA</b>:<b>L</b>:ау_короткий" </p>
 <br/>
 	<h4>Примеры подключения аудио-файла в теге &lt;<b>audio</b>&gt;</h4>
-		<p>1 <audio id="s1" src="https://archive.org/download/clouds_20200310/Clouds.mp3" controls="controls"></audio>
-			<br />Обычная ссылка на файл (атрибут <b>class</b> не указан):<br />
-			<span>src="https://archive.org/download/clouds_20200310/Clouds.mp3"</span>
+		<p>
+		Первый тег имеет стандартное задание <b>url</b>'а через "<i>src='https://archive....</i>". 
+		<br/>В остальных - "ленивое" задание адреса, а реальное будет определяться 
+		<br/>(согласно атрибуту '<b>data-consts</b>' в &lt;<b>script</b>&gt ) 
+		<br/>и подставляться только после наведения курсора.
+	</p>
+	
+		<p><b>s1</b>:  <audio id="s1" src="https://archive.org/download/clouds_20200310/Clouds.mp3" controls="controls"></audio>
+			<br />Обычная ссылка на файл (не будет работать если задать &lt;<b>base</b>&gt;):<br />
+			<pre>
+&lt;audio controls
+    <b>src</b>="https://archive.org/download/clouds_20200310/Clouds.mp3"
+&lt;/audio&gt;</pre>			
 		</p>
-		<p>2 <audio id="s2" _src="https://archive.org/download/clouds_20200310/Clouds.mp3" controls="controls"></audio>
-			<br />Как '<b>1</b>', но с <b>_src</b> (вместо <b>src</b>):<br />
+		<p><b>s1s</b>:  
+            <audio id="s1s" controls>
+                <source
+                    src="https://archive.org/download/clouds_20200310/Clouds.mp3"
+                    type="audio/mpeg">
+            </audio>
+			<br />Ссылка с &lt;<b>source</b>&gt; на файл (будет работать и с &lt;<b>base</b>&gt;):
+			<pre>
+&lt;audio controls&gt;
+    &lt;source
+        <b>src</b>="https://archive.org/download/clouds_20200310/Clouds.mp3"
+        type="audio/mpeg"
+    &gt;
+&lt;/audio&gt;</pre>
+		</p>
+		<p><b>s2</b>:  <audio id="s2" _src="https://archive.org/download/clouds_20200310/Clouds.mp3" controls="controls"></audio>
+			<br />Как '<b>s1</b>', но с <b>_src</b> (вместо <b>src</b>):<br />
 			<span>_src="https://archive.org/download/clouds_20200310/Clouds.mp3"</span>
 		</p>
-		<p><b>3</b> <audio id="s3" _src="моя_папка + /gitme.mp3" controls class="olga-snd"></audio>
-			<br />Как '<b>2</b>', но с символической ссылкой в <b>_src</b> и  <b>olga-snd</b>:<br />
-			<span>_src="моя_папка + /gitme.mp3" class="olga-snd"</span>
+			<p><b>s2s</b>:  
+            <audio id="s2s" controls>
+                <source
+                    _src="https://archive.org/download/clouds_20200310/Clouds.mp3"
+                    type="audio/mpeg">
+            </audio>
+			<br />Как '<b>s1s</b>', но с <b>_src</b> (вместо <b>src</b>):<br />
 		</p>
-		<p>4 <audio id="s4" data-src=моя_папка+gitme.mp3 controls></audio>
+		<p><b>s3</b>:  <audio id="s3" _src="ау_короткий" controls ></audio>
+			<br />Как '<b>2</b>', но с символической ссылкой в <b>_src</b>:<br />
+			<span>_src="ау_короткий"</span>
+		</p>
+		<p><b>s4</b>:  <audio id="s4" data-src=моя_папка+gitme.mp3 controls></audio>
 			<br />Как '<b>3</b>', но с <b>data-src</b> вместо <b>_src</b> (и без слэша и кавычек у ссылки):<br />
-			<span>data-src=моя_папка+gitme.mp3 class="olga-snd"</span>
+			<span>data-src=моя_папка+gitme.mp3 </span>
 		</p>
-		<p style="font-size:small">
-			Во всех, кроме '<b>1</b>', аудио-файл будет загружать после наведения курсора.<br />
-			Файл <b>gitme.mp3</b> находится в <b>моя_папка</b>, заданой атрибутом 'data-consts' в &lt;<b>script</b>&gt .
+		<p><b>s5</b>:  <audio id="s5" data-src=моя_папка+gitme.mp3 controls class="olga-snd"></audio>
+			<br />Как '<b>4</b>', но с заданием класса  '<b>olga-snd</b>':<br />
+			<span>data-src=моя_папка+gitme.mp3 class="olga-snd"</span>
 		</p>
 	</div>
 </body>

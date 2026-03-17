@@ -292,7 +292,8 @@ const
             }
 
         W.reset()
-        const e = new CustomEvent('o_incReady', { detail: { modul: W.modul, avtonom: C.avtonom } })
+        const e = new CustomEvent('o_incReady', { detail: { modul: W.modul} })
+        // const e = new CustomEvent('o_incReady', { detail: { modul: W.modul, autonom: C.autonom } })
         window.dispatchEvent(e)
     }
 

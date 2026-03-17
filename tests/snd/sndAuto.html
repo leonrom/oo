@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>sndAuto</title>
+	<link rel="shortcut icon" href="./add/favicon.svg" type="image/x-icon">
+
+	<!-- <link href="../blog/csss/olga5-o5.css" media="screen" rel="stylesheet" /> -->
+	<script type="module" src="http://localhost/oo/o7/inc/inc.js"  ></script>
+    <script type="module" src="http://localhost/oo/o7/snd/snd.js"  
+		data-modules="snd" 	
+	 	data-consts="
+			media = + ../media;
+			sounds= media + /audio;
+			аудио_Ceza1-25=sounds+/Ceza1-25.mp3;
+			images= media + /image; 
+			btn_stop='images + /icons8-youtube-music-48.png';
+			btn_play='images + /icons8-youtube-music-50.png';
+			imagestop='images + /myMusikIT.png';
+			solfedjio=images+ /solfedjio.png;
+			imageplay='images + /play.png';
+        " >
+    </script>
+<link href='./sndA.css' rel='stylesheet' />
+
+</head>
+
+<body style="margin: 0 0.1em 0 0.3em;">
+	<div class='example olga5_Start'>
+		Примеры с кнопками <span title="Для звучания - кликнуть по иконке (и чуток подождать)">задания</span> атрибутов тега
+		<b>&lt;img&gt;</b> :
+		<p>1 <img id="1" _src=imagestop image_play=imageplay class="olga-snd:аудио_Ceza1-25" />
+			Заданы: <b>src</b> для <u><i>без звука</i></u> - 'imagestop', а для <u><i>звучание</i></u> -
+			<b>image_play</b>
+		</p>
+		<p class="teSe">
+			&lt;img id="1" <b>src</b>=imagestop <b>image_play</b>=imageplay class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
+		</p>
+
+		<p>2 <img id="2" _src=imagestop class="olga-snd:аудио_Ceza1-25" />
+			<u><i>без звука</i></u> как в <b>1</b>, но при <u><i>звучании</i></u> иконка не меняется (т.к. не задан
+			<b>image_play</b>)
+		</p>
+		<p class="teSe">
+			&lt;img id="2" <b>src</b>=imagestop class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
+		</p>
+
+		<p>3 <img id="3" _src=imagestop image_play=_src class="olga-snd:аудио_Ceza1-25" />
+			То же, что <b>2</b>, при этом <b>image_play</b> задан равным <b>_src</b>
+		</p>
+		<p class="teSe">
+			&lt;img id="3" <b>_src</b>=imagestop <b>image_play</b>=_src class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
+		</p>
+
+		<p>4 <img id="4" image_play=imageplay class="olga-snd:аудио_Ceza1-25" />
+			Не задан <b>src</b>, поэтому <u><i>без звука</i></u> берётся из <b>btn-stop</b> (а <u><i>звучание</i></u> -
+			<b>image_play</b>)
+		</p>
+		<p class="teSe">
+			&lt;img id="4" <b>image_play</b>=imageplay class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
+		</p>
+
+		<p>5 <img id="5" class="olga-snd:аудио_Ceza1-25" />
+			Не заданы ни <u><i>без звука</i></u>, ни <u><i>звучание</i></u>,- берутся, соответственно, из
+			<b>btn_stop</b> и <b>btn_play</b>.
+		</p>
+		<p class="teSe">
+			&lt;img id="5" class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
+		</p>
+
+		<br />
+		<p>Дополнительно: ссылка на <a id='6' href=аудио_Ceza1-25 class="olga-snd:O:href">аудио_Ceza1-25</a>
+			в качестве квалификатора <b>audio_play</b> будет взят <b>href</b>
+		</p>
+		<p class="teSe">
+			&lt;a <b>href</b>=аудио_Ceza1-25 class="olga-snd:over"/&gt;аудио_Ceza1-25&lt;/a/&gt;
+		</p>
+
+		<br />
+		<p>
+			Использовались следующие 'кнопки' (эти ниже - некликабельные):
+			<br /><img id='i1' _src=imagestop class="olga-snd:n" title="файл 'myMusikIT.png'" /> &mdash; теговый
+			атрибут src=<b>imagestop</b>;
+			<br /><img id='i2' _src=imageplay class="olga-snd:n" title="файл 'play.png'" /> &mdash; теговый атрибут
+			image_play=<b>imageplay</b>;
+			<br /><img id='i3' _src=btn-stop class="olga-snd:n" title="файл 'icons8-youtube-music-48.png'" /> &mdash;
+			скриптовый параметр <b>btn-stop</b>;
+			<br /><img id='i4' _src=btn-play class="olga-snd:n" title="файл 'icons8-youtube-music-50.png'" /> &mdash;
+			скриптовый параметр <b>btn-play</b>.
+		</p>
+		<br />
+		<p>
+			Здесь подключение <code>o5snd.js</code> имеет вид:
+		</p>
+		<table class="olga5_tableCode">
+			<tbody>
+				<tr>
+					<td>
+					</td>
+					<td>
+						<pre>
+&lt;script async src='../olga5/o5snd.js'
+    <b>btn_stop</b>='images + /icons8-youtube-music-48.png';
+    <b>btn_play</b>='images + /icons8-youtube-music-50.png';
+    <b>imagestop</b>='_url_olga5 + ../media/image/myMusikIT.png';
+    <b>imageplay</b>='images + /play.png';
+    <b>аудио_Ceza1-25</b>=sounds + /Ceza1-25.mp3;
+/&gt;&lt;/script/&gt;
+&lt;script async src='../olga5/o5com!.js' o5debug=0
+    <b>images</b>="_url_olga5 + ../media/image"
+    <b>sounds</b>=https://archive.org/download/clouds_20200310;
+/&gt;&lt;/script/&gt;
+</pre>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+			В первом теге &lt;<b>script</b>&gt; атрибут <b>btn_play</b> не задан - он
+			<spam
+				title="Там '#' не есть знак комментария (у атрибутов нет коментариев),- этот 'произвольный' символ дописан слитно просто чтобы 'спрятать' атрибут.">
+				как-бы</spam> заремлен.
+		</p>
+	</div>
+</body>
+
+</html>

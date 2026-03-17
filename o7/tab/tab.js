@@ -107,7 +107,7 @@ export const W = {
 		// 	console.log('%c%s', C.consts.fmtOK,
 		// 		` инициализация `,
 		// 		`${W.modul}.js`,
-		// 		` ${C.avtonom ? ('автономно по ' + e.type) : 'из библиотеки'} `)
+		// 		` ${C.autonom ? ('автономно по ' + e.type) : 'из библиотеки'} `)
 
 		for (const tag of tags) {
 			const ss = tag.innerHTML.split(m_line),

@@ -4,123 +4,92 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>snd2</title>
+
 	<link rel="shortcut icon" href="./add/favicon.svg" type="image/x-icon">
+	<link href='./sndA.css' rel='stylesheet' />
 
-	<!-- <link href="../blog/csss/olga5-o5.css" media="screen" rel="stylesheet" /> -->
-	
-    <script type="module" src="http://localhost/oo/o7/index.js"  
-		data-modules="snd" 	
-	 	data-consts="
-			media = + ../media;
-			sounds= media + /audio;
-			аудио_Ceza1-25=sounds+/Ceza1-25.mp3;
-			images= media + /image; 
-			btn_stop='images + /icons8-youtube-music-48.png';
-			btn_play='images + /icons8-youtube-music-50.png';
-			imagestop='images + /myMusikIT.png';
-			solfedjio=images+ /solfedjio.png;
-			imageplay='images + /play.png';
-        " >
-    </script>
-<link href='./sndA.css' rel='stylesheet' />
-
+    <base href="http://localhost/oo/media/audio/" target="_self">
+	<script type="module" src="http://localhost/oo/o7/snd/snd.js" 
+        data-modules="snd" 
+		data-consts="
+        	moe-p='12s 3',
+        	back_time= 0.6с, 
+			ау_длинный = Clouds.mp3;
+			ау_средний = Ceza1-25.mp3;
+			ау_короткий = ./yapma.mp3;
+        ">
+		</script>
 </head>
 
 <body style="margin: 0 0.1em 0 0.3em;">
 	<div class='example olga5_Start'>
-		Примеры <span title="Для звучания - кликнуть по иконке (и чуток подождать)">задания</span> атрибутов тега
-		<b>&lt;img&gt;</b> :
-		<p>1 <img id="1" _src=imagestop image_play=imageplay class="olga-snd:аудио_Ceza1-25" />
-			Заданы: <b>src</b> для <u><i>без звука</i></u> - 'imagestop', а для <u><i>звучание</i></u> -
-			<b>image_play</b>
-		</p>
-		<p class="teSe">
-			&lt;img id="1" <b>src</b>=imagestop <b>image_play</b>=imageplay class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
-		</p>
 
-		<p>2 <img id="2" _src=imagestop class="olga-snd:аудио_Ceza1-25" />
-			<u><i>без звука</i></u> как в <b>1</b>, но при <u><i>звучании</i></u> иконка не меняется (т.к. не задан
-			<b>image_play</b>)
-		</p>
-		<p class="teSe">
-			&lt;img id="2" <b>src</b>=imagestop class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
-		</p>
-
-		<p>3 <img id="3" _src=imagestop image_play=_src class="olga-snd:аудио_Ceza1-25" />
-			То же, что <b>2</b>, при этом <b>image_play</b> задан равным <b>_src</b>
-		</p>
-		<p class="teSe">
-			&lt;img id="3" <b>_src</b>=imagestop <b>image_play</b>=_src class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
-		</p>
-
-		<p>4 <img id="4" image_play=imageplay class="olga-snd:аудио_Ceza1-25" />
-			Не задан <b>src</b>, поэтому <u><i>без звука</i></u> берётся из <b>btn-stop</b> (а <u><i>звучание</i></u> -
-			<b>image_play</b>)
-		</p>
-		<p class="teSe">
-			&lt;img id="4" <b>image_play</b>=imageplay class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
-		</p>
-
-		<p>5 <img id="5" class="olga-snd:аудио_Ceza1-25" />
-			Не заданы ни <u><i>без звука</i></u>, ни <u><i>звучание</i></u>,- берутся, соответственно, из
-			<b>btn_stop</b> и <b>btn_play</b>.
-		</p>
-		<p class="teSe">
-			&lt;img id="5" class="olga-snd:аудио_Ceza1-25"&nbsp;/&gt;
-		</p>
-
-		<br />
-		<p>Дополнительно: ссылка на <a id='6' href=аудио_Ceza1-25 class="olga-snd:O:href">аудио_Ceza1-25</a>
-			в качестве квалификатора <b>audio_play</b> будет взят <b>href</b>
-		</p>
-		<p class="teSe">
-			&lt;a <b>href</b>=аудио_Ceza1-25 class="olga-snd:over"/&gt;аудио_Ceza1-25&lt;/a/&gt;
-		</p>
-
-		<br />
+	<h4>Примеры подключения тегов с классом <b>olga-snd</b></h4>
+	<p>
+		На теге или рядом с ним в квадратных скобках написаны (курсивом) включенные у него опции звучания. 
+		<br/>В двойных кавычках показано написание класса для тега. 
+		<br/>Названия файлов заданы условными именами подчеркивающими их продолжительность.
+		<br/>Для примера показано использование дополнительных разделителей '<b>:</b>'.
+	</p>
+		<div class="teSe olga-snd:ау_длинный cp"  id="i1">  
+			<b>i1</b>: Это "olga-snd:ау_длинный" (можно с одним двоеточием) с вложенными тегами &lt;<b>p</b>&gt; и  &lt;<b>span</b>&gt;. 
+			Звучание этого и обоих вложенных в него тегов активируется  кликом. 
+			У вложенных тегов звучание <i>сохраняется</i> после увода курсора.
+			<p class="teSe olga-snd:A:ау_короткий cp" id="i2"><b>i2</b>: [<i>зациклено</i>] "olga-snd:A:ау_короткий" </p>
+			<span>кликни: 
+			<span class="teSe olga-snd:AL:ау_короткий cp" id="i3"><b>i3</b>: [<i>сохраняется</i>, <i>зациклено</i>]  "olga-snd:<b>AL</b>:ау_короткий" </span>
+			</span>
+		</div>
 		<p>
-			Использовались следующие 'кнопки' (эти ниже - некликабельные):
-			<br /><img id='i1' _src=imagestop class="olga-snd:n" title="файл 'myMusikIT.png'" /> &mdash; теговый
-			атрибут src=<b>imagestop</b>;
-			<br /><img id='i2' _src=imageplay class="olga-snd:n" title="файл 'play.png'" /> &mdash; теговый атрибут
-			image_play=<b>imageplay</b>;
-			<br /><img id='i3' _src=btn-stop class="olga-snd:n" title="файл 'icons8-youtube-music-48.png'" /> &mdash;
-			скриптовый параметр <b>btn-stop</b>;
-			<br /><img id='i4' _src=btn-play class="olga-snd:n" title="файл 'icons8-youtube-music-50.png'" /> &mdash;
-			скриптовый параметр <b>btn-play</b>.
+			Иконка [<i>покачивание</i>, <i>сохраняется</i>]  <b>i4</b>:  <img class="olga-snd:SA:ау_длинный" title="img01" id="i4" loop src="../../media/image/snd.icons/myMusikIT.png" />
+			- "olga-snd:<b>SA</b>:ау_длинный" 
+			<br/>(уведите курсор, чтобы это увидеть)
 		</p>
-		<br />
 		<p>
-			Здесь подключение <code>o5snd.js</code> имеет вид:
+			Следующие 3 начнут звучать после наведения курсора (если прежде был '<i>клик</i>')
 		</p>
-		<table class="olga5_tableCode">
-			<tbody>
-				<tr>
-					<td>
-					</td>
-					<td>
-						<pre>
-&lt;script async src='../olga5/o5snd.js'
-    <b>btn_stop</b>='images + /icons8-youtube-music-48.png';
-    <b>btn_play</b>='images + /icons8-youtube-music-50.png';
-    <b>imagestop</b>='_url_olga5 + ../media/image/myMusikIT.png';
-    <b>imageplay</b>='images + /play.png';
-    <b>аудио_Ceza1-25</b>=sounds + /Ceza1-25.mp3;
-/&gt;&lt;/script/&gt;
-&lt;script async src='../olga5/o5com!.js' o5debug=0
-    <b>images</b>="_url_olga5 + ../media/image"
-    <b>sounds</b>=https://archive.org/download/clouds_20200310;
-/&gt;&lt;/script/&gt;
-</pre>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<p class="teSe olga-snd:O:ау_короткий"  id="i5"><b>i5</b>:  [<i>по наведению</i>,]  "olga-snd:<b>O</b>:ау_короткий" </p>
+		<p class="teSe olga-snd:O:A:ау_средний"  id="i6"><b>i6</b>: [<i>по наведению</i>, <i>сохраняется</i>] "olga-snd:<b>O</b>:<b>A</b>:ау_средний" </p>
+		<p class="teSe olga-snd:OA:L:ау_средний"  id="i7"><b>i7</b>: [<i>по наведению</i>, <i>сохраняется</i>,  <i>зациклено</i>] "olga-snd:<b>OA</b>:<b>L</b>:ау_средний" </p>
+<br/>
+	<h4>Примеры подключения аудио-файла в теге &lt;<b>audio</b>&gt;</h4>
 		<p>
-			В первом теге &lt;<b>script</b>&gt; атрибут <b>btn_play</b> не задан - он
-			<spam
-				title="Там '#' не есть знак комментария (у атрибутов нет коментариев),- этот 'произвольный' символ дописан слитно просто чтобы 'спрятать' атрибут.">
-				как-бы</spam> заремлен.
+		Первый тег имеет стандартное задание <b>url</b>'а через "<i>src='https://archive....</i>". 
+		<br/>В остальных - "ленивое" задание адреса, а реальное будет определяться 
+		<br/>(согласно атрибуту '<b>data-consts</b>' в &lt;<b>script</b>&gt ) 
+		<br/>и подставляться только после наведения курсора.
+	</p>
+	
+		<p><b>s1</b>:  
+            <audio id="s1" controls>
+                <source
+                    src="https://archive.org/download/clouds_20200310/Clouds.mp3"
+                    type="audio/mpeg">
+            </audio>
+			<br />Обычная ссылка на файл (атрибут <b>class</b> не указан):<br />
+			<pre>
+            &lt;audio id="s1" controls&gt;
+                &lt;source
+                    <b>src</b>="https://archive.org/download/clouds_20200310/Clouds.mp3"
+                    type="audio/mpeg"&gt;
+            &lt;/audio&gt;
+            </pre>
+		</p>
+		<p><b>s2</b>:  <audio id="s2" _src="https://archive.org/download/clouds_20200310/Clouds.mp3" controls="controls"></audio>
+			<br />Как '<b>1</b>', но с <b>_src</b> (вместо <b>src</b>):<br />
+			<span>_src="https://archive.org/download/clouds_20200310/Clouds.mp3"</span>
+		</p>
+		<p><b>s3</b>:  <audio id="s3" _src="ау_короткий" controls ></audio>
+			<br />Как '<b>2</b>', но с символической ссылкой в <b>_src</b>:<br />
+			<span>_src="ау_короткий"</span>
+		</p>
+		<p><b>s4</b>:  <audio id="s4" data-src=моя_папка+gitme.mp3 controls></audio>
+			<br />Как '<b>3</b>', но с <b>data-src</b> вместо <b>_src</b> (и без слэша и кавычек у ссылки):<br />
+			<span>data-src=моя_папка+gitme.mp3 </span>
+		</p>
+		<p><b>s5</b>:  <audio id="s5" data-src=моя_папка+gitme.mp3 controls class="olga-snd"></audio>
+			<br />Как '<b>4</b>', но с заданием класса  '<b>olga-snd</b>':<br />
+			<span>data-src=моя_папка+gitme.mp3 class="olga-snd"</span>
 		</p>
 	</div>
 </body>

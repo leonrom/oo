@@ -1,5 +1,5 @@
 .teSe {
-    width: max-content;
+    width: 420px;
     padding: 0.5em;
     padding-left: 1.0em;
     padding-right: 1.0em;
@@ -44,21 +44,42 @@ p,
 span {
     font-size: small;
     white-space: nowrap;
+    padding-right: 4px;
+}
+
+pre {
+    font-size: smaller;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    background-color: beige;
+    border: 1px solid gold;
+    width: max-content;
+    padding-right: 4px;
 }
 
 p {
     margin: 0;
+    margin-top: 4px;
 }
-div.cp p{
+
+p>b {
+    margin-top: 4px;
+}
+
+div.cp p {
     margin-bottom: 2px;
     background-color: antiquewhite;
     border: 1px dashed blue;
+    max-width: 222px;
 }
 
 img {
-    min-height: 12px;
-    min-width: 12px;
+    min-height: 24px;
+    min-width: 24px;
     height: 16px;
     width: 16px;
-    background-color: green;
+    /* background-color: green; */
+
+    gap: 8px;
 }

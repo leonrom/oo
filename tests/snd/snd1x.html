@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>snd1x</title>
+	<link rel="shortcut icon" href="./add/favicon.svg" type="image/x-icon">
+
+	<script type="module" src="http://localhost/oo/o7/index.js" data-modules="snd" 
+		data-consts="
+        	moe-p='12s 3',
+        	back_time= 0.6с, 
+			media =  + ../media;
+			моя_папка = media + /audio;
+			ау_длинный =моя_папка + /Clouds.mp3;
+			ау_средний=моя_папка+/Ceza1-25.mp3;
+			ау_короткий=моя_папка+/yapma.mp3;
+        ">
+		</script>
+	<link href='./sndA.css' rel='stylesheet' />
+</head>
+
+<body style="margin: 0 0.1em 0 0.3em;">
+	<div class='example olga5_Start'>
+		<p><b>s1s</b>:  
+            <audio id="s1s" controls>
+                <source
+                    _src="https://archive.org/download/clouds_20200310/Clouds.mp3"
+                    type="audio/mpeg">
+            </audio>
+			<br />Ссылка с &lt;<b>source</b>&gt;,- будет работать и с &lt;<b>base</b>&gt;:
+			<pre>
+&lt;audio controls&gt;
+    &lt;source
+        <b>_src</b>="https://archive.org/download/clouds_20200310/Clouds.mp3"
+        type="audio/mpeg"
+    &gt;
+&lt;/audio&gt;</pre>
+		</p>
+	</div>
+</body>
+
+</html>

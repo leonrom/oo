@@ -83,8 +83,14 @@ const
 export function CConsol() {
 	Object.assign(C, {
 		consoleErrs: { count: 0 },
-		ConsoleAlert: (txt, add, tab) => ConsoleMsg(MSG.ALERT, txt, add, tab),
-		ConsoleError: (txt, add, tab) => ConsoleMsg(MSG.ERROR, txt, add, tab),
+		ConsoleAlert: (txt, add, tab) => {
+			ConsoleMsg(MSG.ALERT, txt, add, tab)
+			debugger
+		},
+		ConsoleError: (txt, add, tab) => {
+			ConsoleMsg(MSG.ERROR, txt, add, tab)
+			debugger
+		},
 		ConsoleSign: (txt, add, tab) => ConsoleMsg(MSG.SIGN, txt, add, tab),
 		ConsoleInfo: (txt, add, tab) => ConsoleMsg(MSG.INFO, txt, add, tab),
 		displayLogMsg: (head, text, err, xy, add) => {
@@ -123,6 +129,8 @@ export function CConsol() {
 
 				const timer = setTimeout(() => { div.remove(); }, duration)
 				C.cleanup.push(() => clearInterval(timer))
+				
+				debugger
 			}
 		}
 	})

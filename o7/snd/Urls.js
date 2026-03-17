@@ -7,21 +7,15 @@
  * без лишних перезагрузок
  */
 
-// const commonAudio = new Audio()  ??   // общий для olga-snd
 const blobCache = new Map()         // blob-кэш: url → objectURL
 const loadMap = new Map()           // загрузки: url → Promise
 
+const logName = 'snd.Urls: '
 let C;
 
-async function ensureLoaded(url) {
-    // уже этот же звук и готов
-    // if (curUrl === url && commonAudio.readyState >= 2)
-    //     return
-
+async function ensureLoaded(url, aO7) {
     // есть в blob-кэше
     if (blobCache.has(url)) {
-        // curUrl = url
-        // commonAudio.src = blobCache.get(url)
         return blobCache.get(url)
     }
 
@@ -30,8 +24,9 @@ async function ensureLoaded(url) {
         return loadMap.get(url)
 
     // новая загрузка
-        if (C.consts.debug >1)
-            console.log(`- читается в BLOB ${url}`)
+    if (C.consts.debug > 1)
+        console.log(logName, `читается из BLOB ${url}`)
+
     const p = fetch(url)
         .then(r => {
             if (!r.ok)
@@ -42,9 +37,15 @@ async function ensureLoaded(url) {
             const urlBlob = URL.createObjectURL(blob)
             blobCache.set(url, urlBlob)
 
-            // curUrl = url
-            // commonAudio.src = objUrl
+            aO7.setERROR(false)
             return urlBlob
+        })
+        .catch(e => {
+            aO7.setERROR(true)
+            console.error("%c%s", C.consts.fmtErr, logName, `'${aO7.name}': загрузка аудио:`, e.message)
+            if (C.consts.debug)
+            debugger
+    throw e
         })
         .finally(() => {
             loadMap.delete(url)
@@ -54,8 +55,8 @@ async function ensureLoaded(url) {
     return p
 }
 
-export const Urls = {
-    ensureLoaded:ensureLoaded,
+export const Urls = Object.freeze({
+    ensureLoaded: ensureLoaded,
 
     init: function () {
         // curUrl = null
@@ -72,7 +73,6 @@ export const Urls = {
         blobCache.clear()
     },
     prepare: function (c) {
-        C=c
+        C = c
     }
-,
-}
+})

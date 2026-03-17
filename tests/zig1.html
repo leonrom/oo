@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Running snake outline (conic-gradient)</title>
+
+<style>
+/* просто для наглядности */
+body {
+    font-family: sans-serif;
+    padding: 40px;
+}
+
+@property --a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0turn;
+}
+
+/* сам элемент */
+.box {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #222;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+/* бегущая змейка */
+.box.playing::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+
+    --a: 0turn;
+
+    background: conic-gradient(
+        from var(--a),
+        transparent 0 70%,
+        lime 70% 85%,
+        transparent 85% 100%
+    );
+
+    /* ВАЖНО: только webkit-вариант */
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+
+    padding: 4px;
+
+    animation: spin 1.2s linear infinite;
+    pointer-events: none;
+}
+
+/* анимация */
+@keyframes spin {
+    to { --a: 1turn; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="box playing">
+    audio
+</div>
+
+</body>
+</html>

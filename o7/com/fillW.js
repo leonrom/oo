@@ -72,30 +72,40 @@ const
 		// (\/\*(.|\s)*?\*\/)  стандартные коменты (проверить!!! поему-то переносит строки правил)
 		// (\s*$)              пустое до конца строки       
 	},
-	fillConsts = W => {
-		// копируем константы из корневого модуля
-		for (const [key, val] of Object.entries(C.consts))
-			W.consts[key] = val
+	// 	fillConsts = W => {
+	// 		// копируем константы из корневого модуля
+	// 		for (const [key, val] of Object.entries(C.consts))
+	// 				W.consts[key] = val
 
-		// копируем константы из корневого модуля
-		for (const key in C.dataset)
-			if (key === name) {
-				addToConsts(C.dataset[key], W.consts)
-				break
-			}
+	// 			// if (!W.isDefined(C.consts[key]))
 
-		// проверяю наличие и, при необходимости, добавляю заявленные			
-		for (const par in W.needs)
-			if (!C.isDefined(W.consts[par]))
-				W.consts[par] = W.needs[par]
+	// // 		// копируем константы из корневого модуля
+	// // 		for (const key in C.dataset)
+	// // 			if (key === name) {
+	// // 				addToConsts(C.dataset[key], W.consts)
+	// // 				break
+	// // 			}
 
-		Object.freeze(W.consts)
-		Object.freeze(W)
+	// // 		// проверяю наличие и, при необходимости, добавляю заявленные			
 
-		// const e = new CustomEvent('o_modulReady', { detail: { modul: name } })
-		// window.dispatchEvent(e)
-		return true
-	},
+	// // в W задавать не needs, а сразу и тут их доопределять 
+	// // (и создавать при необходимости ??? - а надо ли)		
+
+	// // в snd  дать использование  shift_speed и back_time
+
+	// // дать автоавтономную работу inc
+
+	// // 		for (const par in W.needs)
+	// // 			if (!C.isDefined(W.consts[par]))
+	// // 				W.consts[par] = W.needs[par]
+
+	// 		Object.freeze(W.consts)
+	// 		Object.freeze(W)
+
+	// 		// const e = new CustomEvent('o_modulReady', { detail: { modul: name } })
+	// 		// window.dispatchEvent(e)
+	// 		return true
+	// 	},
 	convertLinks = () => {
 		const
 			from = 'href',
@@ -108,7 +118,7 @@ const
 				const str = attrs[froms[1]] || attrs[froms[2]]
 				if (str) {
 					const url = C.decodeUrl(str)
-					if (url!==str) {
+					if (url !== str) {
 						replaceTag('link', child, 'href', url, errs)
 						if (debug)
 							links.push({ orig: str, src: url })
@@ -122,25 +132,48 @@ const
 			if (links.length) C.ConsoleInfo("Скорректированны LINK'и : ", links.length, links)
 			else C.ConsoleInfo("Скорректированных LINK'ов нет ")
 	}
-	
+
 export function fillW(name) {
 	const W = C.modules[name].mod.W
 	if (W) {
-		if (W.consts) {
-			console.error('%c%s', C.consts.fmtErr, `Модуль '${name}' уже был инициирован `)
-			return
-		}
+		// if (W.consts) {
+		// 	console.error('%c%s', C.consts.fmtErr, `Модуль '${name}' уже был инициирован `)
+		// 	return
+		// }
 
-		W.consts = {}
-		W.modul = name
-		W.clasn = 'olga-' + name
+		if (W.modul && W.modul !== name) {
+			console.error('%c%s', C.consts.fmtErr, `Для модуля '${name}' прописано иное '${W.modul}' `, ` - принудительно поменял на  '${name}' `)
+			W.modul = name
+			// W.clasn = 'olga-' + name
+		}
+		// if (!W.consts) W.consts = {}
+		if (!W.modul) W.modul = name
+		if (!W.clasn) W.clasn = 'olga-' + name
+
 		if (C.consts.debug > 1)
 			console.log(`Регистрируется модуль '${name}'`)
 
-		fillConsts(W)
+		// fillConsts(W)
+
+		if (W.consts) {
+			// копируем значения заданных констант из корневого модуля
+			for (const [key, val] of Object.entries(C.consts))
+				if (C.isDefined(C.consts[key]))
+					W.consts[key] = val
+
+			// for (const key in C.dataset)
+			// 	if (key === name) {
+			// 		addToConsts(C.dataset[key], W.consts)
+			// 		break
+			// 	}
+
+			Object.freeze(W.consts)
+		}
+		Object.freeze(W)
+
 		fillCss(W)
 		if (W.prepare)
-			W.prepare()
+			W.prepare(C)
 	}
 	else
 		if (C.consts.debug)
