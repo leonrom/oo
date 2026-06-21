@@ -1,0 +1,439 @@
+.cboxed {
+    /* position: fixed;
+    top: 3px;
+    right: 8px;
+    width: 104px;
+    height: calc(100% - 12px);
+    background-color: aliceblue;
+    border: none;
+    z-index: 999999;
+    margin: 2px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding-bottom: 4px; */
+
+      position: fixed;
+      top: 0px;
+      right: 0;
+      width: 120px;
+      background: linen; /* для наглядности */
+      margin: 0;
+      overflow: hidden;
+      border: 1px lightgray solid;
+      bottom: 0;
+      padding-left: 6px;
+}
+
+.cboxed input[type="button"] {
+    border-radius: 3px;
+    float: right;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.cboxed input[type="checkbox"] {
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.cboxed input[type="number"] {
+    cursor: pointer;
+    width: 2.8em;
+    font-size: smaller;
+    padding: 0;
+    border: 1px solid lightgrey;
+    height: 12px;
+    vertical-align: baseline;
+}
+
+.cboxed .divs {
+    border: 1px solid aqua;
+    padding-left: 3px;
+    padding-bottom: 0px;
+    width: calc(100% - 12px);
+    /* height: calc(100% - 6px); */
+    overflow-y: hidden;
+    overflow-x: hidden;
+    direction: rtl;
+    height: auto;
+}
+
+.cboxed p {
+    margin: 0;
+    margin-top: 1px;
+}
+
+.frame i.button {
+    border: 1px solid gray;
+    padding: 0;
+    display: inline-block;
+    margin-right: 6px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding-left: 2px;
+}
+
+.frame i.button:active {
+    transform: scale(0.96);
+    /* слегка уменьшается */
+    border-color: black;
+}
+
+#div-etalon {
+    display: none;
+}
+
+.cboxed div.frame {
+    max-height: fit-content;
+    margin-top: 7px;
+    /* border: 1px dotted gray; */
+    background: beige;
+    line-height: 11px;
+        padding-top: 2px;
+        padding-left: 2px;
+}
+
+.cboxed div {
+    direction: ltr;
+    line-height: 14px;
+    font-size: small;
+    /* border: 1px solid lightgreen; */
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+}
+}
+
+.cboxed div.o-shpDiv {
+    margin-top: 6px;
+    margin-left: 6px;
+    border-top: 1px solid gray;
+}
+
+.cboxed p i {
+    min-width: 30px;
+    display: inline-block;
+}
+
+.cboxed p b {
+    min-width: 10px;
+}
+
+.cboxed b {
+    min-width: 28px;
+    display: inline-block;
+}
+
+.cboxed span b {
+    font-size: smaller;
+    padding-right: 1px;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+    font-weight: bold;
+    margin-right: 0;
+    margin-left: 0;
+    width: 10px;
+    display: inline-block;
+    border: 1px solid aqua;
+    border-radius: 3px;
+    cursor: pointer;
+    color: black;
+    background-color: white;
+    height: 12px;
+}
+
+.cboxed span b:nth-child(2) {
+    border-radius: 8px;
+}
+
+.cboxed span b.disable {
+    cursor: no-drop;
+    color: transparent;
+    border: 1px dashed lightseagreen;
+    background-color: transparent;
+}
+
+.cboxed span {
+    cursor:  default;
+}
+
+.cboxed b.active {
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.cboxed .pitch {
+    display: inline-block;
+    height: 12px;
+    vertical-align: top;
+    align-content: center;
+}
+
+.cboxed .pitch b {
+    font-weight: bold;
+    color: black;
+    border-radius: 8px;
+}
+
+div.olga5_shp_copy,
+div.olga-shp {
+    background-color: yellow;
+    border: 6px solid red;
+    outline-width: 5px;
+    outline-style: solid;
+    outline-color: blue;
+    width: 155px;
+    height: 48px;
+    margin-left: 11px;
+    padding-left: 6px;
+    text-indent: 15px;
+    position: relative;
+}
+
+/* div.o-shpCart {    должно обрабатываться для всех
+    cursor: pointer;
+    z-index: 2;
+} */
+
+/* div.o-shpCart.moved {
+    cursor: pointer;
+} */
+
+.olga5_shp_copy>p,
+.olga-shp>p {
+    color: black;
+
+    font-family: monospace;
+    font-size: smaller;
+    display: block;
+    line-height: 12px;
+
+    position: inherit;
+    /* width: inherit;
+    height: inherit; */
+    opacity: 0.9;
+    word-break: break-word;
+
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.thetext {
+    overflow: auto;
+    width: calc(99% - 110px);
+    border: solid 1px gray;
+    padding-left: 5px;
+    background-color: aliceblue;
+    font-family: serif;
+    font-kerning: normal;
+    font-size: small;
+    border: 1px solid aqua;
+    border-radius: 5px;
+}
+
+.thetext td {
+    vertical-align: baseline;
+}
+
+.thetext pre {
+    border: 1px aqua dotted;
+    float: right;
+    margin-right: 5px;
+    border-radius: 5px;
+    padding-bottom: 4px;
+    padding-top: 6px;
+    background-color: white;
+}
+
+.thetext ul {
+    margin-block-start: 0.2em;
+    margin-block-end: 0.3em;
+}
+
+.pre-head {
+    margin: 0px 155px 0px 0px;
+    margin-right: 33%;
+    line-height: 8px;
+    text-align: center;
+    background-color: transparent;
+    /* vertical-align: super; */
+    font-size: large;
+    padding-top: 5px;
+}
+
+#main .olga-shp {
+    width: 260px;
+    padding-left: 4px;
+}
+
+/* ------------------------------------ */
+.div {
+    position: relative;
+    overflow: scroll;
+    -webkit-user-drag: none;
+    /*   сделать #div1 не draggable вообще:  */
+    user-select: none;
+}
+
+.cbo {
+    position: absolute;
+    height: 800px;
+    width: 1000px;
+    background-image:
+        linear-gradient(90deg, gray 1px, transparent 1px),
+        linear-gradient(0deg, gray 1px, transparent 1px);
+    background-color: transparent;
+}
+
+.div span:first-child {
+    position: sticky;
+    top: 6px;
+    right: 18px;
+    float: right;
+    background-color: yellow;
+    color: black;
+    line-height: 10px;
+    left: 111px;
+}
+
+#div1 {
+    position: relative;
+    height: 80vh;
+    width: calc(100% - 166px);
+
+    border: 3px green dashed;
+    background-color: lightgreen;
+    min-height: 360px;
+    min-width: 360px;
+}
+
+#div2a,
+#div2 {
+    border: 3px blue dashed;
+    height: 70vh;
+    width: 66vw;
+    background-color: lightblue;
+}
+
+#div3a,
+#div3 {
+    border: 3px red dashed;
+    height: 50vh;
+    width: 56vw;
+    background-color: lightpink;
+}
+
+#cbo2a,
+#cbo2 {
+    background-size: 20px 20px;
+    width: 2400px;
+    height: 1800px;
+}
+
+#cbo4a,
+#cbo4 {
+    background-image:
+        linear-gradient(90deg, lightgray 1px, transparent 1px),
+        linear-gradient(0deg, lightgray 1px, transparent 1px);
+}
+
+#ref1 {
+    cursor: pointer;
+}
+
+.absent {
+    color: gray;
+}
+
+#o5move{
+    opacity: 0.4;
+            margin: 0;
+    position: fixed;
+    cursor: grabbing;
+    outline: dashed blue 2px;
+    /* border: 6px solid red; */
+            border: none;
+    background-color:yellow;
+}
+.olga-shp.o-shpMoved {
+    outline: dashed blue 1px;
+}
+.olga-shp:not(.o-isready) {
+    cursor: default;
+}
+.olga-shp.o-isready:not(.o-none) {
+    cursor: pointer;
+}
+.olga-shp.o-isready.is-moveable.is-ready:not(.o-fixed) {
+    cursor: grab;
+}
+
+#btnScrollHead {
+    position: absolute;
+    top: 1px;
+    right: 18px;
+    width: 41px;
+    /* padding: 0px 2px; */
+    background-color: transparent;
+    color: black;
+    /* border: 1px red solid; */
+    border-radius: 5px;
+    font-size: x-small;
+    margin-right: 10px;
+}
+
+#btnScrollStep {
+position: absolute;
+    top: 1px;
+    right: 0px;
+    width: 21px;
+    height: 13px;
+    color: black;
+    font-size: 10px;
+    margin-right: 1px;
+    padding-left: 2px;
+    line-height: 2;
+}
+
+.btnCallScroll {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 0px 2px;
+    background-color: yellow;
+    color: black;
+    border: 1px red solid;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: x-small;
+    margin-right: 10px;
+}
+
+.btnCallScroll:active {
+    box-shadow: -1px -1px #666;
+    transform: translateY(1px);
+}
+
+.body,
+.div1,
+.div2,
+.div3,
+.div4 {
+    cursor: pointer;
+}
+
+#div4 {
+    width: 400px;
+    height: 250px;
+    overflow: hidden;
+    border: 3px lightgray dashed;
+    background-color: bisque;
+    min-height: 144px;
+    opacity: 0.8;
+}

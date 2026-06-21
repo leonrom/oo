@@ -1,6 +1,7 @@
 
 /**
  * Init.js
+ * модуля snd
  * определение списков тегов <audio>
  * и тегов с class="olga-snd"
  *  
@@ -10,112 +11,80 @@
 import { TAO7 } from './TAO7.js'
 import { CAO7 } from './CAO7.js'
 
-let clasn;  //, clasMatch;
+let C, clasn;
 
 const
     logName = 'snd.Init: ',
     listO7 = [],
     getAddrForTag = (tag, ref) => {
         const attrs = tag.attributes
-        for (const from of [`data-${ref}`, `_${ref}`, `${ref}`])
+        for (const from of [`${ref}`, `_${ref}`, `data-${ref}`])
             for (const atr of attrs)
-                if (atr.name === from) {
-                    const ori = atr.value,
-                        url = C.decodeUrl(ori, tag.id)
-                    return { ref, ori, url }
-                }
-
-        return null
+                if (atr.name === from)
+                    return (atr.value || '').trim()
     },
-    initByClass = (tag, C) => {
-        // // const
-        //     // ms = tag.className.match(clasMatch),
-        //     // s = ms ? ms[0] : ''
-        // const ms = tag.className.match(clasMatch)
-        // const s = ms ? ms[1] : ''
-        let first = true
-        for (const cls of tag.classList)
-            if (cls.startsWith(`${clasn}:`)) {
-                tag.classList.remove(cls)
-                if (first) {
-                    first = false
-                    tag.classList.add(clasn)
-                    if (!tag.tagName.match(/audio/i) &&     //  эти пойдут отдельно
-                        !tag.classList.contains(CAO7.oNONE)   // для "временного" отключения
-                    ) {
-                        const
-                            ss = cls.split(/\:|,|;/).slice(1),
-                            aO7 = new CAO7(tag, ss, ss.at(-1) || '')
+    addSrc = (audio, src) => {
+        const source = document.createElement('source')
+        source.setAttribute('src', src)
+        audio.appendChild(source)
+    },
+    initByClass = tag => {
+        if (tag.nodeName === 'AUDIO')
+            return
 
-                        listO7.push({ name: aO7.name, node: aO7.tag.nodeName, ori: aO7.ori, url: aO7.url })
-                    }
-                }
+        const atr = C.extractClassAttr(tag, clasn)
+        if (atr)
+            if (atr?.ori) {
+                const aO7 = new CAO7(tag, atr.quals, atr.ori)
+                listO7.push({ name: aO7.name, node: aO7.tag.nodeName, ori: aO7.ori })
             }
-        // const s = tag.className
-        //     .split(/\s+/)
-        //     .find(c => c.startsWith(`${clasn}:`))
-
-        // if (s) {
-        //     tag.className = tag.className.replace(`${clasn}:${s}`, clasn)
-        //     if (
-        //         !tag.tagName.match(/audio/i) &&     //  эти пойдут отдельно
-        //         !tag.classList.contains(CAO7.oNONE)   // для "временного" отключения
-        //     ) {
-        //         const
-        //             ss = s
-        //                 .split(/\:|,|;/)
-        //                 .slice(1),
-        //             aO7 = (new CAO7(tag, ss, ss.at(-1) || ''))
-
-        //         listO7.push({ name: aO7.name, node: aO7.tag.nodeName, ori: aO7.ori, url: aO7.url })
-        //     }
-        // }
+            else
+                console.log("%c%s", C.consts.fmtErr,
+                    logName + `audio-тег '${C.getObjName(tag)}' - нет адреса`,
+                    `в квалификаторе ${atr.cls}`)
     },
-    initForAudio = (tag, C) => {
-        const
-            srcTags = [],
-            stags = tag.getElementsByTagName('source')
+    initForAudio = tag => {
+        const stags = tag.getElementsByTagName('source')
+        let l = stags?.length || 0
 
-        if (stags?.length)
+        if (l)
             for (const stag of stags) {
-                stag.aO7snd_ori = getAddrForTag(stag, 'src') || ''
-                if (stag.aO7snd_ori)
-                    srcTags.push(stag)
+                const src = getAddrForTag(stag, 'src')
+                stag.src = C.decodeUrl(src, stag.id)
             }
 
-        const
-            len = stags?.length || 0,
-            addr =
-                tag.getAttribute('audio_play') ||
-                getAddrForTag(tag, 'src')
+        const src = getAddrForTag(tag, 'src')
+        if (src) {
+            l++
+            tag.removeAttribute('src')
+            addSrc(tag, C.decodeUrl(src, tag.id))
+        }
 
-        if (addr || (len && len === srcTags.length)) {
-            const aO7 = (new TAO7(tag, srcTags, addr?.url || ''))
-            listO7.push({ name: aO7.name, node: aO7.tag.nodeName, ori: aO7.ori, url: aO7.url })
+        const atr = C.extractClassAttr(tag, clasn)
+        if (atr?.ori) {
+            l++
+            addSrc(tag, C.decodeUrl(atr.ori, tag.id))
         }
-        else {
-            const err = `audio-тег '${C.getObjName(tag)}' - нет адреса`
-            let s = `['data-src', '_src', 'src']`
-            if (len)
-                s += `во вложенном <source>`
-            console.log("%c%s", C.consts.fmtErr, logName, err, ` ${s} `)
+
+        if (l) {
+            tag.load()
+            const aO7 = (new TAO7(tag, atr?.quals || '', stags))
+            listO7.push({ name: aO7.name, node: aO7.tag.nodeName, ori: '..' })
         }
+        else
+            console.log("%c%s", C.consts.fmtErr,
+                logName + `audio-тег '${C.getObjName(tag)}' - нет адреса`,
+                `ни в <source>'ах, ни в ['data-src', '_src', 'src'], ни в квалификаторе ${clasn}`)
     }
-let C;
 
 export const Init = Object.freeze({
     init: function () {
-        // clasMatch = new RegExp(`(?<=${clasn}:)[^\\s]+`) 
-        // Можно переписать регулярку без lookbehind.
-        // clasMatch = new RegExp(`${clasn}:([^\\s]+)`)
-
-        C.makeForTypName(tag => initByClass(tag, C), 'myclass', clasn)
-
-        C.makeForTypName(tag => initForAudio(tag, C), 'node', 'audio')
+        C.makeForTypName(tag => initForAudio(tag), 'node', 'audio')
+        C.makeForTypName(tag => initByClass(tag), 'myclass', clasn)
 
         if (!listO7.length) {
-            console.log("%c%s", C.consts.fmtErr, logName, `Нет объектов с class='${clasn}' или тегов <audio>`,
-                `в документе или в его тегах с 'olga-start' (вообще, или без '${CAO7.oNONE}' и ':N')`)
+            console.log("%c%s", C.consts.fmtErr, logName + `Нет объектов с class='${clasn}' или тегов <audio>`,
+                `в документе или в его тегах с 'olga-start' `)
             return
         }
 

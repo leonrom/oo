@@ -4,7 +4,7 @@
 /*jshint esversion: 6 */
 
 import { DoChgs } from './DoChgs.js'
-let observer;
+let observer, C;
 const
     saved = {
         last: {
@@ -152,6 +152,9 @@ export class PO5shp {
             V: oxy || nst.overflowY === 'auto' || nst.overflow === 'scroll' || nst.overflowY === 'scroll',
         }
     }
+    static prepare (c) {
+            C = c
+        }
     static pBody;
     name = ''       // вначале, чтобы было лучше "видно"
 

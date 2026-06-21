@@ -1,0 +1,20 @@
+.OPathTest  div {
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid gray;
+    min-width: 88px;
+    min-height: 55px;
+    margin: 4px;
+    margin-left: 12px;
+}
+.OPathTest  span{
+color:blue;
+    font-size: small;
+}
+
+.OPathTest  div::first-line{
+    font-weight: bold;
+    font-size: small;
+    font-family: 'Courier New', Courier, monospace;
+    background: bisque;
+}

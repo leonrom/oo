@@ -1,31 +1,63 @@
 /**
- *  контроль загрузки url'ов
- * Urls.js
- * 
- * blob-кэш
- * кэш загрузок по URL (без гонок)
- * без лишних перезагрузок
+ * контроль загрузки url'ов
+ * blob-кэши: для мелких и больших аудио
  */
 
-const blobCache = new Map()         // blob-кэш: url → objectURL
-const loadMap = new Map()           // загрузки: url → Promise
+const tinyBlobs = new Map()   // url → { blobUrl, size }
+const bigBlobs = new Map()    // url → blobUrl
+const loadMap = new Map()     // url → Promise
 
-const logName = 'snd.Urls: '
-let C;
+const logName = 'snd.Urls  : '
 
-async function ensureLoaded(url, aO7) {
-    // есть в blob-кэше
-    if (blobCache.has(url)) {
-        return blobCache.get(url)
+const MAX_TINY_SIZE = 50 * 1024 * 1024   // 50 MB
+const MAX_ITEM_RATIO = 0.3               // 30%
+const MAX_BIG_NUM = 2
+
+let C, tinysSize = 0
+
+// --- LRU для маленьких ---
+function touch(url) {
+    const entry = tinyBlobs.get(url)
+    tinyBlobs.delete(url)
+    tinyBlobs.set(url, entry)
+}
+
+// --- освобождение места (tiny) ---
+function ensureSpace(newSize) {
+    while (tinysSize + newSize > MAX_TINY_SIZE && tinyBlobs.size > 0) {
+        const [oldUrl, entry] = tinyBlobs.entries().next().value
+
+        URL.revokeObjectURL(entry.blobUrl)
+
+        tinysSize -= entry.size
+        tinyBlobs.delete(oldUrl)
     }
+}
 
-    // уже грузится
-    if (loadMap.has(url))
-        return loadMap.get(url)
+// --- ограничение количества больших ---
+function ensureBigLimit() {
+    while (bigBlobs.size >= MAX_BIG_NUM) {
+        const [oldUrl, oldBlob] = bigBlobs.entries().next().value
+        URL.revokeObjectURL(oldBlob)
+        bigBlobs.delete(oldUrl)
+    }
+}
 
-    // новая загрузка
-    if (C.consts.debug > 1)
-        console.log(logName, `читается из BLOB ${url}`)
+// --- загрузка ---
+function loadUrl(url, logErr) {
+    // // tiny cache
+    // if (tinyBlobs.has(url)) {
+    //     touch(url)
+    //     return Promise.resolve(tinyBlobs.get(url).blobUrl)
+    // }
+
+    // // big cache
+    // if (bigBlobs.has(url))
+    //     return Promise.resolve(bigBlobs.get(url))
+
+    // // already loading
+    // if (loadMap.has(url))
+    //     return loadMap.get(url)
 
     const p = fetch(url)
         .then(r => {
@@ -34,18 +66,26 @@ async function ensureLoaded(url, aO7) {
             return r.blob()
         })
         .then(blob => {
-            const urlBlob = URL.createObjectURL(blob)
-            blobCache.set(url, urlBlob)
+            const size = blob.size
+            const blobUrl = URL.createObjectURL(blob)
 
-            aO7.setERROR(false)
-            return urlBlob
+            const isTiny = size <= MAX_TINY_SIZE * MAX_ITEM_RATIO
+
+            if (isTiny) {
+                ensureSpace(size)
+                tinyBlobs.set(url, { blobUrl, size })
+                tinysSize += size
+            } else {
+                ensureBigLimit()
+                bigBlobs.set(url, blobUrl)
+            }
+
+            return blobUrl
         })
         .catch(e => {
-            aO7.setERROR(true)
-            console.error("%c%s", C.consts.fmtErr, logName, `'${aO7.name}': загрузка аудио:`, e.message)
-            if (C.consts.debug)
-            debugger
-    throw e
+            if (logErr && C.consts.debug > 1)
+                console.log(logName, `ошибка загрузки: \n` + e.stack)
+            return Promise.reject(e)
         })
         .finally(() => {
             loadMap.delete(url)
@@ -55,24 +95,46 @@ async function ensureLoaded(url, aO7) {
     return p
 }
 
-export const Urls = Object.freeze({
-    ensureLoaded: ensureLoaded,
-
-    init: function () {
-        // curUrl = null
-    },
-
-    reset: function () {
-
-        loadMap.clear()
-
-        // очистить blob-кэш
-        for (const objUrl of blobCache.values())
-            URL.revokeObjectURL(objUrl)
-
-        blobCache.clear()
-    },
-    prepare: function (c) {
-        C = c
+// --- получить (с ожиданием, если грузится) ---
+function getUrl(url) {
+    // tiny cache
+    if (tinyBlobs.has(url)) {
+        touch(url)
+        return Promise.resolve(tinyBlobs.get(url).blobUrl)
     }
+
+    // big cache
+    if (bigBlobs.has(url))
+        return Promise.resolve(bigBlobs.get(url))
+
+    // already loading
+    if (loadMap.has(url))
+        return loadMap.get(url)
+
+    return Promise.resolve(undefined)
+}
+
+// --- очистка ---
+function reset() {
+    loadMap.clear()
+
+    for (const { blobUrl } of tinyBlobs.values())
+        URL.revokeObjectURL(blobUrl)
+
+    for (const blobUrl of bigBlobs.values())
+        URL.revokeObjectURL(blobUrl)
+
+    tinyBlobs.clear()
+    bigBlobs.clear()
+    tinysSize = 0
+}
+
+// --- экспорт ---
+export const Urls = Object.freeze({
+    oERROR: 'o-error',
+    loadUrl,
+    getUrl,
+    reset,
+    init: () => { },
+    prepare: c => { C = c }
 })

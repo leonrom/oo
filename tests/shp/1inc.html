@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>1inc</title>
+	<link rel="shortcut icon" href="../add/favicon.svg" type="image/x-icon">
+	<!-- <link rel="shortcut icon" href="../add/favicon.svg" type="image/x-icon"> -->
+
+	<link href='./js/all.css' media='screen' rel='stylesheet' />
+	<script type="module"  src='./js/all.js'></script>
+
+    <script type="module" src="http://localhost/oo/o7/index.js" 
+		data-modules=" inc" 
+		data-consts="
+        	html='+ ../tests/shp/html';
+        ">
+    </script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			window.scrollTo(0, 260)
+			let div;
+			for (const m of ['', 'a']) {
+				div = document.getElementById('div3' + m); if (div) div.scrollTo(550, 450)
+				div = document.getElementById('div2' + m); if (div) div.scrollTo(750, 650)
+				div = document.getElementById('div1' + m); if (div) div.scrollTo(950, 750)
+			}
+		})
+	</script>
+</head>
+
+<body id="body" style="height: 1500px;">
+	<div class='example olga-start'>
+		<div class='cboxed'>
+			<div id="i_0shp" o_include='html + /0shp.html?.cboxedinc'></div>
+		</div>
+
+		<pre id="ref0" class="pre-head"><b>Варианты подвисания <i>olga-shp</i></b>
+	</pre>
+		<div class="thetext" style="height: 227px;">
+			<p>
+				Чисто для примера: у <b>shp1</b> - <i>position</i>: static а у <b>shp0</b> - relative -----------------------------------------)
+			</p>
+			<div>
+				<div id="i_all" o_include='html + /all.html?.descript'></div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>2shp</title>
+	<link rel="shortcut icon" href="../add/favicon.svg" type="image/x-icon">
+
+	<link href='./js/all.css' media='screen' rel='stylesheet' />
+	<script type="module" src='./js/all.js'></script>
+
+    <script type="module" src="http://localhost/oo/o7/index.js" 
+		data-modules="shp, inc" 
+		data-consts="
+        	html='+ ../tests/shp/html';
+        ">
+    </script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			window.scrollTo(0, 260)
+			let div;
+			for (const m of ['', 'a']) {
+				div = document.getElementById('div3' + m); if (div) div.scrollTo(550, 450)
+				div = document.getElementById('div2' + m); if (div) div.scrollTo(750, 650)
+				div = document.getElementById('div1' + m); if (div) div.scrollTo(950, 750)
+			}
+		})
+	</script>
+</head>
+
+<body id="body" style="height: 1500px;">
+	<div class='example olga-start'>
+		<div class='cboxed'>
+			<div id="i_all" o_include='html + /0shp.html?.cboxedinc'></div>
+		</div>
+
+		<pre id="ref0" class="pre-head"><b>Варианты подвисания <i>olga-shp</i></b>
+	</pre>
+		<div class="thetext" style="height: 227px;">
+			<p>
+				Демонстрация вариантов взаимодействия объектов <b>shp1</b> и <b>shp0</b> . 
+				По умолчанию 1 прилипает к 0, а 0 - сдвигает 1 (это м.б. изменено).
+				<br>
+				При этом изменять:
+			</p>
+			<ul>
+				<li>направление скроллинга (по умолчанию: вверху - прилипание, внизу - сдвиг) </li>
+				<li>способ сдвига другого (подвисшего) объекта - '<b>O</b>, '<b>P</b>, '<b>C</b>, '<b>S</b>'</li>
+				<li>значения приоритетов объектов</li>
+				<li>автовозврат после сдвига</li>
+			</ul>
+			<p>
+				Чисто для примера: у <b>shp1</b> - <i>position</i>: static а у <b>shp0</b> - relative)
+			</p>
+			<div>
+				<div id="i_all" o_include='html + /all.html?.descript'></div>
+			</div>
+		</div>
+
+		<div id="div1" class="div" style="top:11px;left: 22px;">
+			<span>div1</span>
+			<div id="cbo1" class="cbo" style="background-size: 25px 25px; width: 3300px; height: 2200px;">
+
+				<div id="div2" class="div" style="left:1000px; top:800px;">
+					<span>div2</span>
+					<div id="cbo2" class="cbo">
+
+						<div id="div3" class="div" style="left:800px; top:700px;">
+							<span>div3</span>
+							<div id="cbo3" class="cbo"
+								style="background-size: 15px 15px; width: 1900px; height: 1300px; ">
+
+								<div id="shpX" class="moved olga-shp:n o-none"
+									style="left:600px; top:520px; height: 50px; width: 55px;">
+									<p><br>контроль</p>
+								</div>
+
+								<div id="div4" class="div" style="top: 440px; left: 700px;">
+                                    <span>div4</span>
+									<div id="shp0" class="moved olga-shp:TrLb-1A:i=div3/f,div4/c"
+										style="left:30px; top:40px;">
+										<p>название объекта</p>
+									</div>
+									<div id="shp1 (static)" class="moved olga-shp:TL:i=div4/c,div3,div2/f"
+										style="position: static;
+										transform: translate(130px, 70px);">
+										<p>название объекта</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="div2a" class="div" style="left:1030px; top:1460px;">
+				<span>div2a</span>
+				<div id="cbo2a" class="cbo">
+					<div id="div3a" class="div" style="left:800px; top:700px;">
+						<span>div3a</span>
+						<div id="cbo3a" class="cbo" style="background-size: 15px 15px; width: 1900px; height: 1300px; ">
+
+							<div id="shp9" class="moved olga-shp:TrLb:i=div3a/fc,div2a/f"
+								style="left:750px; top:500px;">
+								<p>название объекта</p>
+							</div>
+
+							<!-- <div id="shp2" class="moved olga-shp:TrLb:1:i=div3/fc" style="left:900px; top:660px;">
+								<p>название объекта</p>
+							</div>
+							<div id="shp3" class="moved olga-shp:TrLb2A:i=div3/fc" style="left:700px; top:700px; height: 60px;">
+								<p>название объекта</p>
+							</div>
+							<div id="shp4" class="moved olga-shp:TrLb:3:i=div3/fc" style="left:950px; top:860px;">
+								<p>название объекта</p>
+							</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

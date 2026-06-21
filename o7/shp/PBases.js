@@ -4,7 +4,8 @@
 /*jshint esversion: 6 */
 //!
 
-import { C } from '../index.js'
+let C;
+// import { C } from '../index.js'
 import { PO5shp } from './PO5shp.js'
 
 const
@@ -80,6 +81,10 @@ const
 export class PBases {
     static #pbases = new Map()
     static #idn = 0
+    static prepare (c) {
+            C = c
+        }
+
     tagCuts = new Set()
     aAll = []
 
@@ -115,7 +120,7 @@ export class PBases {
         R: (a1, a2) => (a2.posO.left + a2.posO.width) - (a1.posO.left + a1.posO.width),
         B: (a1, a2) => (a2.posO.top + a2.posO.height) - (a1.posO.top + a1.posO.height),
     }
-    ReorderAOs() {
+    ReorderAO5s() {
         for (const aO7 of this.aAll) {
             const p = aO7.shdw.getBoundingClientRect()
             Object.assign(aO7.posO, { top: p.top, left: p.left, height: p.height, width: p.width, right: p.right, bottom: p.bottom })

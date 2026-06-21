@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>s1</title>
+	<link rel="shortcut icon" href="./add/favicon.svg" type="image/x-icon">
+
+	<script type="module" src="http://localhost/oo/o7/index.js"
+	 	data-modules="snd" 
+	 	data-consts="
+        	moe-p='12s 3',
+        	back_time= 0.6с, 
+			media =  + ../media;
+			моя_папка = media + /audio;
+			ау_длинный =моя_папка + /Clouds.mp3;
+			ау_средний=моя_папка+/Ceza1-25.mp3;
+			ау_короткий=моя_папка+/yapma.mp3;
+        ">
+		</script>
+	<link href='./all.css' rel='stylesheet' />
+</head>
+
+<body style="margin: 0 0.1em 0 0.3em;">
+	<div class='example olga5_Start'>
+
+		<h4>Примеры подключения тегов с классом <b>olga-snd</b></h4>
+		<div class="infa">
+			<p>
+				Начало звучания определяется опциями:
+			</p>
+			<ul>
+				<li><b>C</b> - <i>клик</i>,- (умолчание) звучит после клика по тегу;</li>
+				<li><b>A</b> - <i>всюду</i>,- звучит после наведения курсора на тег;</li>
+				<li><b>O</b> - <i>сверху</i>,- как <b>A</b>, но прекращает звучать после ухода курсора;</li>
+			</ul>
+			<p>
+				Звучание по наведению на тег (опции <b>O</b> или <b>A</b>) начинается только если нет
+				звучания иного тега.
+			</p>
+			<p>
+				Остановка звучания - кликом по странице, а при опции <b>O</b> - также и уводом курсора со "звучащего"
+				тега.
+				Если клик был именно по "звучащему" тегу и после остановки звучания
+				курсор оставался над тегом, то следующий клик по этому тегу взобновит звучание с прерванного места.
+			</p>
+			<p>
+				Также остановка звучания при покидании (курсором) текущей страницы
+			</p>
+			<p>
+				В двойных кавычках показано (продублировано) написание класса для тега.
+				Названия файлов заданы условными именами идентифицирующими их продолжительность.
+				На теге или рядом с ним в квадратных скобках написаны включенные
+				опции звучания.
+				В примерах показаны варианты использования дополнительных разделителей '<b>:</b>'.
+			</p>
+			<p>
+				Дополнительные опции:
+			</p>
+			<ul>
+				<li><b>L</b> - <i>цикл</i>,- зацикленное непрерывное звучание; </li>
+				<li><b>S</b> - изображает "сияние" вокруг тега при звучании; </li>
+				<li><b>W</b> - изображает "покачивание" тега при звучании; </li>
+			</ul>
+		</div>
+		<div class="teSe olga-snd::ау_длинный cp" id="i1">
+			<b>i1</b>: Это "olga-snd::ау_длинный", содержит вложенные теги.
+			Срабатывают [<i>по клику</i>], т.к. не указано ни '<b>O</b>', ни '<b>A</b>'.
+			<br />
+			<p class="teSe olga-snd:L:ау_короткий cp" id="i2"><b>i2</b>: [<i>цикл</i>]
+				"olga-snd:L:ау_короткий"
+			</p>
+			<p class="teSe olga-snd:SL:ау_средний cp" id="i3"><b>i3</b>:
+				"olga-snd:SL:ау_средний" (с "сиянием")
+			</p>
+		</div>
+		<p>
+			<b>i4</b> иконка [<i>покачивание</i>, <i>сохраняется</i>] :
+			<img class="olga-snd:WA:ау_длинный" title="img01" id="i4" loop
+				src="../../media/image/snd.icons/myMusikIT.png" />
+			- "olga-snd:<b>WA</b>:ау_длинный"
+		</p>
+		<p>
+			Следующие 3 начнут звучать после наведения курсора (если прежде был '<i>клик</i>')
+		</p>
+		<p class="teSe olga-snd:OL:ау_длинный" id="i5"><b>i5</b>: [<i>по наведению</i>, <i>зациклено</i>]
+			"olga-snd:<b>OL</b>:ау_длинный"
+		</p>
+		<p class="teSe olga-snd:A:ау_средний" id="i6"><b>i6</b>: [<i>по наведению-сохраняется</i>]
+			"olga-snd:<b>A</b>:ау_средний"
+		</p>
+		<p>
+			Сравните здесь "поведение" при переводе курсора с <b>i5</b> на <b>i6</b> и наоборот,- с <b>i6</b> на
+			<b>i5</b>.
+		</p>
+
+
+		<h4>Примеры подключения аудио-файла в теге &lt;<b>audio</b>&gt;</h4>
+		<p>
+			Первый тег имеет стандартное задание <b>url</b>'а через "<i>src='https://archive....</i>".
+			В остальных - "ленивое" задание адреса, а реальное будет определяться
+			(согласно атрибуту '<b>data-consts</b>' в &lt;<b>script</b>&gt )
+			и подставляться только после наведения курсора.
+		</p>
+
+		<div><b>s1</b>: <audio id="s1" src="https://archive.org/download/clouds_20200310/Clouds.mp3"
+				controls="controls"></audio>
+			<br />Обычная ссылка на файл (не будет работать если задать &lt;<b>base</b>&gt;):<br />
+			<pre>
+&lt;audio controls
+    <b>src</b>="https://archive.org/download/clouds_20200310/Clouds.mp3"
+&lt;/audio&gt;</pre>
+		</div>
+		<div><b>s1s</b>:
+			<audio id="s1s" controls>
+				<source src="https://archive.org/download/clouds_20200310/Clouds.mp3" type="audio/mpeg">
+			</audio>
+			<p>Ссылка с &lt;<b>source</b>&gt; на файл (будет работать и с &lt;<b>base</b>&gt;):
+			</p>
+			<pre>
+&lt;audio controls&gt;
+    &lt;source
+        <b>src</b>="https://archive.org/download/clouds_20200310/Clouds.mp3"
+        type="audio/mpeg"
+    &gt;
+&lt;/audio&gt;</pre>
+		</div>
+		<div>
+			<b>s2</b>: <audio id="s2" _src="https://archive.org/download/clouds_20200310/Clouds.mp3"
+				controls="controls"></audio>
+			<p>
+				Как '<b>s1</b>', но с <b>_src</b> (вместо <b>src</b>):<br />
+			</p>
+			<span>_src="https://archive.org/download/clouds_20200310/Clouds.mp3"</span>
+		</div>
+		<div><b>s2s</b>:
+			<audio id="s2s" controls>
+				<source _src="https://archive.org/download/clouds_20200310/Clouds.mp3" type="audio/mpeg">
+			</audio>
+			<p>
+				Как '<b>s1s</b>', но с <b>_src</b> (вместо <b>src</b>):<br />
+			</p>
+		</div>
+		<div>
+			<b>s3</b>: <audio id="s3" _src="ау_короткий" controls></audio>
+			<p>
+				Как '<b>2</b>', но с символической ссылкой в <b>_src</b>:<br />
+			</p>
+			<span>_src="ау_короткий"</span>
+		</div>
+		<div>
+			<b>s4</b>: <audio id="s4" data-src=моя_папка+gitme.mp3 controls></audio>
+			<p>
+				Как '<b>3</b>', но с <b>data-src</b> вместо <b>_src</b> (и без слэша и кавычек у ссылки):<br />
+			</p>
+			<span>data-src=моя_папка+gitme.mp3 </span>
+		</div>
+		<div>
+			<b>s5</b>:
+			<audio id="s1s" controls data-src=моя_папка+gitme.mp3 class="olga-snd::моя_папка+/Ceza1-25.mp3">
+				<source src="https://archive.org/download/clouds_20200310/Clouds.mp3" type="audio/mpeg">
+			</audio>
+			<p>Пример включает 3 варианта (в т.ч. &lt;source&gt;) задания аудио :<br />
+			</p>
+			<span>data-src=моя_папка+gitme.mp3 class="olga-snd::моя_папка+/Ceza1-25.mp3"</span>
+		</div>
+	</div>
+</body>
+
+</html>

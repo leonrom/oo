@@ -48,12 +48,12 @@
 
     <script>
         // document.addEventListener('DOMContentLoaded', () => {
-        window.addEventListener('o_isInited', () => {
+        window.addEventListener('o-inited', () => {
             const div = document.getElementById("shp-demo")
             if (div) {
                 const top = div.offsetTop
                 window.scrollTo(0, top)
-                div.addEventListener('o_isInited', () => {
+                div.addEventListener('o-inited', () => {
                     window.scrollTo(0, 260)
                     let div;
                     div = document.getElementById('shp1'); if (div) div.scrollTo(150, 100)
@@ -1092,8 +1092,8 @@
 
 				<h4 id='head_44'>4.4. Отключение скрипта</h4>
 				<p>
-					Для отключений зависания тегов любой один из содержащих его контейнеров должен иметь класс
-					<b>o-none</b>. Его действие в чём-то подобно использованию квалификатора :<b>None</b>.
+					Для отключений зависания тег квалификатор его класса должен содержать символ
+					'<b>#</b>'. Его действие в чём-то подобно использованию квалификатора :<b>None</b>.
 				</p>
 				<p>
 					Использование такого отключения м.б. целесообразным при включении <b>html</b>-фрагмента, содержащего

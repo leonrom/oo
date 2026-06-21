@@ -3,15 +3,12 @@
 /*jshint asi:true  */
 /*jshint esversion: 6*/
 
-
-import { C } from '../index.js'
-// import { page } from '../com/Page.js'
-
-const clsEmpty = '_empty'
+let C;
 
 const
 	// const phases = ['NONE', 'CAPTURING_PHASE', 'AT_TARGET', 'BUBBLING_PHASE',]
-	state = { target: '_self', resize: true, scrollX: 0, scrollY: -18, }, // blockclick: false, timclick: 0 },
+	state = { target: '_self', resize: true, scrollX: 0, scrollY: -18, }, // blockclick: false, timclick: 0 },	
+	clasn = 'olga-' + W.modul,
 	Target = e => {
 		const t = e.target.closest('li')
 		return t && t.o_menus ? t : null
@@ -84,7 +81,7 @@ const
 			let ul = document.createElement("ul")
 
 			ul.id = id
-			ul.className = W.clasn
+			ul.className = clasn
 			if (item0.right) ul.style.right = item0.right
 			else if (item0.left) {
 				ul.style.left = item0.left
@@ -122,8 +119,8 @@ const
 			// C.page.InsertBefore(owner, ul, owner.firstChild)
 
 			// C.E.AddEventListener(ul, 'mousedown', DoMnu, true)
-			C.E.AddEventListener(ul, 'click', DoMnu, true)
-			C.E.AddEventListener(window, 'click', Clear)
+			ul.addEventListener( 'click', DoMnu, true)
+			windowa.ddEventListener( 'click', Clear)
 
 			uls[0] = ul
 			const blc = (item0.block || 's')[0].toLowerCase(),
@@ -215,8 +212,9 @@ const
 
 export const W = {
 	needs: { o_menudef: 'o_menudef', },
+	modul: 'mnu',
 	makeCss: () => `
-		.${W.clasn} {
+		.${clasn} {
 		    margin: 0 !important;
 		    padding: 0 !important;
 		    font-size: small;
@@ -228,16 +226,16 @@ export const W = {
 		    position: unset; /* будут присвоено ниже */
 		    display: initial; 
 		}
-		.${W.clasn}.Left {left: 1px; right:''}
+		.${clasn}.Left {left: 1px; right:''}
 
-		.${W.clasn} ul {
+		.${clasn} ul {
 		    margin: 0;
 		    padding: 0;
 		    border-radius: 2px;
 		    display: grid;    /* иначе переносит строки последующего пункта при открытии подменю */
 		}
 
-		.${W.clasn} li {
+		.${clasn} li {
 		    display: block;
 		    color: white;
 		    background: gray;
@@ -255,7 +253,7 @@ export const W = {
 		    padding-bottom: 0 !important;
 		}
 
-		.${W.clasn} li>ul {
+		.${clasn} li>ul {
 		    position: absolute;
 		    top: unset;
 		    display: none;
@@ -265,9 +263,9 @@ export const W = {
 		    outline: 1px solid white;
 		    float: right;
 		}
-		.${W.clasn}.Left li>ul {float: left;}
+		.${clasn}.Left li>ul {float: left;}
 
-		.${W.clasn}>li {
+		.${clasn}>li {
 		    background-color: white;
 		    border: none;
 		    border-radius: 8px;
@@ -278,31 +276,31 @@ export const W = {
 			// text-align: -moz-left;
 		}
 
-		.${W.clasn}.Left>li {
+		.${clasn}.Left>li {
 		    text-align: left;
 			text-align: -webkit-left;
 			text-align: -moz-left;
 		}
 
-		.${W.clasn}>li>ul {
+		.${clasn}>li>ul {
 		    outline: 1px solid bisque;
 		    top: 0.5em;
 		    position: relative;
 		    right: 0.1em;
 		}
 
-		.${W.clasn}>li>ul {left: 0.1em;}
-		.${W.clasn}>li>ul>li>ul { right: 3.1em; margin-top: -4px;}
-		.${W.clasn}>li>ul>li>ul>li>ul { right: 6.1em; margin-top: -3px;}
-		.${W.clasn}>li>ul>li>ul>li>ul>li>ul { right: 9.1em; margin-top: -3px;}
-		.${W.clasn}>li>ul>li>ul>li>ul>li>ul>li>ul { right: 12.1em; margin-top: -3px;}
-		.${W.clasn}.Left>li>ul {left: 0.1em;}
-		.${W.clasn}.Left>li>ul>li>ul { left: 3.1em; margin-top: -4px;}
-		.${W.clasn}.Left>li>ul>li>ul>li>ul {left: 6.1em; margin-top: -3px;}
-		.${W.clasn}.Left>li>ul>li>ul>li>ul>li>ul {left: 9.1em; margin-top: -3px;}
-		.${W.clasn}.Left>li>ul>li>ul>li>ul>li>ul>li>ul {left: 12.1em; margin-top: -3px;}
+		.${clasn}>li>ul {left: 0.1em;}
+		.${clasn}>li>ul>li>ul { right: 3.1em; margin-top: -4px;}
+		.${clasn}>li>ul>li>ul>li>ul { right: 6.1em; margin-top: -3px;}
+		.${clasn}>li>ul>li>ul>li>ul>li>ul { right: 9.1em; margin-top: -3px;}
+		.${clasn}>li>ul>li>ul>li>ul>li>ul>li>ul { right: 12.1em; margin-top: -3px;}
+		.${clasn}.Left>li>ul {left: 0.1em;}
+		.${clasn}.Left>li>ul>li>ul { left: 3.1em; margin-top: -4px;}
+		.${clasn}.Left>li>ul>li>ul>li>ul {left: 6.1em; margin-top: -3px;}
+		.${clasn}.Left>li>ul>li>ul>li>ul>li>ul {left: 9.1em; margin-top: -3px;}
+		.${clasn}.Left>li>ul>li>ul>li>ul>li>ul>li>ul {left: 12.1em; margin-top: -3px;}
 
-		.${W.clasn} li>span {
+		.${clasn} li>span {
 		    display: flex;
 		    padding-left: 6px;
 		    height: 100%;
@@ -312,7 +310,7 @@ export const W = {
 		    overflow: hidden;
 		}
 
-		.${W.clasn}>li>span {
+		.${clasn}>li>span {
 		    border: 1px solid darkgray;
 		    border-radius: 8px;
 		    color: black;
@@ -324,29 +322,29 @@ export const W = {
 			width: fit-content;
 		}
 
-		.${W.clasn} li:hover {
+		.${clasn} li:hover {
 		    color: black;
 		    background-color: lavender;
 		}
 
-		.${W.clasn}>li:hover {
+		.${clasn}>li:hover {
 		    background: transparent;
 		    height: 3em;
 		}
 
-		.${W.clasn}>li:hover>span {
+		.${clasn}>li:hover>span {
 		    color: white;
 		    background: gray;
 		    border: 0.01em solid lightseagreen;
 		    padding-bottom: 4px;
 		}
 
-		.${W.clasn} li:hover>ul,
-		.${W.clasn} li>ul:hover {
+		.${clasn} li:hover>ul,
+		.${clasn} li>ul:hover {
 		    display: block;
 		}
 
-		.${W.clasn} li:active>ul {    /* для корректного "гашения" - д.б. ПОСЛЕДНИМ ! */
+		.${clasn} li:active>ul {    /* для корректного "гашения" - д.б. ПОСЛЕДНИМ ! */
 		    display: none;
 		}
 		.main-outer {
@@ -354,12 +352,13 @@ export const W = {
 		    border: 1px solid navajowhite;
 		}
 
-		.${W.clasn}.${W.clsEmpty} {
+		.${clasn}.${W.clsEmpty} {
 		    height: 2px ! important;
 		    background-color: aqua ! important;
 		}
 	`,
-	prepare: () => {
+	prepare: (c) => {
+		C = c
 		C.ConsoleInfo(`Mnu prepare: ${C.consts.nomnu ? 'отключено (по nomnu)' : 'включено'} `)
 	},
 	init: () => {
@@ -388,7 +387,7 @@ export const W = {
 
 		_clear()
 
-		window.dispatchEvent(new CustomEvent(C.E.o_done, { detail: { modul: W.modul, act: 'done' } }))
+		window.dispatchEvent(new CustomEvent(C.E.o_done, { detail: { module: W.modul, err: errs } }))
 	},
 	// ----------------------------
 	reset: () => {

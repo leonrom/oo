@@ -1,70 +1,71 @@
 /**
  * Pick.js
- * обработка событий мышина тегах
+ * модуля snd
+ * обработка событий мыши на тегах
  * 
  * ловит события мыши на аудиотегах и вызывает их обработка в соотв. aO7
  */
 
+import { Play } from './Play.js'
+
 const
     logName = 'snd.Pick: ',
     teves = Object.freeze({
-        pointerover: 'enter',
-        pointerout: 'leave',
-        focusout: 'leave',
-        focusin: 'enter',
-        click: 'click',
+        pointerover: 'E',  // 'enter',
+        pointerout: 'L',  // 'leave',
+        focusout: 'L',  // 'leave',
+        focusin: 'E',  // 'enter',
+        click: 'C',  // 'click',
     })
 
-let prevO7, C, clasn;
+
+let C, clasn, firstClick;       // prevO7, 
+
+function onLeavePage(e) {
+    const actO7 = Play.actO7()
+    if (actO7?.isOlgaSnd) {
+        if (C.consts.debug)
+            console.log(`прекращение звучания по событию '${e.type}'`)
+
+        Play.stopSound(true)
+    }
+}
 
 function handler(e) {
-    const tag = e.target, teve = teves[e.type]
-    if (!teve) return
+    const
+        aO7 = e.target.aO7snd_ref,
+        teve = teves[e.type]
 
-    const aO7 = tag.aO7snd || tag.aO7snd_ref  // в таком порядке
-    // elsnd = tag.closest(`.${clasn}`),
-    // aO7 = elsnd?.aO7snd 
-
-    // игнорируем перемещения внутри одного контейнера
-    if (e.relatedTarget) {
-        const 
-            rel = e.relatedTarget,
-            rO7 = rel.aO7snd || rel.aO7snd_ref
-        if (rO7 === aO7)
-            return
+    if (teve === 'C') {
+        // console.log("%c%s", C.consts.fmtErr, `==========================================================`)
+        const byClick = aO7?.byClick()
+        if (byClick) aO7.onClick(e)
+        else {
+            const oO7 = Play.stopSound(!!aO7)
+            if (aO7 && aO7 !== oO7)
+                aO7.onEnter(e, 'byClick')  // вместо 'byClick' можно просто: true
+        }
+        // if (prevO7)
+        //     prevO7.onClick()
+        firstClick = true
     }
+    else
+        if (aO7 && (teve === 'E' || teve === 'L')) {
+            const rO7 = e.relatedTarget?.aO7snd_ref // relatedTarget показывает откуда пришёл курсор или куда ушёл курсор
+            if (rO7 === aO7)             //  игнорирую перемещения внутри одного контейнера
+                return
 
-    if (aO7 && C.consts.debug > 2) {
-        const name = C.getObjName(tag)
-        console.log(logName, ` ${e.type.padEnd(12)} на '${name}':  '${aO7 ? aO7.name : '?'}'   prevO7='${prevO7 ? prevO7.name : '?'}'`)
-    }
-
-    if (teve === 'click') {
-        Pick.firstClick.was = true
-        if (aO7 && !aO7.isAUDIO)    // для <audio> будет проверяться не 'click', а 'play'
-            aO7.onClick(e)
-    }
-    else        //   (teve === 'leave' || teve === 'enter') 
-        if (prevO7 !== aO7) {
-            if (prevO7)    // && tag.aO7snd_ref !== prevO7)
-                if (!prevO7.isAUDIO)
-                    prevO7.onLeave()
-
-            if (aO7)
-                if (teve === 'enter')
-                    aO7.onEnter(e)
-                else
-                    if (!aO7.isAUDIO)
-                        aO7.onLeave(e)
+            if (teve === 'E') aO7.onEnter(e)
+            else aO7.onLeave(e)
         }
 
-    prevO7 = aO7
+    // prevO7 = aO7
 }
 
 export const Pick = Object.freeze({
-    firstClick: { was: false },
+    firstClick: () => firstClick,
     init: function () {
-        this.firstClick.was = false
+        firstClick = false
     },
     prepare: function (c, clsn) {
         C = c
@@ -72,5 +73,17 @@ export const Pick = Object.freeze({
         // for (const eve in teves)  -- теоретически может зацепить prototype.
         for (const eve of Object.keys(teves))
             document.addEventListener(eve, handler)
+
+        document.addEventListener('visibilitychange', e => {
+            if (document.hidden)
+                onLeavePage(e)
+        })
+        document.addEventListener('mouseout', e => {
+            if (!e.relatedTarget && !e.toElement) {
+                onLeavePage(e)
+            }
+        })
+        window.addEventListener('o-stopSound', onLeavePage)
+
     },
 })

@@ -9,9 +9,7 @@
  * @param {C} мутируемый объект
  */
 
-import { C } from '../index.js'
-
-export function CConsts() {
+export function CConsts(C) {
     C.tryToDigit = x => {
         if (!C.isDefined(x)) return 1
         const
@@ -43,7 +41,7 @@ export function CConsts() {
     C.addToConsts = (str, consts) => {
         const pars = C.splitStr(str)
         for (const par of pars) {
-            const m = par.match(/^([^:=\s]+)\s*[:=]\s*(.+)$/)
+            const m = par.match (/^([^:=\s]+)\s*[:=]\s*(.+)$/)
             if (m) {
                 let [, key, val] = m
                 C.addConst(key, val, consts)
@@ -61,7 +59,7 @@ export function CConsts() {
 
     C.decodeUrl = (str, name) => {
         if (!str || !str.replace) {
-            console.error(`str="${str}" не поддерживает replace`)
+            console.error(`Для name='${name?name:'?'}' str="${str}" не поддерживает replace`)
             debugger
         }
         const

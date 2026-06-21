@@ -137,10 +137,10 @@ export function Pos(c) {
 	div.aOmpos = new Mpos(div)
 	mposPos = div.aOmpos
 
-	C.E.AddEventListener(window, 'resize', SetVP)
-	C.E.AddEventListener(document, 'mouselive', StopMoveAct)
-	C.E.AddEventListener(document, 'mouseup', StopMoveAct)
-	C.E.AddEventListener(document, 'mousemove', MyMouseMove)
+	window.addEventListener( 'resize', SetVP)
+	document.addEventListener( 'mouselive', StopMoveAct)
+	document.addEventListener( 'mouseup', StopMoveAct)
+	document.addEventListener( 'mousemove', MyMouseMove)
 
 	SetVP()
 	ShowPos()

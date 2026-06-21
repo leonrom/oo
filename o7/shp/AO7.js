@@ -3,155 +3,10 @@
 /*jshint strict:true  */
 /*jshint esversion: 6 */
 
-import { C } from '../index.js'
-
+import { AOcls } from './AOcls.js'
+let C;
 const
-    DblClick = e => {
-        if (e.currentTarget !== e.target && e.target.ondblclick) {
-            console.log("%c%s", C.consts.fmtErr, C.getObjName(e.target), ` - тег имеет свой dblclick-обработчик — пропускаем`)
-            return
-        }
-
-        const aO7 = e.currentTarget.aO7shp  // т.е. расфиксирую всё
-        aO7.DoFix()
-
-        e.stopImmediatePropagation()
-
-        if (C.consts.debug > 0)
-            console.log("%c%s", C.consts.fmtOK, `расфиксация '${aO7.cnst.id}' по событию '${e.type}'`)
-    },
-    IsOnlyTranslate = nst => {
-        const t = nst.transform;
-        if (!t || t === 'none') {
-            return { x: 0, y: 0 };
-        }
-        // --- 2D ---
-        const eps = 1e-6,
-            m2 = t.match(/^matrix\(([^)]+)\)$/)
-        if (m2) {
-            const v = m2[1].split(',').map(Number)
-                /*    matrix2d:
-                  [ 1  0  ]
-                  [ 0  1  ]
-                   tx ty 
-                */  if (
-                Math.abs(v[0] - 1) < eps &&
-                Math.abs(v[1]) < eps &&
-                Math.abs(v[2]) < eps &&
-                Math.abs(v[3] - 1) < eps
-            )
-                return { x: v[4], y: v[5] }
-        }
-        else {
-            // --- 3D ---
-            const m3 = t.match(/^matrix3d\(([^)]+)\)$/)
-            if (m3) {
-                const v = m3[1].split(',').map(Number)
-                /*    matrix3d:
-                  [ 1  0  0  0 ]
-                  [ 0  1  0  0 ]
-                  [ 0  0  1  0 ]
-                  [ tx ty tz 1 ]
-                */
-                if (
-                    Math.abs(v[0] - 1) < eps &&
-                    Math.abs(v[1]) < eps &&
-                    Math.abs(v[2]) < eps &&
-                    Math.abs(v[3]) < eps &&
-
-                    Math.abs(v[4]) < eps &&
-                    Math.abs(v[5] - 1) < eps &&
-                    Math.abs(v[6]) < eps &&
-                    Math.abs(v[7]) < eps &&
-
-                    Math.abs(v[8]) < eps &&
-                    Math.abs(v[9]) < eps &&
-                    Math.abs(v[10] - 1) < eps &&
-                    Math.abs(v[11]) < eps &&
-
-                    Math.abs(v[15] - 1) < eps
-                )
-                    return { x: v[12], y: v[13] }
-            }
-        }
-    },
-    Init = aO7 => {
-        const shp = aO7.cnst.shp,
-            nst = window.getComputedStyle(shp),
-            t = IsOnlyTranslate(nst),
-            z = nst.zoom
-
-        aO7.act.inited = true
-
-        if (!t || !(z === "normal" || Number(z) === 1)) {
-            const
-                err = !t ? `'transform'` : `'zoom'`,
-                add = !t ? `(кроме "translation")` : `(кроме "zoom = 1")`
-            C.displayLogMsg(aO7.name, ` - теги с ` + err + ` НЕ обрабатываются`, 1, 0, add)
-            console.log(`DoFix ${aO7.name}: расфиксировалось (навсегда)`)
-            aO7.act.observer.unobserve(shp)
-            aO7.act.ready = false
-            return true
-        }
-
-        Object.assign(aO7.transform, t)
-
-        Object.assign(aO7.origin, {
-            display: nst.display,
-            overflowX: nst.overflowX,
-            overflowY: nst.overflowY,
-        })
-        Object.assign(aO7.margin, {
-            margin: nst.margin,
-            marginTop: nst.marginTop,
-            marginLeft: nst.marginLeft,
-            marginRight: nst.marginRight,
-            marginBottom: nst.marginBottom,
-        })
-        Object.assign(aO7.outline, {
-            outlineWidth: nst.outlineWidth,
-            outlineStyle: nst.outlineStyle,
-            outlineColor: nst.outlineColor,
-            outlineOffset: nst.outlineOffset,
-        })
-
-        const a = shp.style
-        Object.assign(aO7.astyle, {
-            top: a.top,
-            left: a.left,
-            width: a.width,
-            height: a.height,
-            margin: a.margin,
-            border: a.border,
-            outline: a.outline,
-            position: a.position,
-            overflowX: a.overflowX,
-            overflowY: a.overflowY,
-            boxSizing: a.boxSizing,
-        })
-    },
-    ClearClone = clon => {
-        const EVENTS = [
-            'onclick', 'ondblclick',
-            'onmousedown', 'onmouseup',
-            'onmousemove', 'onmouseover', 'onmouseout',
-            'onkeydown', 'onkeyup', 'onkeypress',
-            'onchange', 'oninput', 'onsubmit',
-            'onfocus', 'onblur',
-            'oncontextmenu'
-        ],
-            all = [clon, ...clon.querySelectorAll('*')];
-
-        for (const el of all) {
-            for (const ev of EVENTS)
-                el.removeAttribute(ev)
-
-            if (el.id) {
-                el.dataset.origId = el.id
-                el.id = ''
-            }
-        }
-    },
+    p_ref = 'aO7shp',
     RecalcIndex = (pBases, dIndex) => {
         for (const pBase of pBases) {
             pBase.bChgs.zIndex += dIndex
@@ -176,9 +31,16 @@ const
 
 export class AO7 {
     static #nom = 0
+    static observer= null
+    
+    static prepare (c) {
+        C = c
+        AOcls.prepare (c)
+    }
 
     #state = Object.seal({ transition: '', scrollLeft: 0, scrollTop: 0, active: false, })
     name = ''       // вначале, чтобы было лучше "видно"
+    tobased = false // отметска об обработке createO7 
 
     transform = Object.seal({ x: 0, y: 0, })
     attachss = MakeT(() => [])  // список: которые зафиксированы на этом
@@ -202,27 +64,30 @@ export class AO7 {
     posC = Object.seal({ top: 0, left: 0, height: 0, width: 0, })
     posO = Object.seal({ top: 0, left: 0, height: 0, width: 0, right: 0, bottom: 0 })
 
-    act = Object.seal({ isfix: false, ready: false, inited: false, observer: null, })
+    act = Object.seal({ isfix: false, ready: false, inited: false,  })
 
-    constructor(shp, quals) {
-        shp.aO7shp = this
-        this.name = C.getObjName(shp)
-        this.shdw = shp
+    constructor(tag, atr) {
+        this.name = C.getObjName(tag)
+        this.shdw = tag
 
         Object.assign(this, {
             cnst: Object.freeze({
-                parent: shp.parentElement,   // запоминаю исходное
+                parent: tag.parentElement,   // запоминаю исходное
                 nom: AO7.#nom++,
-                id: shp.id,
-                shp: shp,
+                id: tag.id,
+                shp: tag,
+                tag: tag,   // да-да, тут дублирование
             }),
             cls: Object.seal({
-                quals: quals,               // меняю в тестах для ReadAttrs         
+                ori: atr.ori,       // запоминаю для activateAO7
+                quals: atr.quals,               // меняю в тестах для ReadAttrs         
                 puts: MakeT(false),             // инициализация puts будет в ReadCls(this, ss) 
-                zIndex: shp.style.zIndex,   // для PitchBy 
+                zIndex: tag.style.zIndex,   // для PitchBy 
                 level: 0, pitch: 0, nofx: 0, alive: 0,
             }),
         })
+        AOcls.ReadCls(this, this.cls.quals)
+
         for (const m of 'TLRB') {
             this.aO7s[m] = Object.freeze(new Set())
             this.fixs[m] = Object.seal({ xO5: null, isP: '' })
@@ -230,7 +95,13 @@ export class AO7 {
         Object.freeze(this.aO7s)
         Object.freeze(this.fixs)
 
+        tag[p_ref] = this
+        C.propagate(tag, this, p_ref, tag[p_ref + C.p_ref] ?? null)
         Object.seal(this)
+
+    }
+    erase() {
+        C.propagate(this.tag, null, p_ref, tag[p_ref + C.p_ref] ?? null)
     }
     IsP(x, isP) {
         const fix = this.fixs[x]
@@ -304,7 +175,7 @@ export class AO7 {
             nom = this.cnst.nom,
             clon = this.clon = shp.cloneNode(true)
 
-        ClearClone(clon)
+        AOcls.ClearClone(clon)
 
         clon.id = `${nom}.clon_${shp.id || ''}`
         clon.classList.add('o-shpClon')
@@ -334,7 +205,7 @@ export class AO7 {
 
         requestAnimationFrame(() => {
 
-				clon.setAttribute(C.myInclude, '1')
+            clon.setAttribute(C.myInclude, '1')
             shp.parentNode.insertBefore(clon, shp)
             clon.style.display = this.origin.display
 
@@ -342,10 +213,8 @@ export class AO7 {
             cart.appendChild(shp)
 
             Object.assign(shp.style, styleInChart)
-
-            shp.addEventListener('dblclick', DblClick, true)
-            this.act.observer.unobserve(shp)
-            this.act.observer.observe(clon)
+            AO7.observer.unobserve(shp)
+            AO7.observer.observe(clon)
 
             this.shdw = clon
         })
@@ -362,15 +231,14 @@ export class AO7 {
 
             this.clon.style.display = 'none'
 
-				shp.setAttribute(C.myInclude, '1')
+            shp.setAttribute(C.myInclude, '1')
             this.cnst.parent.insertBefore(shp, this.clon)
             this.clon.remove()
             this.cart.remove()
             this.shdw = shp
 
-            shp.removeEventListener('dblclick', DblClick, true)
-            this.act.observer.unobserve(this.clon)
-            this.act.observer.observe(shp)
+            AO7.observer.unobserve(this.clon)
+            AO7.observer.observe(shp)
         })
     }
     DoFix(x, xO5) {
@@ -399,8 +267,8 @@ export class AO7 {
         const dofix = !!(fixs.T.xO5 || fixs.L.xO5 || fixs.R.xO5 || fixs.B.xO5)
         if (act.isfix !== dofix) {
 
-            if (!act.inited&&Init(this))    // ???
-                    return
+            if (!act.inited && AOcls.InitStyle(this))    // ???
+                return
 
             if (C.consts.debug) {
                 const op = x ?
@@ -421,7 +289,7 @@ export class AO7 {
 
             Object.assign(this.hidden, { T: 0, L: 0, R: 0, B: 0 })
         }
-        window.dispatchEvent(new CustomEvent('o_testActFix', { detail: { aO7: this, fix: dofix } }))
+        window.dispatchEvent(new CustomEvent('o-testActFix', { detail: { aO7: this, fix: dofix } }))
     }
 }
 

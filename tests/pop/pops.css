@@ -1,0 +1,11 @@
+li>span  {
+    width: fit-content;
+    height: 95%;
+    min-width: 120px;
+    background-color: cornsilk;
+    border: 1px solid aqua;
+    cursor: pointer;
+    display: inline-block;
+    max-height: max-content;
+    margin-bottom: 6px;
+}

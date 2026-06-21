@@ -3,8 +3,7 @@
 /*jshint esversion: 6*/
 /*eslint no-useless-escape: 0*/
 
-import { C } from '../index.js'
-
+let C;
 const
 	cc_span = 'o-tabSpan',
 	cc_odd = 'o-tabOdd',
@@ -72,8 +71,11 @@ const
 	}
 
 export const W = {
-	needs: {
+	consts: {
 		tabSymbols: '§¶▸▹↢⇔↣ₔᐞ',
+	},
+	prepare: c => {
+		C = c
 	},
 	init: () => {
 		const sel = 'o_table',
@@ -107,7 +109,7 @@ export const W = {
 		// 	console.log('%c%s', C.consts.fmtOK,
 		// 		` инициализация `,
 		// 		`${W.modul}.js`,
-		// 		` ${C.autonom ? ('автономно по ' + e.type) : 'из библиотеки'} `)
+		// 		` ${W.act.autonom ? ('автономно по ' + e.type) : 'из библиотеки'} `)
 
 		for (const tag of tags) {
 			const ss = tag.innerHTML.split(m_line),

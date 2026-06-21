@@ -10,59 +10,44 @@
  */
 
 import { AO7 } from './AO7.js'
+import { Urls } from './Urls.js'
+
 let C;
-const
-    logName = 'snd.TAO7: ',
-    setAudioSrc = aO7 => {
-        if (aO7.srcTags?.length) {
-            let k = 0
-            for (const srcTag of aO7.srcTags) {
-                const
-                    surl = srcTag.aO7snd_ori.url, // C.decodeUrl(srcTag.aO7snd_ori, aO7.name),
-                    url = new URL(surl, document.baseURI).href
-
-                if (srcTag.src !== url) {
-                    srcTag.src = url
-                    k++
-                }
-            }
-            if (k)
-                aO7.audio.load()
-        }
-        else    // основной src учитывается только если небыло <source>
-            if (aO7.tag.src !== aO7.url)
-                aO7.tag.src = aO7.url
-
-        aO7.srcReady = true
-    }
+const logName = 'snd.TAO7: '
 
 export class TAO7 extends AO7 {
-    constructor(tag, srcTags, ori) {
-        super(tag, ori)
+    #isTAO7 = true
 
-        this.audio = tag
-        this.audio.preload = "none"
-        this.isAUDIO = true
-
-        this.srcTags = srcTags    // для <audio>  с заданнм(и) <source>
-
-        // Play.setListeners(tag, 'add')
-        Object.seal(this)
-    }
-    onEnter(e) {
-        if (!this.srcReady)
-            setAudioSrc(this)
-    }
     static prepare(c) {
         C = c
     }
     erase() {
-        // Play.setListeners(this.tag, 'remove')
-        if (this.srcTags)
-            this.srcTags.length = 0
         super.erase()
     }
     static reset() {
         C.makeForTypName(tag => tag.aO7snd?.erase(), 'node', 'audio')
+    }
+    constructor(tag, cls, stags) {
+        super(tag, cls)
+
+        this.audio = tag
+        this.audio.preload = "none"
+
+        if (C.consts.debug) {
+            const stags = tag.getElementsByTagName('source')
+            let s = ''
+            for (const stag of stags)
+                s += `\n\t"${stag.src}"`
+            console.log(logName + ` '${this.name}' source:`, s)
+        }
+        Object.seal(this)
+    }
+
+    get isTAO7() {
+        return this.#isTAO7
+    }
+
+    onEnter(e) {
+        super.onEnter(e)
     }
 }

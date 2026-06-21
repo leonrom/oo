@@ -12,93 +12,99 @@
 import { Play } from './Play.js'
 let C, clasn;
 const
-    logName = 'snd.AO7: ',
-    getOri = (u, snd) => {
-        switch (u.toLowerCase()) {
-            case 'href': return snd.getAttribute('href')
-            case 'src': return snd.getAttribute('src')
-            case 'n': return ''
-        }
-        return u
-    },
-    propagate = (el, aO7, add) => {
-        for (const ch of el.children) {
-            if (add) {
-                ch.aO7snd_ref = aO7
-                propagate(ch, aO7, add)
+    logName = 'snd.AO7 : ',
+p_ref='aO7snd',
+    setMode = (aO7, quals) => {
+        let loop=false
+        for (const c of quals)
+            switch (c.toUpperCase()) {
+                case 'W': aO7.tag.classList.add(AO7.M.oSWING); break  // покачивание при проигрывании 
+                case 'S': aO7.tag.classList.add(AO7.M.oSHOW); break   // ореол при проигрывании 
+                case 'C': aO7.mode = AO7.M.CLICK; break  // звучание только после клика (умолчание)
+                case 'O': aO7.mode = AO7.M.OVER; break   // звучание при наведении курсора (и по клику).
+                case 'A': aO7.mode = AO7.M.AVER; break   // -"- и не прекращается после увода курсора с тега 
+                case 'L': loop = true; break     // звучание зацикливается;
+                default:
+                    console.error("%c%s", C.consts.fmtErr, logName + ` для '${aO7.name}' непонятное '${c}'`, ` в квалификаторе quals='${quals}'`)
+                    debugger
             }
-            else
-                if (ch.aO7snd_ref) {
-                    ch.aO7snd_ref = null
-                    propagate(ch, aO7, add)
-                }
-        }
+        if (loop && !aO7.tag.loop)
+            aO7.loop = loop
     }
 
 export class AO7 {
-    static oPROPAGATE = 'o-propagate'
-    titlO = null
-    audio = null
-    modis = null
-    srcTags = null
-    isAUDIO = false
-
     #stt = ''
+    #entered = false
 
-    get stt() {
-        return this.#stt
-    }
-    setSTT(state) {
-        if (this.#stt !== Play.oERROR && state !== this.#stt) {
-            const classList = this.tag.classList
-            for (const stt of [Play.oWAIT, Play.oSOUND])
-                classList.remove(stt)
-
-            if (state)
-                classList.add(state)
-            this.#stt = state
-
-            if (C.consts.debug > 1)
-                console.log(`state='${state}', #stt='${this.#stt}', classList="${classList}"`)
-        }
-    }
-    setERROR(err) {
-        this.tag.classList[err ? 'add' : 'remove'](Play.oERROR)
-        this.#stt = err ? Play.oERROR : ''
-        this.setSTT('')
+    static M = Object.freeze({ CLICK: 'click', OVER: 'over', AVER: 'over+alive', oSWING: 'o-swing', oSHOW: 'o_sbd-show', })
+    static prepare(c, clsn) {
+        C = c
+        clasn = clsn
     }
 
-    constructor(tag, ori) {
+    url = ''       //   для TAO7 и CAO7
+    playId = 0
+    audio = null
+    loop = false
+    mode = AO7.M.CLICK
+
+    errSrc = false    // были ошибки загрузки src
+
+    constructor(tag, quals) {
         const isOlgaSnd = tag.classList.contains(clasn)
+
         this.tag = tag
-        this.srcReady = false
-        this.tag.aO7snd = this
+        this.title = tag.title
         this.isOlgaSnd = isOlgaSnd
-        this.ori = getOri(ori, tag)
         this.name = C.getObjName(tag)
 
-        this.url = new URL
-            (ori ? C.decodeUrl(this.ori, this.name) : '',
-                document.baseURI   // учитывает <base>
-            ).href
-        this.urlB = this.url
+        setMode(this, quals)
 
         this.act = Object.seal({ time: 0, shift: false })
 
-        propagate(tag, this, true)
+        tag[p_ref] = this
+        C.propagate(tag, this, p_ref, tag[p_ref + C.p_ref] ?? null )
         Object.seal(this)
     }
 
     erase() {
-        propagate(this.tag, this, false)
+        C.propagate(this.tag, null, p_ref, tag[p_ref + C.p_ref] ?? null )
+        this.url = ''
         this.act = null
-        this.url = null
         this.tag = null
         this.audio = null
         this.tag.aO7snd = null
     }
-    static prepare(c, clsn) {
-        C = c
-        clasn = clsn
+    getStt() {
+        return this.#stt
+    }
+    setSTT(state, e) {
+        if (!this.isOlgaSnd || state === this.#stt)
+            return
+
+        if (this.#stt)
+            this.tag.classList.remove(this.#stt)
+        if (state)
+            this.tag.classList.add(state)
+        this.#stt = state
+
+        if (C.consts.debug > 1) {
+            console.log(logName + `'${this.name.padEnd(6)}': ${state ? state : '-'}`)
+            // if (C.consts.debug > 2)
+            //     console.trace()
+        }
+    }
+
+    isEntered() {
+        return this.#entered
+    }
+    onEnter(e) {
+        this.#entered = true
+        this.act.time = 0
+    }
+    onLeave(e) {
+        this.#entered = false
+    }
+    onClick(e) {
     }
 }

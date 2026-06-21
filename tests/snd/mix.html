@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>mix</title>
+    <link rel="shortcut icon" href="./add/favicon.svg" type="image/x-icon">
+    <script type="module" src="http://localhost/oo/o7/snd/snd.js" data-consts="
+        	moe-p='12s 3',
+        	back_time= 0.6с, 
+			media =  + ../media;
+			моя_папка = media + /audio;
+			ау_длинный =../../media/audio/Clouds.mp3;
+			ау_средний=../../media/audio/Ceza1-25.mp3;
+			ау_короткий=../../media/audio/yapma.mp3;
+			ау_ошибка=моя_папка+/yapma1.mp3;
+        ">
+        </script>
+    <script type="module" src="http://localhost/oo/o7/index.js" data-modules="snd" data-consts="
+        	moe-p='12s 3',
+        	back_time= 0.6с, 
+			media =  + ../media;
+			моя_папка = media + /audio;
+			ау_длинный =моя_папка + /Clouds.mp3;
+			ау_средний=моя_папка+/Ceza1-25.mp3;
+			ау_короткий=моя_папка+/yapma.mp3;
+			ау_ошибка=моя_папка+/yapma1.mp3;
+        ">
+        </script>
+    <link href='./all.css' rel='stylesheet' />
+</head>
+
+<body style="margin: 0 0.1em 0 0.3em;">
+    <div class='example olga5_Start'>
+        <div>
+            <p class="teSe olga-snd:Sl:ау_средний cp" id="i2">
+                <b>i2</b>: [<i>зациклено</i>] (по клику) "olga-snd:Sl:ау_средний"
+            </p>
+        </div>
+        <div>
+            <p>
+                Иконка [<i>покачивание</i>, <i>сохраняется</i>] <b>i4</b>:
+                <img class="olga-snd:WSA:ау_длинный" title="img01" id="i4" loop
+                    src="../../media/image/snd.icons/myMusikIT.png" />
+                - "olga-snd:<b>SA</b>:ау_длинный"
+            </p>
+        </div>
+        <div>
+            <b>s3</b>: <audio id="s3" _src="ау_короткий" controls></audio>
+            <p>
+                Как '<b>2</b>', но с символической ссылкой в <b>_src</b>:<br />
+            </p>
+            <span>_src="ау_короткий"</span>
+        </div>
+    </div>
+</body>
+
+</html>

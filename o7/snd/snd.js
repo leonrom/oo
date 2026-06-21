@@ -30,65 +30,72 @@ import { Init } from './Init.js'
 import { Urls } from './Urls.js'
 import { Pick } from './Pick.js'
 
-const modul = 'snd'
+const
+	modul = 'snd',
+	clasn = 'olga-' + modul
 let C;
-export const W = {
-	modul: modul,	
-	clasn: 'olga-' + modul, // 'modul' и 'clasn' м.б. необязательны
-	autonom: false,
-	consts: {
+
+export const W = Object.freeze({
+	// export const W = {
+	modul: modul,
+	// clasn: 'olga-' + modul, // 'modul' и 'clasn' м.б. необязательны
+	act: Object.seal({ auto: -1 }),
+	consts: Object.seal({
 		shift_speed: 0.5, // при Shift - замедлять вдвое;
 		back_time: 0.3, // при возобновлении "отмотать" 0.3 сек ;
-	},
+	}),
 	prepare: function (c) {
 		C = c
-		AO7.prepare(C, W.clasn)
-		CAO7.prepare(C, W.clasn)
+		AO7.prepare(C, clasn)
+		CAO7.prepare(C, clasn)
 		TAO7.prepare(C)
-		Init.prepare(C, W.clasn)
-		Pick.prepare(C, W.clasn)
-		Play.prepare(C, W)	
+		Init.prepare(C, clasn)
+		Pick.prepare(C, clasn)
+		Play.prepare(C, W)
 		Urls.prepare(C)
 	},
 	init: function () {
 		Play.init()
 		Pick.init()
 		Init.init()
-	},
-	finish: function () {
-		window.dispatchEvent(new CustomEvent(C.E.o_done, { detail: { modul: W.modul, act: 'done' } }))
+	if (!this.act.auto)
+		window.dispatchEvent(new CustomEvent('o_done', { detail: { module: W.modul, err: false } }))
 	},
 	reset: function () {
 		Play.reset()
 		Init.reset()
 		CAO7.reset()
 		TAO7.reset()
+	// 	,
+    // reset: function () {
+    //     listO7.length = 0
+    // }
 	},
 	// ----------------------------
 	makeCss: () => `
-		.${W.clasn} ,
-		.${W.clasn} * {
+		.${clasn}  {
 			cursor: pointer;
     		user-select: none;
 		}
-		.${W.clasn}.${CAO7.oSWING} {
-            display: inline-block;
-		}
-		.${W.clasn}.${Play.oWAIT} {
+
+		.${clasn}.${Play.oLOAD} {
 			cursor: wait;
 			outline: 2px solid blue;
 		}
-		.${W.clasn}.${Play.oSOUND}{
+		.${clasn}.${Play.oWAIT} {
+			cursor: wait;
+		}
+		.${clasn}.${Play.oSOUND}{
 			cursor: progress;
 		}
-		.${W.clasn}.${Play.oERROR}{
+		.${clasn}.${Urls.oERROR}{
 			opacity: 0.5;
 			outline: 2px dotted black;
 			cursor: help;
 		}
 
 		/* Пульсирующий ореол */
-		.${W.clasn}.${Play.oSOUND}:not(${CAO7.oNONE}) {
+		.${clasn}.${AO7.M.oSHOW}.${Play.oSOUND} {
   			animation: sndGlow 1.4s ease-in-out infinite;
 		}
 		@keyframes sndGlow {
@@ -98,7 +105,8 @@ export const W = {
 		}
 
 		/* покачивание - только inline-block (например <img>) */
-		.${W.clasn}.${CAO7.oSWING}.${Play.oSOUND}:not(${CAO7.oNONE}) {    
+		.${clasn}.${AO7.M.oSWING}.${Play.oSOUND} { 
+            display: inline-block;  
 			will-change: transform;
     		transform: rotate(3deg) translateZ(0.001px);
     		transform-origin: 50% 50%;
@@ -110,8 +118,8 @@ export const W = {
             25% {  transform: rotate(13deg) translateZ(0); }
             75% {  transform: rotate(-13deg) translateZ(0); }
         }	
-			/* оставил "на потом" для отмечания скорости. Доделать через позцию мыши 
-		.olga-snd[data-speed]::after {
+/* оставил "на потом" для отмечания скорости. Доделать через позцию мыши 
+.olga-snd[data-speed]::after {
     content: attr(data-speed);
     position: absolute;
     font-size: 0.7em;
@@ -120,14 +128,13 @@ export const W = {
     transform: translateX(-50%);
     opacity: 0.8;
 
-
     background: yellow;
     color: black;
     z-index: 9999;
-	*/
 }
+*/
 	`,
-};
+});
 
 // проверка автономности. не надо try/catch,- и так выдаст "Uncaught (in promise) TypeError: Failed to fetch"
-(async function loadCmin() { (await import(`./Cmin.js`)).Cmin(W, modul) })()
+(async function () { (await import(`../com/Auto.js`)).Auto(W) })()

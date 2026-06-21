@@ -3,8 +3,7 @@
 /*jshint esversion: 6*/
 /*eslint no-useless-escape: 0*/
 
-import { C } from '../index.js'
-let debug;
+let debug, C;
 const
 	ParseTagAttrs = params => {
 		const errs = [],
@@ -174,7 +173,7 @@ const
 					aO7.iframe = aO7.player.getIframe()
 					aO7.iframe.aO7 = aO7
 
-					C.E.AddEventListener(window, 'o_stopVideo', e => {
+					window.addEventListener( 'o_stopVideo', e => {
 						const act = e.detail.tag
 						for (const tag of tags)
 							if (tag !== act && tag.aYT.player)
@@ -205,7 +204,8 @@ const
 
 export const W = {
 	needs: { o_attrs: '', },
-	prepare: () => {
+	prepare: (c) => {
+		C = c
 		debug = C.consts.debug
 	},
 	init: () => {

@@ -50,12 +50,12 @@
     <link data-href='+../o7css/o-shp.css' media='screen' rel='stylesheet' />
     <script>
         // document.addEventListener('DOMContentLoaded', () => {
-        window.addEventListener('o_isInited', () => {
+        window.addEventListener('o-inited', () => {
             const div = document.getElementById("shp-demo")
             if (div) {
                 const top = div.offsetTop
                 window.scrollTo(0, top)
-                div.addEventListener('o_isInited', () => {
+                div.addEventListener('o-inited', () => {
                     window.scrollTo(0, 260)
                     let div;
                     div = document.getElementById('shp1'); if (div) div.scrollTo(150, 100)
